@@ -1,7 +1,9 @@
 export default function Timetable() {
     return (
-        <div>
-            <h1>This is timetable page</h1>
+        <div className="w-full h-full">
+            <h1>
+                This is timetable page!
+            </h1>
         </div>
     )
 }

@@ -21,14 +21,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="w-screen h-screen flex flex-col">
-          <div className="fixed h-12 w-full bg-slate-100">
+          <div className="fixed h-12 w-full">
             <NavBar />
           </div>
           <div className="mt-12 w-full h-full flex flex-row">
             <div className="fixed w-48 h-full">
               <SideBar />
             </div>
-            <main className="ml-48 pt-8 w-full">
+            <main className="ml-48 pt-8 w-full bg-blue-50">
               {children}
             </main>
           </div>
