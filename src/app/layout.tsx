@@ -25,10 +25,10 @@ export default function RootLayout({
             <NavBar />
           </div>
           <div className="mt-12 w-full h-full flex flex-row">
-            <div className="fixed w-48 h-full">
+            <div className="fixed w-64 h-full">
               <SideBar />
             </div>
-            <main className="ml-48 pt-8 w-full bg-blue-50">
+            <main className="ml-64 p-8 w-full bg-blue-50">
               {children}
             </main>
           </div>
