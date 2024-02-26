@@ -13,9 +13,9 @@ export default function NavBar() {
     ]
 
     return (
-        <div className="h-full w-full flex items-center">
+        <div className="h-full w-full flex flex-row items-center justify-between">
             <Link className="hover:cursor-pointer text-xl" href="/">NTUMODS</Link>
-            <div className="w-full flex flex-row justify-between">
+            <div className="flex flex-row items-center divide-x divide-slate-300">
                 <ul className="flex pl-24">
                     {tabs.map((item,index) => (
                         <Link key={index} href={item.link}>
@@ -30,23 +30,9 @@ export default function NavBar() {
                         </Link>
                     ))}
                 </ul>
-                <div className="flex flex-row items-center divide-x divide-slate-300">
-                    <div className="relative">
-                        <div className="flex items-center mr-2">
-                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                {search}
-                            </div>
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                className="pl-10 border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-                            />
-                        </div>
-                    </div>
-                    <h1 className="text-sm pl-2 text-slate-500">
-                        AY2023/24, Semester 2, Recess Week
-                    </h1>
-                </div>
+                <h1 className="text-sm pl-2 text-slate-500">
+                    AY2023/24, Semester 2, Recess Week
+                </h1>
             </div>
         </div>
     )
