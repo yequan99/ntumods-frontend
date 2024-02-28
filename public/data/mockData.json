@@ -1,0 +1,32 @@
+[
+    {
+        "moduleCode": "SC1003",
+        "title": "Introduction To Computational Thinking and Programming",
+        "description": "add in descriptions"
+    },
+    {
+        "moduleCode": "SC1007",
+        "title": "Data Structures and Algorithms",
+        "description": "add in descriptions"
+    },
+    {
+        "moduleCode": "SC1015",
+        "title": "Introduction To Data Science and Artificial Intelligence",
+        "description": "add in descriptions"
+    },
+    {
+        "moduleCode": "SC2001",
+        "title": "Algorithm Design and Analysis",
+        "description": "add in descriptions"
+    },
+    {
+        "moduleCode": "SC2002",
+        "title": "Object Oriented Design and Programming",
+        "description": "add in descriptions"
+    },
+    {
+        "moduleCode": "SC2006",
+        "title": "Software Engineering",
+        "description": "add in descriptions"
+    }
+]

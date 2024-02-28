@@ -1,6 +1,26 @@
-export default function CoursesPage() {
+'use client'
 
-    const moduleInfo = [1,2,3,4,5,6,7,8,9,10]
+import { useState, useEffect } from "react"
+import { ModuleMetaData } from "@/type/struct"
+
+import ModuleCards from "./moduleCards"
+
+export default function CoursesPage() {
+    const [moduleData, setModuleData] = useState<ModuleMetaData[]>([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/data/mockData.json')
+                const data: ModuleMetaData[] = await response.json()
+                setModuleData(data)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            }
+        }
+
+        fetchData()
+    }, [])
 
     return (
         <div className="w-full h-full">
@@ -19,10 +39,8 @@ export default function CoursesPage() {
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-4 h-20">
-                {moduleInfo.map((item,index) => (
-                    <div key={index} className="h-20 border-2 border-slate-200 rounded-lg flex items-center">
-                        Module Info
-                    </div>
+                {moduleData.map((item,index) => (
+                    <ModuleCards key={index} moduleData={item} />
                 ))}
             </div>
         </div>

@@ -9,18 +9,18 @@ export default function NavBar() {
 
     const tabs = [
         { name: "Timetable", icon: timetable, link:"/timetable" },
-        { name: "Courses", icon: course, link:"/courses" }
+        { name: "Modules", icon: course, link:"/modules" }
     ]
 
     return (
         <div className="h-full w-full flex flex-row items-center justify-between">
-            <Link className="hover:cursor-pointer text-xl" href="/">NTUMODS</Link>
-            <div className="flex flex-row items-center divide-x divide-slate-300">
-                <ul className="flex pl-24">
+            <Link className="hover:cursor-pointer text-2xl" href="/">NTUMODS</Link>
+            <div className="flex flex-row items-center divide-x divide-slate-400">
+                <ul className="flex">
                     {tabs.map((item,index) => (
                         <Link key={index} href={item.link}>
-                            <li className={`flex flex-row items-center p-2 mr-8 hover:cursor-pointer ${item.name.toLowerCase() === pathname ? 'border-b-2 border-slate-400' : ''}`} >
-                                <div className="w-8 h-8">
+                            <li className={`flex flex-row items-center py-2 px-4 mr-8 hover:cursor-pointer ${item.name.toLowerCase() === pathname ? 'text-blue-800' : ''}`} >
+                                <div className="w-6 h-6">
                                     {item.icon}
                                 </div>
                                 <h1 className="pl-2">
@@ -30,7 +30,7 @@ export default function NavBar() {
                         </Link>
                     ))}
                 </ul>
-                <h1 className="text-sm pl-2 text-slate-500">
+                <h1 className="text-sm pl-4 text-slate-800">
                     AY2023/24, Semester 2, Recess Week
                 </h1>
             </div>
