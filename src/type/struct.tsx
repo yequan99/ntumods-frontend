@@ -1,5 +1,6 @@
 export type ModuleMetaData = {
     moduleCode: string,
     title: string,
-    description: string
+    description: string,
+    credits: number
 }
