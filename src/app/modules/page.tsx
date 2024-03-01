@@ -1,12 +1,16 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { ModuleMetaData } from "@/type/struct"
+import { Pagination } from 'antd';
 
-import ModuleCards from "./moduleCards"
+import { ModuleMetaData, FilterData } from "@/utils/types"
+import Modules from "./modules"
+import ModuleFilter from "./moduleFilters"
 
 export default function CoursesPage() {
     const [moduleData, setModuleData] = useState<ModuleMetaData[]>([])
+    // const [filter, setFilter] = useState<FilterData>({moduleCode: "", title: "", faculty: "", semester: 0, moduleType: ""})
+    const [currentPage, setCurrentPage] = useState<number>(0)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,26 +26,22 @@ export default function CoursesPage() {
         fetchData()
     }, [])
 
+    // Getting current posts based on pagination
+    const postsPerPage: number = 10
+    const indexOfFirstPost: number = currentPage * postsPerPage
+    const indexOfLastPost: number = indexOfFirstPost + postsPerPage
+    const currentPosts: ModuleMetaData[] = moduleData.slice(indexOfFirstPost, indexOfLastPost)
+
     return (
-        <div className="w-full h-full">
-            <div className="grid grid-cols-9 gap-4 h-10 mb-8">
-                <div className="col-span-4 border-2 border-slate-200 rounded-lg flex items-center">
-                    <h1 className="text-slate-400 pl-2">Search for module name or code</h1>
-                </div>
-                <div className="col-span-3 border-2 border-slate-200 rounded-lg flex items-center">
-                    <h1 className="text-slate-400 pl-2">Faculty</h1>
-                </div>
-                <div className="border-2 border-slate-200 rounded-lg flex items-center">
-                    <h1 className="text-slate-400 pl-2">Semester</h1>
-                </div>
-                <div className="border-2 border-slate-200 rounded-lg flex items-center">
-                    <h1 className="text-slate-400 pl-2">Module type</h1>
-                </div>
+        <div className="w-full h-full flex flex-col items-center">
+            <div className="w-full">
+                <ModuleFilter />
             </div>
-            <div className="grid grid-cols-2 gap-4 h-20">
-                {moduleData.map((item,index) => (
-                    <ModuleCards key={index} moduleData={item} />
-                ))}
+            <div className="w-full">
+                <Modules modules={currentPosts} />
+            </div>
+            <div className="py-8">
+                <Pagination onChange={(value) => setCurrentPage(value-1)} defaultCurrent={1} total={moduleData.length} />
             </div>
         </div>
     )

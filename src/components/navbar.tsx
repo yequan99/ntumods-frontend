@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { timetable, course, search } from "@/icons/icons"
+import { timetable, course, search } from "@/utils/icons"
 
 export default function NavBar() {
     const pathname = usePathname().substring(1)

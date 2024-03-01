@@ -1,4 +1,4 @@
-import { ModuleMetaData } from "@/type/struct"
+import { ModuleMetaData } from "@/utils/types"
 
 export default function ModuleCards({moduleData}: {moduleData: ModuleMetaData}) {
     return (
