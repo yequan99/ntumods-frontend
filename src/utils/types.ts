@@ -6,9 +6,8 @@ export type ModuleMetaData = {
 }
 
 export type FilterData = {
-    moduleCode: string,
-    title: string,
+    query: string,
     faculty: string,
-    semester: number,
+    semester: string,
     moduleType: string
 }

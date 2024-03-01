@@ -1,3 +1,5 @@
+'use client'
+
 import { ModuleMetaData } from "@/utils/types"
 
 export default function Modules({modules}: {modules: ModuleMetaData[]}) {

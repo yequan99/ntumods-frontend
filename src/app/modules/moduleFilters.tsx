@@ -1,8 +1,26 @@
 'use client'
 
+import { Dispatch, SetStateAction, ChangeEvent } from 'react';
 import { Select, Input } from 'antd';
 
-export default function ModuleFilter() {
+import { FilterData } from '@/utils/types';
+
+let timer: NodeJS.Timeout | null = null
+
+export default function ModuleFilter({filter, setFilter}:{filter: FilterData, setFilter: Dispatch<SetStateAction<FilterData>>}) {
+
+    const handleChange = (e:  ChangeEvent<HTMLInputElement>) => {
+        if (timer) {
+            clearTimeout(timer)
+        }
+        timer = setTimeout(() => {
+            setFilter(prevFilter => ({
+                ...prevFilter,
+                query: e.target.value
+            }))
+        }, 1000) 
+    }
+
     return (
         <div className="grid grid-cols-6 gap-4 h-10">
             <div className="col-span-2">
@@ -10,12 +28,13 @@ export default function ModuleFilter() {
                     className="w-full h-full" 
                     placeholder="Search for module name or code" 
                     allowClear={true}
+                    onChange={(e) => handleChange(e)}
                 />
             </div>
             <div className="col-span-2">
                 <Select
                     className="w-full h-full"
-                    defaultValue="All Faculties"
+                    defaultValue={filter.faculty}
                     options={[
                         { value: 'All', label: 'All Faculties' },
                         { value: 'ACC', label: 'Accountancy' },
@@ -27,16 +46,16 @@ export default function ModuleFilter() {
             </div>
             <Select
                 className="w-full h-full"
-                defaultValue="All Semesters"
+                defaultValue={filter.semester}
                 options={[
-                    { value: 'All', label: 'All Semesters' },
-                    { value: '1', label: 'Semester 1' },
-                    { value: '2', label: 'Semester 2' },
+                    { value: 'All Semesters', label: 'All Semesters' },
+                    { value: 'Semester 1', label: 'Semester 1' },
+                    { value: 'Semester 2', label: 'Semester 2' },
                 ]}
             />
             <Select
                 className="w-full h-full"
-                defaultValue="All Module Types"
+                defaultValue={filter.moduleType}
                 options={[
                     { value: 'All', label: 'All Module Types' },
                     { value: 'Core', label: 'Core' },
