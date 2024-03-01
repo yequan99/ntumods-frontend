@@ -56,14 +56,24 @@ export default function CoursesPage() {
                 <ModuleFilter filter={filter} setFilter={setFilter} />
             </div>
             <Divider className="w-full" orientation="right" plain orientationMargin="0">
-                {moduleData.length} courses found
+                {filteredData.length} courses found
             </Divider>
-            <div className="w-full">
-                <Modules modules={currentPosts} />
-            </div>
-            <div className="py-8">
-                <Pagination onChange={(value) => setCurrentPage(value-1)} defaultCurrent={1} total={filteredData.length} />
-            </div>
+            {filteredData.length > 0 ? 
+                <>
+                    <div className="w-full">
+                        <Modules modules={currentPosts} />
+                    </div>
+                    <div className="py-8">
+                        <Pagination onChange={(value) => setCurrentPage(value-1)} defaultCurrent={1} total={filteredData.length} />
+                    </div>
+                </>
+
+                :
+                <div>
+                    No modules found!
+                </div>
+            }
+            
         </div>
     )
 }
