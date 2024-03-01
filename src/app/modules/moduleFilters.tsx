@@ -4,7 +4,7 @@ import { Select, Input } from 'antd';
 
 export default function ModuleFilter() {
     return (
-        <div className="grid grid-cols-6 gap-4 h-10 mb-8">
+        <div className="grid grid-cols-6 gap-4 h-10">
             <div className="col-span-2">
                 <Input 
                     className="w-full h-full" 

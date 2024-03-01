@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { Pagination } from 'antd';
+import { Pagination, Divider } from 'antd';
 
 import { ModuleMetaData, FilterData } from "@/utils/types"
 import Modules from "./modules"
@@ -37,6 +37,9 @@ export default function CoursesPage() {
             <div className="w-full">
                 <ModuleFilter />
             </div>
+            <Divider className="w-full" orientation="right" plain orientationMargin="0">
+                {moduleData.length} courses found
+            </Divider>
             <div className="w-full">
                 <Modules modules={currentPosts} />
             </div>
