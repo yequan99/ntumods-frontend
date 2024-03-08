@@ -27,8 +27,15 @@ export type ModuleFullData = {
 }
 
 export type IndexData = {
-    Lecture: string[],
-    Tutorial: string[],
-    Lab: string[],
-    Seminar: string[]
+    lecture: LessonData[],
+    tutorial: LessonData[],
+    lab: LessonData[],
+    seminar: LessonData[]
+}
+
+export type LessonData = {
+    day: string,
+    start: string,
+    end: string,
+    venue: string
 }

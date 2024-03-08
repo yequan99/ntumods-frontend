@@ -17,14 +17,12 @@ export default function CoursesPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('/data/mockData.json')
+                const response = await fetch('/data/mockData.json', { cache: 'force-cache', next: { revalidate: 3600 } }) // cache json and revalidate every hour
                 const data: ModuleMetaData[] = await response.json()
 
-                setTimeout(() => {
-                    setModuleData(data)
-                    setFilteredData(data)
-                    setLoading(false)
-                }, 1000)
+                setModuleData(data)
+                setFilteredData(data)
+                setLoading(false)
                 console.log("rendered module data")
             } catch (error) {
                 console.error('Error fetching data:', error)

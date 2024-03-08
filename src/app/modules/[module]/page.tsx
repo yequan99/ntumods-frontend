@@ -23,10 +23,25 @@ export default function Module({ params }: { params: { module: string } }) {
             prerequisites: ["CZ1003", "CZ2003"],
             exam: "8 May 2024, 9.00 am - 11.00 am",
             index: {
-                Lecture: [],
-                Tutorial: [],
-                Lab: [],
-                Seminar: []
+                lecture: [{
+                    day: "Wednesday",
+                    start: "1430",
+                    end: "1630",
+                    venue: "LT27A"
+                }],
+                tutorial: [{
+                    day: "Monday",
+                    start: "1030",
+                    end: "1130",
+                    venue: "TR12"
+                }],
+                lab: [{
+                    day: "Thursday",
+                    start: "1230",
+                    end: "1430",
+                    venue: "Software Lab 3"
+                }],
+                seminar: []
             }
         }
         setModuleDetails(data)
@@ -35,7 +50,7 @@ export default function Module({ params }: { params: { module: string } }) {
     return (
         <div className="w-full h-full flex flex-row">
             <div className="w-[75%]">
-                <div id="details" className="h-screen">
+                <div id="details" className="h-fit pb-16">
                     <h1 className="font-bold text-4xl text-blue-800">
                         {moduleDetails?.moduleCode}
                     </h1>
@@ -49,8 +64,15 @@ export default function Module({ params }: { params: { module: string } }) {
                     </div>
                     <p className="pt-4">{moduleDetails?.description}</p>
                 </div>
-                <div id="prerequisites" className="h-screen">
-                    {moduleDetails?.prerequisites}
+                <div id="indexes" className="h-screen">
+                    {moduleDetails?.index.lecture.map((item,index) => (
+                        <div key={index}>
+                            <h1>Lecture {index+1}</h1>
+                            <h1>Day: {item.day}</h1>
+                            <h1>Time: {item.start}-{item.end}</h1>
+                            <h1>Venue: {item.venue}</h1>
+                        </div>
+                    ))}
                 </div>
                 <div id="reviews" className="h-screen">
                     This is review section
@@ -66,9 +88,9 @@ export default function Module({ params }: { params: { module: string } }) {
                         title: 'Details',
                     },
                     {
-                        key: 'prerequisites',
-                        href: '#prerequisites',
-                        title: 'Pre-requisites',
+                        key: 'indexes',
+                        href: '#indexes',
+                        title: 'Indexes',
                     },
                     {
                         key: 'reviews',
