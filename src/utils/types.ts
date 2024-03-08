@@ -12,30 +12,30 @@ export type FilterData = {
     moduleType: string
 }
 
-export type ModuleFullData = {
-    moduleCode: string,
-    title: string,
-    description: string,
-    credits: number,
-    course: string,
-    faculty: string,
-    semester: string,
-    moduleType: string,
-    prerequisites: string[],
-    exam: string,
-    index: IndexData
+export type ModuleData = {
+    Code: string,
+    Title: string,
+    AU: string,
+    Course: string,         // need to cnfm
+    Faculty: string,        // need to cnfm
+    Prerequisite: string,
+    MutuallyExclusive: string,
+    NotAvailableTo: string,
+    NotAvailableToProgWith: string,
+    GradeType: string,
+    NotAvailableAsUE: string,
+    NotAvailableAsPE: string,
+    Description: string,
+    Schedules: Schedule[]
 }
 
-export type IndexData = {
-    lecture: LessonData[],
-    tutorial: LessonData[],
-    lab: LessonData[],
-    seminar: LessonData[]
-}
-
-export type LessonData = {
-    day: string,
-    start: string,
-    end: string,
-    venue: string
+export type Schedule = {
+    StartTime: string,
+    EndTime: string,
+    Venue: string,
+    ClassType: string,
+    Index: number,
+    IndexGroup: number,
+    DayOfWeek: string,
+    Remarks: string
 }
