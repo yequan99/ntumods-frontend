@@ -44,14 +44,15 @@ export default function Module({ params }: { params: { module: string } }) {
                     <p className="pt-4">{moduleDetails?.Description}</p>
                 </div>
                 <div id="indexes" className="h-fit pb-16">
-                    {moduleDetails?.Schedules.map((item,index) => (
+                    {/* {moduleDetails?.Schedules.map((item,index) => (
                         <div key={index}>
                             <h1>{item.ClassType}</h1>
                             <h1>Day: {item.DayOfWeek}</h1>
                             <h1>Time: {item.StartTime}-{item.EndTime}</h1>
                             <h1>Venue: {item.Venue}</h1>
                         </div>
-                    ))}
+                    ))} */}
+                    <h1>Available Indexes: </h1>
                     <Schedule />
                 </div>
                 <div id="reviews" className="h-screen">

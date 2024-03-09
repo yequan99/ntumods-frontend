@@ -7,13 +7,35 @@ export default function Schedule() {
 
     const eventList = [
         {
-            title: 'Lecture',
+            title: 'LEC',
             daysOfWeek: ['3'],
-            startTime: '12:30:00',
-            endTime: '13:30:00',
+            startTime: '14:30:00',
+            endTime: '16:30:00',
             extendedProps: {
-                description: "LT 24A",
+                description: "LT 27A",
             },
+            color: 'green'
+        },
+        {
+            title: 'TUT',
+            daysOfWeek: ['1'],
+            startTime: '10:00:00',
+            endTime: '11:00:00',
+            extendedProps: {
+                description: "TR 29",
+            },
+            color: 'blue',
+        },
+        {
+            title: 'LAB',
+            daysOfWeek: ['4'],
+            startTime: '12:30:00',
+            endTime: '14:30:00',
+            extendedProps: {
+                description: "Software Lab 3",
+            },
+            color: 'yellow',
+            textColor: 'black',
         },
     ]
 
@@ -34,6 +56,15 @@ export default function Schedule() {
                 weekday: 'short'
             }}
             events={eventList}
+            slotLaneDidMount={(info) => {info.el.style.height = '40px'}}
+            eventContent={(eventInfo) => {
+                return (
+                    <div>
+                        <div>{eventInfo.event.title}</div>
+                        <div>{eventInfo.event.extendedProps.description}</div>
+                    </div>
+                )
+            }}
         />
     )
 }
