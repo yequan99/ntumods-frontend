@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Anchor } from "antd"
 
 import { ModuleData } from "@/utils/types"
+import Schedule from "./schedule"
 
 export default function Module({ params }: { params: { module: string } }) {
     const [loading, setLoading] = useState<boolean>(true)
@@ -42,7 +43,7 @@ export default function Module({ params }: { params: { module: string } }) {
                     </div>
                     <p className="pt-4">{moduleDetails?.Description}</p>
                 </div>
-                <div id="indexes" className="h-screen">
+                <div id="indexes" className="h-fit pb-16">
                     {moduleDetails?.Schedules.map((item,index) => (
                         <div key={index}>
                             <h1>{item.ClassType}</h1>
@@ -51,6 +52,7 @@ export default function Module({ params }: { params: { module: string } }) {
                             <h1>Venue: {item.Venue}</h1>
                         </div>
                     ))}
+                    <Schedule />
                 </div>
                 <div id="reviews" className="h-screen">
                     This is review section
