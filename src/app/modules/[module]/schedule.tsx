@@ -1,43 +1,13 @@
+'use client'
+
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import interactionPlugin from "@fullcalendar/interaction"
 import timeGridPlugin from "@fullcalendar/timegrid"
 
-export default function Schedule() {
+import { ScheduleEvent } from "@/utils/types"
 
-    const eventList = [
-        {
-            title: 'LEC',
-            daysOfWeek: ['3'],
-            startTime: '14:30:00',
-            endTime: '16:30:00',
-            extendedProps: {
-                description: "LT 27A",
-            },
-            color: 'green'
-        },
-        {
-            title: 'TUT',
-            daysOfWeek: ['1'],
-            startTime: '10:00:00',
-            endTime: '11:00:00',
-            extendedProps: {
-                description: "TR 29",
-            },
-            color: 'blue',
-        },
-        {
-            title: 'LAB',
-            daysOfWeek: ['4'],
-            startTime: '12:30:00',
-            endTime: '14:30:00',
-            extendedProps: {
-                description: "Software Lab 3",
-            },
-            color: 'yellow',
-            textColor: 'black',
-        },
-    ]
+export default function Schedule({index}:{index: ScheduleEvent[]}) {
 
     return (
         <FullCalendar
@@ -50,12 +20,13 @@ export default function Schedule() {
             initialView="timeGridWeek"
             weekends={false}
             allDaySlot={false}
+            now="2012-01-01T00:00:00" // need to hardcode a date if not it will highlight the current day
             slotMinTime="08:00:00"
             slotMaxTime="22:00:00"
             dayHeaderFormat={{
                 weekday: 'short'
             }}
-            events={eventList}
+            events={index}
             slotLaneDidMount={(info) => {info.el.style.height = '40px'}}
             eventContent={(eventInfo) => {
                 return (
