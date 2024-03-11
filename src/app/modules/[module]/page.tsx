@@ -3,11 +3,32 @@
 import { useState, useEffect } from "react"
 import { Anchor } from "antd"
 
-import { ModuleData } from "@/utils/types"
+import { ModuleData,ScheduleEvent } from "@/utils/types"
+import Schedule from "./schedule"
+
+const daysMap: Record<string, string> = {
+    "Monday": "1",
+    "Tuesday": "2",
+    "Wednesday": "3",
+    "Thursday": "4",
+    "Friday": "5"
+}
+
+const indexColor: Record<string, string> = {
+    "LEC": "green",
+    "TUT": "blue",
+    "LAB": "yellow"
+}
+
+const textColor: Record<string, string> = {
+    "LEC": "white",
+    "TUT": "white",
+    "LAB": "black"
+}
 
 export default function Module({ params }: { params: { module: string } }) {
-    const [loading, setLoading] = useState<boolean>(true)
     const [moduleDetails, setModuleDetails] = useState<ModuleData | null>(null)
+    const [indexSchedule, setIndexSchedule] = useState<ScheduleEvent[]>([])
 
     useEffect(() => {
         // make API call to fetch module detail using modulecode
@@ -17,13 +38,40 @@ export default function Module({ params }: { params: { module: string } }) {
                 const data: ModuleData = await response.json()
 
                 setModuleDetails(data)
-                console.log("rendered module data")
+                const parsedIndex: ScheduleEvent[] = ParseEventSchedule(data)
+                setIndexSchedule(parsedIndex)
             } catch (error) {
                 console.log('Error fetching module data:', error)
             }
         }
         fetchData()
     }, [])
+
+    const ParseEventSchedule = (eventData: ModuleData) => {
+        var newEventSchedule: ScheduleEvent[] = []
+        eventData.Schedules.map((schedule) => {
+            const newEvent: ScheduleEvent = {
+                title: schedule.ClassType,
+                daysOfWeek: [daysMap[schedule.DayOfWeek]],
+                startTime: convertTimeFormat(schedule.StartTime),
+                endTime: convertTimeFormat(schedule.EndTime),
+                extendedProps: {
+                    description: schedule.Venue
+                },
+                color: indexColor[schedule.ClassType],
+                textColor: textColor[schedule.ClassType],
+            }
+            newEventSchedule.push(newEvent)
+        })
+        return newEventSchedule
+    }
+
+    const convertTimeFormat = (inputTime: string) => {
+        const hours: string = inputTime.slice(0,2)
+        const minutes: string = inputTime.slice(2)
+
+        return `${hours}:${minutes}:00`
+    }
 
     return (
         <div className="w-full h-full flex flex-row">
@@ -42,15 +90,9 @@ export default function Module({ params }: { params: { module: string } }) {
                     </div>
                     <p className="pt-4">{moduleDetails?.Description}</p>
                 </div>
-                <div id="indexes" className="h-screen">
-                    {moduleDetails?.Schedules.map((item,index) => (
-                        <div key={index}>
-                            <h1>{item.ClassType}</h1>
-                            <h1>Day: {item.DayOfWeek}</h1>
-                            <h1>Time: {item.StartTime}-{item.EndTime}</h1>
-                            <h1>Venue: {item.Venue}</h1>
-                        </div>
-                    ))}
+                <div id="indexes" className="h-fit pb-16">
+                    <h1>Available Indexes: </h1>
+                    <Schedule index={indexSchedule} />
                 </div>
                 <div id="reviews" className="h-screen">
                     This is review section

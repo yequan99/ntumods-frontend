@@ -39,3 +39,17 @@ export type Schedule = {
     DayOfWeek: string,
     Remarks: string
 }
+
+export type ScheduleEvent = {
+    title: string,
+    daysOfWeek: string[],
+    startTime: string,
+    endTime: string,
+    extendedProps: ScheduleExtendedProps,
+    color: string,
+    textColor?: string
+}
+
+export type ScheduleExtendedProps = {
+    description: string
+}
