@@ -11,13 +11,13 @@ export default function CoursesPage() {
     const [loading, setLoading] = useState<boolean>(true)
     const [moduleData, setModuleData] = useState<ModuleMetaData[]>([])
     const [filteredData, setFilteredData] = useState<ModuleMetaData[]>([])
-    const [filter, setFilter] = useState<FilterData>({query: "", faculty: "All Faculties", semester: "All Semesters", moduleType: "All Module Types"})
+    const [filter, setFilter] = useState<FilterData>({query: "", faculty: "All Faculties", semester: ["1", "2"], moduleType: "All Module Types"})
     const [currentPage, setCurrentPage] = useState<number>(0)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('/data/mockData.json', { cache: 'force-cache', next: { revalidate: 3600 } }) // cache json and revalidate every hour
+                const response = await fetch('/data/mockData.json') // cache json and revalidate every hour
                 const data: ModuleMetaData[] = await response.json()
 
                 setModuleData(data)
@@ -33,20 +33,20 @@ export default function CoursesPage() {
 
     // filter modules by query
     useEffect(() => {
-        console.log("query: ", filter.query)
-        if (filter.query === "") {
-            setFilteredData(moduleData)
-        } else {
-            let filterQueryData: ModuleMetaData[] = []
-            for (const modData of moduleData) {
-                if (modData.title.toLowerCase().includes(filter.query.toLowerCase()) || modData.moduleCode.toLowerCase().includes(filter.query.toLowerCase())) {
-                    filterQueryData.push(modData)
-                }
+        // TODO: Filter semester query array
+        let filterQueryData: ModuleMetaData[] = []
+        for (const modData of moduleData) {
+            if ((filter.faculty === "All Faculties" || filter.faculty === modData.faculty) && 
+                (filter.moduleType === "All Module Types" || filter.moduleType === modData.moduleType) &&
+                (filter.semester.some(sem => modData.semesters.includes(sem))) &&
+                (filter.query === "" || modData.title.toLowerCase().includes(filter.query.toLowerCase()) || modData.moduleCode.toLowerCase().includes(filter.query.toLowerCase()) )) {
+                filterQueryData.push(modData)
             }
-            setFilteredData(filterQueryData)
         }
+        setFilteredData(filterQueryData)
         setCurrentPage(0)
-    }, [filter.query])
+        console.log("detected change in query")
+    }, [filter])
 
     // Getting current posts based on pagination
     const postsPerPage: number = 10

@@ -1,1 +1,110 @@
-[{"moduleCode":"AB0403","title":"Decision Making with Programming & Analytics","description":"This is an introductory course designed for business or accountancy undergraduate students who have no programming background and are interested to learn how to manage data and conduct business analytics programmatically. It is oriented to enhance their technical skillset. The aim of this course is to provide a broad understanding on how to manage data, the process of preparing data for analysis, basics of analytics, and the means to communicate analytics outcome. This course will equip students with the ability to write customized solutions to inform business decision, integrate statistical libraries for data analysis, and construct visuals or reports for business understanding. This module will provide students with individual hands-on practices to hone their coding skills and opportunities to develop coding solutions in a team. We utilize Python language as the medium of learning because it is one of the most in-demand coding language and its user-friendly syntax is well suited for the beginner level. Students will utilise modern development tools to turn information into insights.","credits":3},{"moduleCode":"AB1201","title":"Financial Management","description":"This course aims to provide business and accounting students with a broad understanding of all the important financial principles, concepts, and analytical tools. This is a first course in finance and is compulsory for all business and accounting students. For students intending to major in banking and finance, this course is an important foundation course in order to better prepare themselves for other advanced courses such as Advanced Corporate Finance, Financial Markets and Institutions, International Financial Management, Investments, Equity Securities, Fixed Income Securities, and Derivatives Securities.","credits":3},{"moduleCode":"DD0003","title":"Information Visualisation","description":"This introductory level course will provide an overview of the practice of information visualization. You will explore fundamental visual design techniques to interpret, organize and present visual interpretations for different forms of data. The learnings achieved in this course will expand your understanding on how complex information can be communicated meaningfully and clearly through visualization to inspire greater empathy and understanding from an audience.","credits":3},{"moduleCode":"DF2013","title":"Film Music in Theory & Practice","description":"This course will introduce you to an analytical, historical and practical study of music and moving images. You will explore the history, theory, terminology and methods needed to analyze and interpret soundtracks. The process of planning and writing music for film will be examined as well as the role of the composer in film production. Film music form, aesthetics and genre styles will be analyzed with a focus on music and image relationships through screening examples and analysis. The learning in this course will enable greater proficiency when applying sound to creative visual media.","credits":3},{"moduleCode":"MA2001","title":"Mechanics of Materials","description":"The first four topics of the text are devoted to the analysis of the stresses and of the corresponding deformations in various structural members, considering successively axial loading, torsion, and pure bending. Each analysis is based on a few basic concepts, namely, the conditions of equilibrium of the forces exerted on the member, the relations existing between stress and strain in the material, and the conditions imposed by the supports and loading of the member. The study of each type of loading is complemented by a large number of examples designed to strengthen the students' understanding of the subject. Topic 5 is devoted to the determination of shearing stresses in beams under transverse loadings. More advanced aspects of the design of beams, such as the determination of the principal stresses at the junction of the flange and web of a W-beam, are in Topic 6. The chapter also includes the determination of stresses under combined loadings that can now include the determination of the principal stresses, principal planes, and maximum shearing stress at a given point. The determination of the deflection of beams is discussed in Topic 7. The first part of the chapter is devoted to the integration method followed by the use of singularity functions. Topic 8 is devoted to columns and includes the design of steel and aluminum columns.","credits":3},{"moduleCode":"MA2003","title":"Introduction To Thermo-Fluids","description":"Properties of pure substances. Work and heat. Energy and the first law. Energy balance for closed systems and steady state control volumes. Submerged surfaces and bodies. Elementary fluid dynamics.","credits":3},{"moduleCode":"SC1003","title":"Introduction To Computational Thinking and Programming","description":"Computational thinking (CT) is the process of analysing a problem then designing and expressing its solution in such a way that a computer can effectively carry it out. It includes a number of characteristics, such as breaking a problem into small and repetitive ordered steps, logically ordering and analyzing data and creating solutions that can be effectively implemented as programs running on computer. The aim of this course is hence to take students with no prior experience of thinking in a computational manner to a point where you can derive simple algorithms and code the programs to solve some basic problems in your domain of studies. Student will also learn about basic program construct and simple data structures. In addition, the course will include topics to appreciate the internal operations of a processor.","credits":3},{"moduleCode":"SC1007","title":"Data Structures and Algorithms","description":"This course aims to (i) teach the concepts, implementations and applications of data structures such as arrays, linked lists, stacks, queues and trees that are important for building efficient algorithms; (ii) provide an introduction to algorithm analysis and design. These are essential for future computer science and computer engineering courses.","credits":3},{"moduleCode":"SC1015","title":"Introduction To Data Science and Artificial Intelligence","description":"This course will start with the core principles of Data Science, and will equip you with the basic tool and techniques of data handling, exploratory data analysis, data visualization, data-based inference, and data-focussed communication. The course will also introduce you to the fundamentals of Artificial Intelligence - state space representation, uninformed search, and reinforcement learning. The course will motivate you to work closely with data and make data-driven decisions in your field of study. The course will also touch upon ethical issues in Data Science and Artificial Intelligence, and motivate you to explore the cutting-edge applications related to Big Data, Neural Networks and Deep Learning. Python will be the language of choice to introduce hands-on computational techniques.","credits":3},{"moduleCode":"CZ4041","title":"Machine Learning","description":"This course introduces basic concepts and methodologies for machine learning as well as their applications. Clustering. Dimension Reduction. Classification. Decision Theory. Density Estimation. Classifier Evaluation.","credits":3},{"moduleCode":"CZ4042","title":"Neural Network and Deep Learning","description":"This course aims to provide you with a basic but comprehensive foundation of neural networks and deep learning, including underlying principles, architectures, and learning algorithms of various types of deep neural networks that are essential for future applications of artificial intelligence and data science.","credits":3},{"moduleCode":"CZ4052","title":"Cloud Computing","description":"Cloud computing refers to both the applications delivered as services over the Internet and the modern applications powered by these services, collectively known as Software as a Service (SaaS), IaaS (Infrastructure as a Service) and PaaS (Platform as a Service). This course introduces the students to the basic concepts and theory behind cloud computing. Techniques and algorithms in distributed computing that leverages artificial intelligence, machine learning and blockchains, topics that forms an integral part of modern cloud computing and edge/fog computing, will also be covered, along with industrial perspectives. Upon completion, students will be able to understand cloud computing applications that use software frameworks, e.g., MapReduce/Spark, distributed computing services-including database, networking, software, analytics, and intelligence over the Internet to offer faster innovation, flexible resources, and economies of scale.","credits":3}]
+[
+    {
+        "moduleCode": "AB0403",
+        "title": "Decision Making with Programming & Analytics",
+        "description": "This is an introductory course designed for business or accountancy undergraduate students who have no programming background and are interested to learn how to manage data and conduct business analytics programmatically. It is oriented to enhance their technical skillset. The aim of this course is to provide a broad understanding on how to manage data, the process of preparing data for analysis, basics of analytics, and the means to communicate analytics outcome. This course will equip students with the ability to write customized solutions to inform business decision, integrate statistical libraries for data analysis, and construct visuals or reports for business understanding. This module will provide students with individual hands-on practices to hone their coding skills and opportunities to develop coding solutions in a team. We utilize Python language as the medium of learning because it is one of the most in-demand coding language and its user-friendly syntax is well suited for the beginner level. Students will utilise modern development tools to turn information into insights.",
+        "credits": 3,
+        "semesters": ["1"],
+        "faculty": "Accountancy",
+        "moduleType": "Core"
+    },
+    {
+        "moduleCode": "AB1201",
+        "title": "Financial Management",
+        "description": "This course aims to provide business and accounting students with a broad understanding of all the important financial principles, concepts, and analytical tools. This is a first course in finance and is compulsory for all business and accounting students. For students intending to major in banking and finance, this course is an important foundation course in order to better prepare themselves for other advanced courses such as Advanced Corporate Finance, Financial Markets and Institutions, International Financial Management, Investments, Equity Securities, Fixed Income Securities, and Derivatives Securities.",
+        "credits": 3,
+        "semesters": ["1"],
+        "faculty": "Accountancy",
+        "moduleType": "Core"
+    },
+    {
+        "moduleCode": "DD0003",
+        "title": "Information Visualisation",
+        "description": "This introductory level course will provide an overview of the practice of information visualization. You will explore fundamental visual design techniques to interpret, organize and present visual interpretations for different forms of data. The learnings achieved in this course will expand your understanding on how complex information can be communicated meaningfully and clearly through visualization to inspire greater empathy and understanding from an audience.",
+        "credits": 3,
+        "semesters": ["1","2"],
+        "faculty": "Art, Design & Media",
+        "moduleType": "Core"
+    },
+    {
+        "moduleCode": "DF2013",
+        "title": "Film Music in Theory & Practice",
+        "description": "This course will introduce you to an analytical, historical and practical study of music and moving images. You will explore the history, theory, terminology and methods needed to analyze and interpret soundtracks. The process of planning and writing music for film will be examined as well as the role of the composer in film production. Film music form, aesthetics and genre styles will be analyzed with a focus on music and image relationships through screening examples and analysis. The learning in this course will enable greater proficiency when applying sound to creative visual media.",
+        "credits": 3,
+        "semesters": ["2"],
+        "faculty": "Art, Design & Media",
+        "moduleType": "Core"
+    },
+    {
+        "moduleCode": "MA2001",
+        "title": "Mechanics of Materials",
+        "description": "The first four topics of the text are devoted to the analysis of the stresses and of the corresponding deformations in various structural members, considering successively axial loading, torsion, and pure bending. Each analysis is based on a few basic concepts, namely, the conditions of equilibrium of the forces exerted on the member, the relations existing between stress and strain in the material, and the conditions imposed by the supports and loading of the member. The study of each type of loading is complemented by a large number of examples designed to strengthen the students' understanding of the subject. Topic 5 is devoted to the determination of shearing stresses in beams under transverse loadings. More advanced aspects of the design of beams, such as the determination of the principal stresses at the junction of the flange and web of a W-beam, are in Topic 6. The chapter also includes the determination of stresses under combined loadings that can now include the determination of the principal stresses, principal planes, and maximum shearing stress at a given point. The determination of the deflection of beams is discussed in Topic 7. The first part of the chapter is devoted to the integration method followed by the use of singularity functions. Topic 8 is devoted to columns and includes the design of steel and aluminum columns.",
+        "credits": 3,
+        "semesters": ["1","2"],
+        "faculty": "Aerospace Engineering",
+        "moduleType": "Core"
+    },
+    {
+        "moduleCode": "MA2003",
+        "title": "Introduction To Thermo-Fluids",
+        "description": "Properties of pure substances. Work and heat. Energy and the first law. Energy balance for closed systems and steady state control volumes. Submerged surfaces and bodies. Elementary fluid dynamics.",
+        "credits": 3,
+        "semesters": ["1"],
+        "faculty": "Aerospace Engineering",
+        "moduleType": "Core"
+    },
+    {
+        "moduleCode": "SC1003",
+        "title": "Introduction To Computational Thinking and Programming",
+        "description": "Computational thinking (CT) is the process of analysing a problem then designing and expressing its solution in such a way that a computer can effectively carry it out. It includes a number of characteristics, such as breaking a problem into small and repetitive ordered steps, logically ordering and analyzing data and creating solutions that can be effectively implemented as programs running on computer. The aim of this course is hence to take students with no prior experience of thinking in a computational manner to a point where you can derive simple algorithms and code the programs to solve some basic problems in your domain of studies. Student will also learn about basic program construct and simple data structures. In addition, the course will include topics to appreciate the internal operations of a processor.",
+        "credits": 3,
+        "semesters": ["1"],
+        "faculty": "School of Computer Science and Engineering",
+        "moduleType": "Core"
+    },
+    {
+        "moduleCode": "SC1007",
+        "title": "Data Structures and Algorithms",
+        "description": "This course aims to (i) teach the concepts, implementations and applications of data structures such as arrays, linked lists, stacks, queues and trees that are important for building efficient algorithms; (ii) provide an introduction to algorithm analysis and design. These are essential for future computer science and computer engineering courses.",
+        "credits": 3,
+        "semesters": ["1"],
+        "faculty": "School of Computer Science and Engineering",
+        "moduleType": "Core"
+    },
+    {
+        "moduleCode": "SC1015",
+        "title": "Introduction To Data Science and Artificial Intelligence",
+        "description": "This course will start with the core principles of Data Science, and will equip you with the basic tool and techniques of data handling, exploratory data analysis, data visualization, data-based inference, and data-focussed communication. The course will also introduce you to the fundamentals of Artificial Intelligence - state space representation, uninformed search, and reinforcement learning. The course will motivate you to work closely with data and make data-driven decisions in your field of study. The course will also touch upon ethical issues in Data Science and Artificial Intelligence, and motivate you to explore the cutting-edge applications related to Big Data, Neural Networks and Deep Learning. Python will be the language of choice to introduce hands-on computational techniques.",
+        "credits": 3,
+        "semesters": ["1","2"],
+        "faculty": "School of Computer Science and Engineering",
+        "moduleType": "Core"
+    },
+    {
+        "moduleCode": "CZ4041",
+        "title": "Machine Learning",
+        "description": "This course introduces basic concepts and methodologies for machine learning as well as their applications. Clustering. Dimension Reduction. Classification. Decision Theory. Density Estimation. Classifier Evaluation.",
+        "credits": 3,
+        "semesters": ["1", "2"],
+        "faculty": "School of Computer Science and Engineering",
+        "moduleType": "MPE"
+    },
+    {
+        "moduleCode": "CZ4042",
+        "title": "Neural Network and Deep Learning",
+        "description": "This course aims to provide you with a basic but comprehensive foundation of neural networks and deep learning, including underlying principles, architectures, and learning algorithms of various types of deep neural networks that are essential for future applications of artificial intelligence and data science.",
+        "credits": 3,
+        "semesters": ["1"],
+        "faculty": "School of Computer Science and Engineering",
+        "moduleType": "MPE"
+    },
+    {
+        "moduleCode": "CZ4052",
+        "title": "Cloud Computing",
+        "description": "Cloud computing refers to both the applications delivered as services over the Internet and the modern applications powered by these services, collectively known as Software as a Service (SaaS), IaaS (Infrastructure as a Service) and PaaS (Platform as a Service). This course introduces the students to the basic concepts and theory behind cloud computing. Techniques and algorithms in distributed computing that leverages artificial intelligence, machine learning and blockchains, topics that forms an integral part of modern cloud computing and edge/fog computing, will also be covered, along with industrial perspectives. Upon completion, students will be able to understand cloud computing applications that use software frameworks, e.g., MapReduce/Spark, distributed computing services-including database, networking, software, analytics, and intelligence over the Internet to offer faster innovation, flexible resources, and economies of scale.",
+        "credits": 3,
+        "semesters": ["2"],
+        "faculty": "School of Computer Science and Engineering",
+        "moduleType": "MPE"
+    }
+]

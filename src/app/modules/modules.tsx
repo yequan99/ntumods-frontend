@@ -29,7 +29,7 @@ export default function Modules({modules}: {modules: ModuleMetaData[]}) {
                             </div>
                         </div>
                         <div className="text-xs rounded-full border-2 border-slate-400 px-2 w-fit">
-                            BDE
+                            {item.moduleType}
                         </div>
                     </div>
                 </Link>

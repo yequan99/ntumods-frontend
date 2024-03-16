@@ -2,13 +2,16 @@ export type ModuleMetaData = {
     moduleCode: string,
     title: string,
     description: string,
-    credits: number
+    credits: number,
+    semesters: string[],
+    faculty: string,
+    moduleType: string
 }
 
 export type FilterData = {
     query: string,
     faculty: string,
-    semester: string,
+    semester: string[],
     moduleType: string
 }
 
