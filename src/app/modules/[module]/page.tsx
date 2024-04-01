@@ -93,7 +93,7 @@ export default function Module({ params }: { params: { module: string } }) {
                 </div>
                 <div id="indexes" className="h-fit pb-16">
                     <h1>Available Indexes: </h1>
-                    <Schedule index={indexSchedule} />
+                    <Schedule />
                 </div>
                 <div id="reviews" className="h-screen">
                     This is review section
