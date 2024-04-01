@@ -21,7 +21,19 @@
             "Index": 1,
             "IndexGroup": 2,
             "DayOfWeek": "Wednesday",
-            "Remarks": ""
+            "Remarks": "",
+            "GroupID": "1"
+        },
+        {
+            "StartTime": "1430",
+            "EndTime": "1630",
+            "Venue": "TR11",
+            "ClassType": "TUT",
+            "Index": 1,
+            "IndexGroup": 2,
+            "DayOfWeek": "Wednesday",
+            "Remarks": "",
+            "GroupID": "2"
         },
         {
             "StartTime": "1030",
@@ -31,7 +43,8 @@
             "Index": 1,
             "IndexGroup": 2,
             "DayOfWeek": "Monday",
-            "Remarks": ""
+            "Remarks": "",
+            "GroupID": "1"
         },
         {
             "StartTime": "1230",
@@ -41,7 +54,8 @@
             "Index": 1,
             "IndexGroup": 2,
             "DayOfWeek": "Thursday",
-            "Remarks": ""
+            "Remarks": "",
+            "GroupID": "1"
         }
     ]
 }

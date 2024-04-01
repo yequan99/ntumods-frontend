@@ -9,6 +9,16 @@ import { ScheduleEvent } from "@/utils/types"
 
 export default function Schedule({index}:{index: ScheduleEvent[]}) {
 
+    const handleEventMouseEnter = (eventInfo: any) => {
+        eventInfo.el.style.backgroundColor = 'lightblue'
+        eventInfo.el.style.borderColor = 'lightblue'
+    }
+
+    const handleEventMouseLeave = (eventInfo: any) => {
+        eventInfo.el.style.backgroundColor = eventInfo.event.backgroundColor
+        eventInfo.el.style.borderColor = eventInfo.event.borderColor
+    }
+
     return (
         <FullCalendar
             plugins={[ timeGridPlugin, dayGridPlugin, interactionPlugin ]}
@@ -33,9 +43,12 @@ export default function Schedule({index}:{index: ScheduleEvent[]}) {
                     <div>
                         <div>{eventInfo.event.title}</div>
                         <div>{eventInfo.event.extendedProps.description}</div>
+                        <div>{eventInfo.event.groupId}</div>
                     </div>
                 )
             }}
+            eventMouseEnter={handleEventMouseEnter}
+            eventMouseLeave={handleEventMouseLeave}
         />
     )
 }

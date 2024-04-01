@@ -40,7 +40,8 @@ export type Schedule = {
     Index: number,
     IndexGroup: number,
     DayOfWeek: string,
-    Remarks: string
+    Remarks: string,
+    GroupID: string
 }
 
 export type ScheduleEvent = {
@@ -50,7 +51,8 @@ export type ScheduleEvent = {
     endTime: string,
     extendedProps: ScheduleExtendedProps,
     color: string,
-    textColor?: string
+    textColor?: string,
+    groupId: string
 }
 
 export type ScheduleExtendedProps = {

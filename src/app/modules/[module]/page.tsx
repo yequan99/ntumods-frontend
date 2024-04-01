@@ -60,6 +60,7 @@ export default function Module({ params }: { params: { module: string } }) {
                 },
                 color: indexColor[schedule.ClassType],
                 textColor: textColor[schedule.ClassType],
+                groupId: schedule.GroupID
             }
             newEventSchedule.push(newEvent)
         })
