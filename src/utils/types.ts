@@ -37,24 +37,21 @@ export type Schedule = {
     EndTime: string,
     Venue: string,
     ClassType: string,
-    Index: number,
-    IndexGroup: number,
+    Index: string,
+    IndexGroup: string,
     DayOfWeek: string,
     Remarks: string,
     GroupID: string
 }
 
 export type ScheduleEvent = {
-    title: string,
-    daysOfWeek: string[],
-    startTime: string,
-    endTime: string,
-    extendedProps: ScheduleExtendedProps,
-    color: string,
-    textColor?: string,
-    groupId: string
-}
-
-export type ScheduleExtendedProps = {
-    description: string
+    Index: string,
+    ClassType: string,
+    IndexGroup: string,
+    StartTime: string,
+    EndTime: string,
+    Venue: string,
+    DayOfWeek: string,
+    GridRow: string[],
+    BgColour: string
 }

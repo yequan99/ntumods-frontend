@@ -7,23 +7,17 @@ import { ModuleData,ScheduleEvent } from "@/utils/types"
 import Schedule from "./schedule"
 
 const daysMap: Record<string, string> = {
-    "Monday": "1",
-    "Tuesday": "2",
-    "Wednesday": "3",
-    "Thursday": "4",
-    "Friday": "5"
+    "MON": "1",
+    "TUE": "2",
+    "WED": "3",
+    "THU": "4",
+    "FRI": "5"
 }
 
-const indexColor: Record<string, string> = {
-    "LEC": "green",
+const bgColor: Record<string, string> = {
+    "LEC": "pink",
     "TUT": "blue",
-    "LAB": "yellow"
-}
-
-const textColor: Record<string, string> = {
-    "LEC": "white",
-    "TUT": "white",
-    "LAB": "black"
+    "LAB": "green"
 }
 
 export default function Module({ params }: { params: { module: string } }) {
@@ -51,32 +45,44 @@ export default function Module({ params }: { params: { module: string } }) {
         var newEventSchedule: ScheduleEvent[] = []
         eventData.Schedules.map((schedule) => {
             const newEvent: ScheduleEvent = {
-                title: schedule.ClassType,
-                daysOfWeek: [daysMap[schedule.DayOfWeek]],
-                startTime: convertTimeFormat(schedule.StartTime),
-                endTime: convertTimeFormat(schedule.EndTime),
-                extendedProps: {
-                    description: schedule.Venue
-                },
-                color: indexColor[schedule.ClassType],
-                textColor: textColor[schedule.ClassType],
-                groupId: schedule.GroupID
+                Index: schedule.Index,
+                ClassType: schedule.ClassType,
+                IndexGroup: schedule.IndexGroup,
+                StartTime: schedule.StartTime,
+                EndTime: schedule.EndTime,
+                Venue: schedule.Venue,
+                DayOfWeek: daysMap[schedule.DayOfWeek],
+                GridRow: calculateGridRow(schedule.StartTime, schedule.EndTime),
+                BgColour: bgColor[schedule.ClassType]
             }
             newEventSchedule.push(newEvent)
         })
         return newEventSchedule
     }
 
-    const convertTimeFormat = (inputTime: string) => {
-        const hours: string = inputTime.slice(0,2)
-        const minutes: string = inputTime.slice(2)
+    const calculateGridRow = (startTimeString: string, endTimeString: string) => {
+        var startTime = parseInt(startTimeString, 10)
+        var endTime = parseInt(endTimeString, 10)
+        const timetableStart: number = 800
+        var startGrid = (getNumOfIntervals(timetableStart, startTime) * 11) + 2
+        var span = getNumOfIntervals(startTime, endTime) * 11
 
-        return `${hours}:${minutes}:00`
+        return [startGrid.toString(), span.toString()]
+    }
+
+    const getNumOfIntervals = (startTime: number, endTime:number) => {
+        var start = Math.floor(startTime / 100) * 60 + (startTime % 100)
+        var end = Math.floor(endTime / 100) * 60 + (endTime % 100)
+
+        var diffInMinutes = Math.abs(end - start)
+        var numOfIntervals = Math.ceil(diffInMinutes / 30)
+
+        return numOfIntervals
     }
 
     return (
         <div className="w-full h-full flex flex-row">
-            <div className="w-[75%]">
+            <div className="w-[80%]">
                 <div id="details" className="h-fit pb-16">
                     <h1 className="font-bold text-4xl text-blue-800">
                         {moduleDetails?.Code}
@@ -93,13 +99,13 @@ export default function Module({ params }: { params: { module: string } }) {
                 </div>
                 <div id="indexes" className="h-fit pb-16">
                     <h1>Available Indexes: </h1>
-                    <Schedule index={indexSchedule} />
+                    <Schedule scheduleEvents={indexSchedule} />
                 </div>
                 <div id="reviews" className="h-screen">
                     This is review section
                 </div>
             </div>
-            <div className="fixed right-0 w-[25%]">
+            <div className="fixed right-0 w-[20%]">
                 <Anchor
                     targetOffset={112}
                     items={[
