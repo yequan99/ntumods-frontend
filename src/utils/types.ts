@@ -39,9 +39,7 @@ export type Schedule = {
     ClassType: string,
     Index: string,
     IndexGroup: string,
-    DayOfWeek: string,
-    Remarks: string,
-    GroupID: string
+    DayOfWeek: string
 }
 
 export type ScheduleEvent = {

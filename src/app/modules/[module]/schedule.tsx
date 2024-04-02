@@ -1,9 +1,9 @@
 'use client'
 
+import Event from "./event"
 import { ScheduleEvent } from "@/utils/types"
 
 export default function Schedule({scheduleEvents}: {scheduleEvents: ScheduleEvent[]}) {
-
     return (
         <div className="flex h-full flex-col">
             <div className="isolate flex flex-auto flex-col overflow-auto bg-white">
@@ -130,31 +130,7 @@ export default function Schedule({scheduleEvents}: {scheduleEvents: ScheduleEven
                             </div>
 
                             {/* Events */}
-                            {/* 0.5 hrs -> span 11
-                                1 hr -> span 22 */}
-                            {/* offset = gridrow 2
-                                0.5 hrs -> gridrow 11
-                                1 hr -> gridrow 11*/}
-                            <ol
-                                className="col-start-1 col-end-2 row-start-1 grid grid-cols-1 sm:grid-cols-5 sm:pr-8"
-                                style={{ gridTemplateRows: '1.75rem repeat(288, minmax(0, 1fr)) auto' }}
-                            >
-                                {scheduleEvents.map((eventSchedule,index) => (
-                                    <li key={index} className={`relative mt-px flex sm:col-start-${eventSchedule.DayOfWeek}`} style={{ gridRow: `${eventSchedule.GridRow[0]} / span ${eventSchedule.GridRow[1]}` }}>
-                                        <a
-                                            className={`group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-${eventSchedule.BgColour}-50 p-2 text-xs leading-5 hover:bg-${eventSchedule.BgColour}-100`}
-                                        >
-                                            <p className="order-1 text-gray-700">{eventSchedule.StartTime}-{eventSchedule.EndTime}</p>
-                                            <p className="order-2 text-gray-700">{eventSchedule.Venue}</p>
-                                            <div className="flex flex-row">
-                                                <p className="text-black font-semibold pr-2">{eventSchedule.Index}</p>
-                                                <p className={`text-${eventSchedule.BgColour}-500 font-semibold pr-2`}>{eventSchedule.ClassType}</p>
-                                                <p className="text-gray-500">({eventSchedule.IndexGroup})</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                ))}
-                            </ol>
+                            <Event scheduleEvents={scheduleEvents} />
                         </div>
                     </div>
                 </div>

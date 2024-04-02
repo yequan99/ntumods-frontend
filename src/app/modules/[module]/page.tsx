@@ -6,14 +6,6 @@ import { Anchor } from "antd"
 import { ModuleData,ScheduleEvent } from "@/utils/types"
 import Schedule from "./schedule"
 
-const daysMap: Record<string, string> = {
-    "MON": "1",
-    "TUE": "2",
-    "WED": "3",
-    "THU": "4",
-    "FRI": "5"
-}
-
 const bgColor: Record<string, string> = {
     "LEC": "pink",
     "TUT": "blue",
@@ -51,7 +43,7 @@ export default function Module({ params }: { params: { module: string } }) {
                 StartTime: schedule.StartTime,
                 EndTime: schedule.EndTime,
                 Venue: schedule.Venue,
-                DayOfWeek: daysMap[schedule.DayOfWeek],
+                DayOfWeek: schedule.DayOfWeek,
                 GridRow: calculateGridRow(schedule.StartTime, schedule.EndTime),
                 BgColour: bgColor[schedule.ClassType]
             }
@@ -59,6 +51,12 @@ export default function Module({ params }: { params: { module: string } }) {
         })
         return newEventSchedule
     }
+
+    // 0.5 hrs -> span 11
+    // 1 hr -> span 22 
+    // offset = gridrow 2
+    // 0.5 hrs -> gridrow 11
+    // 1 hr -> gridrow 11
 
     const calculateGridRow = (startTimeString: string, endTimeString: string) => {
         var startTime = parseInt(startTimeString, 10)

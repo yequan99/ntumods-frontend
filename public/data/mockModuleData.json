@@ -20,20 +20,16 @@
             "ClassType": "TUT",
             "Index": "10421",
             "IndexGroup": "SCL2",
-            "DayOfWeek": "MON",
-            "Remarks": "",
-            "GroupID": "1"
+            "DayOfWeek": "MON"
         },
         {
             "StartTime": "0830",
-            "EndTime": "1000",
+            "EndTime": "1030",
             "Venue": "Hardware Project Lab 2",
             "ClassType": "LAB",
             "Index": "10371",
             "IndexGroup": "SCL2",
-            "DayOfWeek": "WED",
-            "Remarks": "",
-            "GroupID": "2"
+            "DayOfWeek": "WED"
         },
         {
             "StartTime": "0930",
@@ -42,9 +38,25 @@
             "ClassType": "LEC",
             "Index": "COMMON",
             "IndexGroup": "SCL2",
-            "DayOfWeek": "FRI",
-            "Remarks": "",
-            "GroupID": "1"
+            "DayOfWeek": "FRI"
+        },
+        {
+            "StartTime": "1030",
+            "EndTime": "1230",
+            "Venue": "Software Project Lab 2",
+            "ClassType": "LAB",
+            "Index": "10421",
+            "IndexGroup": "SCL2",
+            "DayOfWeek": "THU"
+        },
+        {
+            "StartTime": "1000",
+            "EndTime": "1100",
+            "Venue": "TR+27",
+            "ClassType": "TUT",
+            "Index": "10371",
+            "IndexGroup": "SCL2",
+            "DayOfWeek": "TUE"
         }
     ]
 }
