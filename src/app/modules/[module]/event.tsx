@@ -17,11 +17,11 @@ export default function Event({scheduleEvents}: {scheduleEvents: ScheduleEvent[]
     }
 
     const dayColumn: Record<string, string> = {
-        "MON": "col-start-1",
-        "TUE": "col-start-2",
-        "WED": "col-start-3",
-        "THU": "col-start-4",
-        "FRI": "col-start-5"
+        "MON": "col-start-1 col-end-2",
+        "TUE": "col-start-2 col-end-3",
+        "WED": "col-start-3 col-end-4",
+        "THU": "col-start-4 col-end-5",
+        "FRI": "col-start-5 col-end-6"
     }
 
     const neutralColour: Record<string, string> = {
