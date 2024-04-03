@@ -53,3 +53,16 @@ export type ScheduleEvent = {
     GridRow: string[],
     BgColour: string
 }
+
+export type ParsedScheduleEvent = {
+    Index: string,
+    ClassType: string,
+    IndexGroup: string,
+    StartTime: string,
+    EndTime: string,
+    Venue: string,
+    DayOfWeek: string,
+    GridRow: string[],
+    BgColour: string,
+    OtherIndexes: string[]
+}

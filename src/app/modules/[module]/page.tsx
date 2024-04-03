@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Anchor } from "antd"
 
-import { ModuleData,ScheduleEvent } from "@/utils/types"
+import { ModuleData,ScheduleEvent,ParsedScheduleEvent } from "@/utils/types"
 import Schedule from "./schedule"
 
 const bgColor: Record<string, string> = {
@@ -14,7 +14,7 @@ const bgColor: Record<string, string> = {
 
 export default function Module({ params }: { params: { module: string } }) {
     const [moduleDetails, setModuleDetails] = useState<ModuleData | null>(null)
-    const [indexSchedule, setIndexSchedule] = useState<ScheduleEvent[]>([])
+    const [indexSchedule, setIndexSchedule] = useState<ParsedScheduleEvent[]>([])
 
     useEffect(() => {
         // make API call to fetch module detail using modulecode
@@ -24,7 +24,7 @@ export default function Module({ params }: { params: { module: string } }) {
                 const data: ModuleData = await response.json()
 
                 setModuleDetails(data)
-                const parsedIndex: ScheduleEvent[] = ParseEventSchedule(data)
+                const parsedIndex: ParsedScheduleEvent[] = ParseEventSchedule(data)
                 setIndexSchedule(parsedIndex)
             } catch (error) {
                 console.log('Error fetching module data:', error)
@@ -34,7 +34,9 @@ export default function Module({ params }: { params: { module: string } }) {
     }, [])
 
     const ParseEventSchedule = (eventData: ModuleData) => {
+        var parsedEventSchedule: ParsedScheduleEvent[] = []
         var newEventSchedule: ScheduleEvent[] = []
+        var eventMap: Record<string, string[]> = {}
         eventData.Schedules.map((schedule) => {
             const newEvent: ScheduleEvent = {
                 Index: schedule.Index,
@@ -47,9 +49,23 @@ export default function Module({ params }: { params: { module: string } }) {
                 GridRow: calculateGridRow(schedule.StartTime, schedule.EndTime),
                 BgColour: bgColor[schedule.ClassType]
             }
+            const key: string = `${newEvent.DayOfWeek}-${newEvent.StartTime}-${newEvent.EndTime}`
+            if (eventMap[key]) {
+                eventMap[key].push(newEvent.Index)
+            } else {
+                eventMap[key] = [newEvent.Index]
+            }
             newEventSchedule.push(newEvent)
         })
-        return newEventSchedule
+        newEventSchedule.map((eventSchedule) => {
+            const parsedEvent: ParsedScheduleEvent = {
+                ...eventSchedule,
+                OtherIndexes: eventMap[`${eventSchedule.DayOfWeek}-${eventSchedule.StartTime}-${eventSchedule.EndTime}`]
+            }
+            parsedEventSchedule.push(parsedEvent)
+        })
+        
+        return parsedEventSchedule
     }
 
     // 0.5 hrs -> span 11
