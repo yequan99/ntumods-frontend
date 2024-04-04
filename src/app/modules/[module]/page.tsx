@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react"
 import { Anchor } from "antd"
 
-import { ModuleData,ScheduleEvent,ParsedScheduleEvent } from "@/utils/types"
+import { ModuleData,ScheduleEvent,ParsedScheduleEvent, ThreadReviewData } from "@/utils/types"
 import Schedule from "./schedule"
+import Reviews from "./reviews"
 
 const bgColor: Record<string, string> = {
     "LEC": "pink",
@@ -15,10 +16,11 @@ const bgColor: Record<string, string> = {
 export default function Module({ params }: { params: { module: string } }) {
     const [moduleDetails, setModuleDetails] = useState<ModuleData | null>(null)
     const [indexSchedule, setIndexSchedule] = useState<ParsedScheduleEvent[]>([])
+    const [reviews, setReviews] = useState<ThreadReviewData[]>([])
 
     useEffect(() => {
         // make API call to fetch module detail using modulecode
-        const fetchData = async () => {
+        const fetchModuleData = async () => {
             try {
                 const response = await fetch('/data/mockModuleData.json')
                 const data: ModuleData = await response.json()
@@ -30,7 +32,20 @@ export default function Module({ params }: { params: { module: string } }) {
                 console.log('Error fetching module data:', error)
             }
         }
-        fetchData()
+
+        // make API call to fetch reviews data using modulecode
+        const fetchReviewData = async () => {
+            try {
+                const response = await fetch('/data/mockReviewData.json')
+                const data: ThreadReviewData[] = await response.json()
+
+                setReviews(data)
+            } catch (error) {
+                console.log('Error fetching review data')
+            }
+        }
+        fetchModuleData()
+        fetchReviewData()
     }, [])
 
     const ParseEventSchedule = (eventData: ModuleData) => {
@@ -112,11 +127,11 @@ export default function Module({ params }: { params: { module: string } }) {
                     <p className="pt-4">{moduleDetails?.Description}</p>
                 </div>
                 <div id="indexes" className="h-fit pb-16">
-                    <h1>Available Indexes: </h1>
+                    <h1 className="font-bold text-slate-500 text-2xl">Available Indexes: </h1>
                     <Schedule scheduleEvents={indexSchedule} />
                 </div>
                 <div id="reviews" className="h-screen">
-                    This is review section
+                    <Reviews reviews={reviews} />
                 </div>
             </div>
             <div className="fixed right-0 w-[20%]">

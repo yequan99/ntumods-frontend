@@ -66,3 +66,17 @@ export type ParsedScheduleEvent = {
     BgColour: string,
     OtherIndexes: string[]
 }
+
+export interface ReviewData {
+    Author: string,
+    Comment: string,
+    Upvotes: number,
+    Downvotes: number,
+    Date: number
+}
+
+export type SubThreadReviewData = ReviewData
+
+export interface ThreadReviewData extends ReviewData {
+    SubThreads?: SubThreadReviewData[]
+}

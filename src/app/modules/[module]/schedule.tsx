@@ -1,9 +1,9 @@
 'use client'
 
 import Event from "./event"
-import { ScheduleEvent } from "@/utils/types"
+import { ParsedScheduleEvent } from "@/utils/types"
 
-export default function Schedule({scheduleEvents}: {scheduleEvents: ScheduleEvent[]}) {
+export default function Schedule({scheduleEvents}: {scheduleEvents: ParsedScheduleEvent[]}) {
     return (
         <div className="flex h-full flex-col">
             <div className="isolate flex flex-auto flex-col overflow-auto bg-white">

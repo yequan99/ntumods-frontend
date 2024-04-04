@@ -1,0 +1,48 @@
+[
+    {
+        "Author": "Xin Wei",
+        "Comment": "I love this mod so much! I managed to learn MapReduce!",
+        "Upvotes": 88,
+        "Downvotes": 0,
+        "Date": 1712210979,
+        "SubThreads": [
+            {
+                "Author": "Jun Wei",
+                "Comment": "I agree with you! The prof is so nice and patient!",
+                "Upvotes": 125,
+                "Downvotes": 0,
+                "Date": 1712221001
+            },
+            {
+                "Author": "Prof Tan Chee Wei",
+                "Comment": "OMG I didnt expect my mod to be such a success. I love my students!",
+                "Upvotes": 266,
+                "Downvotes": 0,
+                "Date": 1712221015
+            }
+        ]
+    },
+    {
+        "Author": "Ye Quan",
+        "Comment": "This mod sucks. How is Dropbox a PaaS. Prof rly amazes me at how stupid he is",
+        "Upvotes": 0,
+        "Downvotes": 1231234,
+        "Date": 1712221035,
+        "SubThreads": [
+            {
+                "Author": "Xin Wei",
+                "Comment": "Boooo you just dont know your shit. Go away",
+                "Upvotes": 132,
+                "Downvotes": 0,
+                "Date": 1712221046
+            },
+            {
+                "Author": "Prof Tan Chee Wei",
+                "Comment": "If you dont like my class, i can drop you out. Your choice.",
+                "Upvotes": 123,
+                "Downvotes": 0,
+                "Date": 1712221058
+            }
+        ]
+    }
+]
