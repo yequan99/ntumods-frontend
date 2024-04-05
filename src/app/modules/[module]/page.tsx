@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Anchor } from "antd"
 
-import { ModuleData,ScheduleEvent,ParsedScheduleEvent, ThreadReviewData } from "@/utils/types"
+import { ModuleData, ScheduleEvent, ParsedScheduleEvent, ThreadReviewData } from "@/utils/types"
 import Schedule from "@/components/schedule"
 import Reviews from "./reviews"
 
@@ -15,8 +15,11 @@ const bgColor: Record<string, string> = {
 
 export default function Module({ params }: { params: { module: string } }) {
     const [moduleDetails, setModuleDetails] = useState<ModuleData | null>(null)
-    const [indexSchedule, setIndexSchedule] = useState<ParsedScheduleEvent[]>([])
+    const [selectedIndexSchedule, setSelectedIndexSchedule] = useState<ScheduleEvent[]>([])
+    const [indexMap, setIndexMap] = useState<Record<string, ScheduleEvent[]>>({})
     const [reviews, setReviews] = useState<ThreadReviewData[]>([])
+    const [indexList, setIndexList] = useState<string[]>([])
+    const [selectedIndex, setSelectedIndex] = useState<string>("")
 
     useEffect(() => {
         // make API call to fetch module detail using modulecode
@@ -26,8 +29,8 @@ export default function Module({ params }: { params: { module: string } }) {
                 const data: ModuleData = await response.json()
 
                 setModuleDetails(data)
-                const parsedIndex: ParsedScheduleEvent[] = ParseEventSchedule(data)
-                setIndexSchedule(parsedIndex)
+                const parsedEvent: ScheduleEvent[] = ParseEventSchedule(data)
+                setSelectedIndexSchedule(parsedEvent)
             } catch (error) {
                 console.log('Error fetching module data:', error)
             }
@@ -48,11 +51,10 @@ export default function Module({ params }: { params: { module: string } }) {
         fetchReviewData()
     }, [])
 
-    const ParseEventSchedule = (eventData: ModuleData) => {
-        var parsedEventSchedule: ParsedScheduleEvent[] = []
-        var newEventSchedule: ScheduleEvent[] = []
-        var eventMap: Record<string, string[]> = {}
-        eventData.Schedules.map((schedule) => {
+    const ParseEventSchedule = (moduleIndexes: ModuleData) => {
+        var listOfIndex: string[] = []
+        var tempIndexMap: Record<string, ScheduleEvent[]> = {}
+        moduleIndexes.Schedules.map((schedule) => {
             const newEvent: ScheduleEvent = {
                 Index: schedule.Index,
                 ClassType: schedule.ClassType,
@@ -65,23 +67,18 @@ export default function Module({ params }: { params: { module: string } }) {
                 GridRow: calculateGridRow(schedule.StartTime, schedule.EndTime),
                 BgColour: bgColor[schedule.ClassType]
             }
-            const key: string = `${newEvent.DayOfWeek}-${newEvent.StartTime}-${newEvent.EndTime}`
-            if (eventMap[key]) {
-                eventMap[key].push(newEvent.Index)
+            if (tempIndexMap[newEvent.Index]) {
+                tempIndexMap[newEvent.Index].push(newEvent)
             } else {
-                eventMap[key] = [newEvent.Index]
+                tempIndexMap[newEvent.Index] = [newEvent]
+                listOfIndex.push(newEvent.Index)
             }
-            newEventSchedule.push(newEvent)
         })
-        newEventSchedule.map((eventSchedule) => {
-            const parsedEvent: ParsedScheduleEvent = {
-                ...eventSchedule,
-                OtherIndexes: eventMap[`${eventSchedule.DayOfWeek}-${eventSchedule.StartTime}-${eventSchedule.EndTime}`]
-            }
-            parsedEventSchedule.push(parsedEvent)
-        })
-        
-        return parsedEventSchedule
+        const sortedListOfIndex: string[] = listOfIndex.sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+        setIndexList(sortedListOfIndex)
+        setSelectedIndex(sortedListOfIndex[0])
+        setIndexMap(tempIndexMap)
+        return tempIndexMap[sortedListOfIndex[0]]
     }
 
     // 0.5 hrs -> span 11
@@ -110,6 +107,11 @@ export default function Module({ params }: { params: { module: string } }) {
         return numOfIntervals
     }
 
+    const handleSelectIndex = (newIndex: string) => {
+        setSelectedIndex(newIndex)
+        setSelectedIndexSchedule(indexMap[newIndex])
+    }
+
     return (
         <div className="w-full h-full flex flex-row">
             <div className="w-[80%]">
@@ -127,9 +129,22 @@ export default function Module({ params }: { params: { module: string } }) {
                     </div>
                     <p className="pt-4">{moduleDetails?.Description}</p>
                 </div>
-                <div id="indexes" className="h-[48rem] pb-16">
+                <div id="indexes" className="pb-16">
                     <h1 className="font-bold text-slate-500 text-2xl">Available Indexes: </h1>
-                    <Schedule events={indexSchedule} />
+                    <div className="pt-2 flex flex-row">
+                        {indexList.map((indexNum, index) => (
+                            <h1 
+                                key={index} 
+                                className={`p-2 rounded-md mr-2 hover:cursor-pointer ${selectedIndex === indexNum ? "bg-blue-800 text-white border-2 border-blue-800" : "border-2"}`}
+                                onClick={() => {handleSelectIndex(indexNum)}}
+                            >
+                                {indexNum}
+                            </h1>
+                        ))}
+                    </div>
+                    <div className="h-[48rem]">
+                        <Schedule events={selectedIndexSchedule} />
+                    </div>
                 </div>
                 <div id="reviews" className="h-screen">
                     <Reviews reviews={reviews} />

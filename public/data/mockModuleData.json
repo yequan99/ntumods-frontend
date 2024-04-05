@@ -27,7 +27,25 @@
             "EndTime": "1030",
             "Venue": "LT27A",
             "ClassType": "LEC",
-            "Index": "COMMON",
+            "Index": "10371",
+            "IndexGroup": "SCL2",
+            "DayOfWeek": "FRI"
+        },
+        {
+            "StartTime": "0930",
+            "EndTime": "1030",
+            "Venue": "LT27A",
+            "ClassType": "LEC",
+            "Index": "10421",
+            "IndexGroup": "SCL2",
+            "DayOfWeek": "FRI"
+        },
+        {
+            "StartTime": "0930",
+            "EndTime": "1030",
+            "Venue": "LT27A",
+            "ClassType": "LEC",
+            "Index": "10212",
             "IndexGroup": "SCL2",
             "DayOfWeek": "FRI"
         },

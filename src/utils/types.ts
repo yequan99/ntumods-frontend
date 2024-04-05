@@ -46,10 +46,10 @@ export type ModuleData = {
     // Faculty: FacultyData,
     // NotOfferedAsBDE: boolean,
     // Exam: ExamData,
-    Schedules: Schedule[]
+    Schedules: ScheduleData[]
 }
 
-export type Schedule = {
+export type ScheduleData = {
     StartTime: string,
     EndTime: string,
     Venue: string,
