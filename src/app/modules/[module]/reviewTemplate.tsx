@@ -1,6 +1,8 @@
 'use client'
 
 import moment from 'moment'
+import Avatar from 'react-avatar'
+// import { Divider } from 'antd'
 
 import { ThreadReviewData } from "@/utils/types"
 import { upvote, downvote } from '@/utils/icons'
@@ -15,11 +17,12 @@ export default function ReviewTemplate({isMainThread, mainThreadReviews}: {isMai
     return (
         <div className={`w-full h-full ${isMainThread ? "" : "pt-4"}`}>
             {mainThreadReviews?.map((mainThread,index) => (
-                <div key={index} className="pb-6 pt-2 w-full flex flex-row">
+                <div key={index} className="pb-6 pt-2 w-full h-fit flex flex-row">
                     <div className="w-[5%]">
-                        {mainThread.Author}
+                        <Avatar name={mainThread.Author} size="43" round="10px" />
+                        {/* <Divider type="vertical"  /> */}
                     </div>
-                    <div className="w-[95%]">
+                    <div className="w-[95%] pl-2 h-full">
                         <p className="text-blue-800 font-medium text-xl">{mainThread.Author}</p>
                         <p className="text-slate-500 text-sm italic pb-4">{getDateDiff(new Date(mainThread.Date * 1000))}</p>
                         <p className="pb-2">{mainThread.Comment}</p>

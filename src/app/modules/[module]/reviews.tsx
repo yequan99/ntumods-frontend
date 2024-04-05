@@ -1,9 +1,7 @@
 'use client'
 
-import moment from 'moment'
 import ReviewTemplate from './reviewTemplate'
 import { ThreadReviewData } from "@/utils/types"
-import { upvote, downvote } from '@/utils/icons'
 
 export default function Reviews({reviews}: {reviews: ThreadReviewData[]}) {
 
