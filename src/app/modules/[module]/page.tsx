@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Anchor } from "antd"
 
 import { ModuleData,ScheduleEvent,ParsedScheduleEvent, ThreadReviewData } from "@/utils/types"
-import Schedule from "./schedule"
+import Schedule from "@/components/schedule"
 import Reviews from "./reviews"
 
 const bgColor: Record<string, string> = {
@@ -61,6 +61,7 @@ export default function Module({ params }: { params: { module: string } }) {
                 EndTime: schedule.EndTime,
                 Venue: schedule.Venue,
                 DayOfWeek: schedule.DayOfWeek,
+                Remarks: schedule.Remarks,
                 GridRow: calculateGridRow(schedule.StartTime, schedule.EndTime),
                 BgColour: bgColor[schedule.ClassType]
             }
@@ -126,9 +127,9 @@ export default function Module({ params }: { params: { module: string } }) {
                     </div>
                     <p className="pt-4">{moduleDetails?.Description}</p>
                 </div>
-                <div id="indexes" className="h-fit pb-16">
+                <div id="indexes" className="h-[48rem] pb-16">
                     <h1 className="font-bold text-slate-500 text-2xl">Available Indexes: </h1>
-                    <Schedule scheduleEvents={indexSchedule} />
+                    <Schedule events={indexSchedule} />
                 </div>
                 <div id="reviews" className="h-screen">
                     <Reviews reviews={reviews} />

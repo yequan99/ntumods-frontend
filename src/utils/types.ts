@@ -15,6 +15,20 @@ export type FilterData = {
     moduleType: string
 }
 
+export type FacultyData = {
+    Faculty: string,
+    FacultyCode: string
+}
+
+export type ExamData = {
+    Date: string,
+    DayOfWeek: string,
+    Time: string,
+    Code: string,
+    Title: string,
+    Duration: string
+}
+
 export type ModuleData = {
     Code: string,
     Title: string,
@@ -29,6 +43,9 @@ export type ModuleData = {
     NotAvailableAsUE: string,
     NotAvailableAsPE: string,
     Description: string,
+    // Faculty: FacultyData,
+    // NotOfferedAsBDE: boolean,
+    // Exam: ExamData,
     Schedules: Schedule[]
 }
 
@@ -39,7 +56,8 @@ export type Schedule = {
     ClassType: string,
     Index: string,
     IndexGroup: string,
-    DayOfWeek: string
+    DayOfWeek: string,
+    Remarks: string
 }
 
 export type ScheduleEvent = {
@@ -50,6 +68,7 @@ export type ScheduleEvent = {
     EndTime: string,
     Venue: string,
     DayOfWeek: string,
+    Remarks: string,
     GridRow: string[],
     BgColour: string
 }
