@@ -17,46 +17,49 @@ export type FilterData = {
 
 export type FacultyData = {
     Faculty: string,
-    FacultyCode: string
+    Code: string
 }
 
 export type ExamData = {
-    Date: string,
-    DayOfWeek: string,
-    Time: string,
-    Code: string,
-    Title: string,
-    Duration: string
+    date: string,
+    dayOfWeek: string,
+    time: string,
+    code: string,
+    title: string,
+    duration: string
 }
 
 export type ModuleData = {
-    Code: string,
-    Title: string,
-    AU: string,
-    Course: string,         // need to cnfm
-    Faculty: string,        // need to cnfm
-    Prerequisite: string,
-    MutuallyExclusive: string,
-    NotAvailableTo: string,
-    NotAvailableToProgWith: string,
-    GradeType: string,
-    NotAvailableAsUE: string,
-    NotAvailableAsPE: string,
-    Description: string,
-    // Faculty: FacultyData,
-    // NotOfferedAsBDE: boolean,
-    // Exam: ExamData,
-    Schedules: ScheduleData[]
+    code: string,
+    title: string,
+    au: string,
+    prerequisite: string,
+    mutually_exclusive: string,
+    not_available_to: string,
+    not_available_to_prog_with: string,
+    grade_type: string,
+    not_available_as_ue: string,
+    not_available_as_pe: string,
+    description: string,
+    faculty: FacultyData,
+    notOfferedAsBDE: boolean,
+    exam: ExamData,
+    schedule: ScheduleData[]
 }
 
 export type ScheduleData = {
-    StartTime: string,
-    EndTime: string,
+    startTime: string,
+    endTime: string,
+    venue: string,
+    classType: string,
+    index: string,
+    indexGroup: string,
+    dayOfWeek: string,
+    remarks: string
+}
+
+export type RemarksData = {
     Venue: string,
-    ClassType: string,
-    Index: string,
-    IndexGroup: string,
-    DayOfWeek: string,
     Remarks: string
 }
 
@@ -66,24 +69,10 @@ export type ScheduleEvent = {
     IndexGroup: string,
     StartTime: string,
     EndTime: string,
-    Venue: string,
+    Remarks: RemarksData[],
     DayOfWeek: string,
-    Remarks: string,
     GridRow: string[],
     BgColour: string
-}
-
-export type ParsedScheduleEvent = {
-    Index: string,
-    ClassType: string,
-    IndexGroup: string,
-    StartTime: string,
-    EndTime: string,
-    Venue: string,
-    DayOfWeek: string,
-    GridRow: string[],
-    BgColour: string,
-    OtherIndexes: string[]
 }
 
 export interface ReviewData {

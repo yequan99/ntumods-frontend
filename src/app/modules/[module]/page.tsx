@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react"
 import { Anchor } from "antd"
 
-import { ModuleData, ScheduleEvent, ParsedScheduleEvent, ThreadReviewData } from "@/utils/types"
+import { ModuleData, ScheduleEvent, ThreadReviewData } from "@/utils/types"
 import Schedule from "@/components/schedule"
 import Reviews from "./reviews"
 
 const bgColor: Record<string, string> = {
-    "LEC": "pink",
+    "LEC/STUDIO": "pink",
     "TUT": "blue",
     "LAB": "green"
 }
@@ -25,7 +25,8 @@ export default function Module({ params }: { params: { module: string } }) {
         // make API call to fetch module detail using modulecode
         const fetchModuleData = async () => {
             try {
-                const response = await fetch('/data/mockModuleData.json')
+                // const response = await fetch('/data/mockModuleData.json')
+                const response = await fetch('/data/mockfakeData.json')
                 const data: ModuleData = await response.json()
 
                 setModuleDetails(data)
@@ -54,21 +55,29 @@ export default function Module({ params }: { params: { module: string } }) {
     const ParseEventSchedule = (moduleIndexes: ModuleData) => {
         var listOfIndex: string[] = []
         var tempIndexMap: Record<string, ScheduleEvent[]> = {}
-        moduleIndexes.Schedules.map((schedule) => {
+        moduleIndexes.schedule.map((event) => {
             const newEvent: ScheduleEvent = {
-                Index: schedule.Index,
-                ClassType: schedule.ClassType,
-                IndexGroup: schedule.IndexGroup,
-                StartTime: schedule.StartTime,
-                EndTime: schedule.EndTime,
-                Venue: schedule.Venue,
-                DayOfWeek: schedule.DayOfWeek,
-                Remarks: schedule.Remarks,
-                GridRow: calculateGridRow(schedule.StartTime, schedule.EndTime),
-                BgColour: bgColor[schedule.ClassType]
+                Index: event.index,
+                ClassType: event.classType,
+                IndexGroup: event.indexGroup,
+                StartTime: event.startTime,
+                EndTime: event.endTime,
+                Remarks: [{ Venue: event.venue, Remarks: event.remarks.replace("Teaching ", "") }],
+                DayOfWeek: event.dayOfWeek,
+                GridRow: calculateGridRow(event.startTime, event.endTime),
+                BgColour: bgColor[event.classType]
             }
             if (tempIndexMap[newEvent.Index]) {
-                tempIndexMap[newEvent.Index].push(newEvent)
+                let found: boolean = false
+                for (let i = 0; i < tempIndexMap[newEvent.Index].length; i++) {
+                    if (tempIndexMap[newEvent.Index][i].ClassType === newEvent.ClassType && tempIndexMap[newEvent.Index][i].DayOfWeek === newEvent.DayOfWeek && tempIndexMap[newEvent.Index][i].StartTime === newEvent.StartTime && tempIndexMap[newEvent.Index][i].EndTime === newEvent.EndTime) {
+                        tempIndexMap[newEvent.Index][i].Remarks.push(...newEvent.Remarks)
+                        found = true
+                    }
+                }
+                if (!found) {
+                    tempIndexMap[newEvent.Index].push(newEvent)
+                }
             } else {
                 tempIndexMap[newEvent.Index] = [newEvent]
                 listOfIndex.push(newEvent.Index)
@@ -91,7 +100,8 @@ export default function Module({ params }: { params: { module: string } }) {
         var startTime = parseInt(startTimeString, 10)
         var endTime = parseInt(endTimeString, 10)
         const timetableStart: number = 800
-        var startGrid = (getNumOfIntervals(timetableStart, startTime) * 11) + 2
+        const startGridInterval: number = getNumOfIntervals(timetableStart, startTime)
+        var startGrid = (startGridInterval * 11) + 2 + Math.floor(startGridInterval / 8)
         var span = getNumOfIntervals(startTime, endTime) * 11
 
         return [startGrid.toString(), span.toString()]
@@ -112,22 +122,23 @@ export default function Module({ params }: { params: { module: string } }) {
         setSelectedIndexSchedule(indexMap[newIndex])
     }
 
+    console.log(selectedIndexSchedule)
+
     return (
         <div className="w-full h-full flex flex-row">
             <div className="w-[80%]">
                 <div id="details" className="h-fit pb-16">
                     <h1 className="font-bold text-4xl text-blue-800">
-                        {moduleDetails?.Code}
+                        {moduleDetails?.code}
                     </h1>
                     <h1 className="text-slate-500 font-bold text-3xl pt-2">
-                        {moduleDetails?.Title}
+                        {moduleDetails?.title}
                     </h1>
                     <div className="flex flex-row mt-4 divide-x divide-slate-400 text-slate-800">
-                        <h1 className="pr-2">{moduleDetails?.Course}</h1>
-                        <h1 className="px-2">{moduleDetails?.Faculty}</h1>
-                        <h1 className="pl-2">{moduleDetails?.AU} AU</h1>
+                        <h1 className="pr-2">{moduleDetails?.faculty.Faculty} ({moduleDetails?.faculty.Code})</h1>
+                        <h1 className="pl-2">{moduleDetails?.au} AU</h1>
                     </div>
-                    <p className="pt-4">{moduleDetails?.Description}</p>
+                    <p className="pt-4">{moduleDetails?.description}</p>
                 </div>
                 <div id="indexes" className="pb-16">
                     <h1 className="font-bold text-slate-500 text-2xl">Available Indexes: </h1>
