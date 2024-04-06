@@ -28,15 +28,12 @@ export default function Event({scheduleEvents}: {scheduleEvents: ScheduleEvent[]
                         <p className="order-1 text-gray-700">{eventSchedule.StartTime}-{eventSchedule.EndTime}</p>
                         {eventSchedule.Remarks.map((remark,index) => (
                             <div key={index} className={`order-${index + 1}`}>
-                                <p className="text-gray-700">{remark.Venue} ({remark.Remarks})</p>
+                                <p className="text-gray-700">
+                                    {remark.Venue} {remark.Remarks !== "" ? `(${remark.Remarks})` : ""}
+                                </p>
                             </div>
                         ))}
-                        {/* <p className="order-2 text-gray-700">{eventSchedule.Venue}</p>
-                        <p className="order-3 text-gray-700">{eventSchedule.Remarks}</p> */}
                         <div className="flex flex-row">
-                            {/* <p className="text-black font-semibold pr-2">
-                                {eventSchedule.Index}
-                            </p> */}
                             <p className={`text-${eventSchedule.BgColour}-500 font-semibold pr-2`}>{eventSchedule.ClassType}</p>
                             <p className="text-gray-500">({eventSchedule.IndexGroup})</p>
                         </div>
@@ -58,5 +55,6 @@ const dayColumn: Record<string, string> = {
 const neutralColour: Record<string, string> = {
     "blue": "bg-blue-100",
     "pink": "bg-pink-100",
-    "green": "bg-green-100"
+    "green": "bg-green-100",
+    "yellow": "bg-yellow-100"
 }

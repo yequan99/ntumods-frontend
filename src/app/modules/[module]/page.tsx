@@ -10,7 +10,8 @@ import Reviews from "./reviews"
 const bgColor: Record<string, string> = {
     "LEC/STUDIO": "pink",
     "TUT": "blue",
-    "LAB": "green"
+    "LAB": "green",
+    "SEM": "yellow"
 }
 
 export default function Module({ params }: { params: { module: string } }) {
@@ -101,7 +102,7 @@ export default function Module({ params }: { params: { module: string } }) {
         var endTime = parseInt(endTimeString, 10)
         const timetableStart: number = 800
         const startGridInterval: number = getNumOfIntervals(timetableStart, startTime)
-        var startGrid = (startGridInterval * 11) + 2 + Math.floor(startGridInterval / 8)
+        var startGrid = (startGridInterval * 11) + 2 + (startGridInterval > 8 ? 1 : 0)
         var span = getNumOfIntervals(startTime, endTime) * 11
 
         return [startGrid.toString(), span.toString()]
@@ -162,11 +163,11 @@ export default function Module({ params }: { params: { module: string } }) {
                 </div>
                 <div id="indexes" className="pb-16">
                     <h1 className="font-bold text-slate-500 text-2xl">Available Indexes: </h1>
-                    <div className="pt-2 flex flex-row">
+                    <div className="pt-2 pb-4 flex flex-row flex-wrap">
                         {indexList.map((indexNum, index) => (
                             <h1 
                                 key={index} 
-                                className={`p-2 rounded-md mr-2 hover:cursor-pointer ${selectedIndex === indexNum ? "bg-blue-800 text-white border-2 border-blue-800" : "border-2"}`}
+                                className={`p-2 rounded-md mr-2 mt-2 w-30 hover:cursor-pointer ${selectedIndex === indexNum ? "bg-blue-800 text-white border-2 border-blue-800" : "border-2"}`}
                                 onClick={() => {handleSelectIndex(indexNum)}}
                             >
                                 {indexNum}
