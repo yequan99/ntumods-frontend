@@ -25,8 +25,8 @@ export default function Module({ params }: { params: { module: string } }) {
         // make API call to fetch module detail using modulecode
         const fetchModuleData = async () => {
             try {
-                // const response = await fetch('/data/mockModuleData.json')
-                const response = await fetch('/data/mockfakeData.json')
+                // const response = await fetch('/data/mockfakeData.json')
+                const response = await fetch(`/data/fullData/moduleData/${params.module}.json`)
                 const data: ModuleData = await response.json()
 
                 setModuleDetails(data)
