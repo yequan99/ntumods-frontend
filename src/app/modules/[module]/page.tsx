@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Anchor } from "antd"
 
-import { ModuleData, ScheduleEvent, ThreadReviewData } from "@/utils/types"
+import { ModuleData, ScheduleEvent, ThreadReviewData, ModuleInfo } from "@/utils/types"
 import Schedule from "@/components/schedule"
 import Reviews from "./reviews"
 
@@ -122,7 +122,17 @@ export default function Module({ params }: { params: { module: string } }) {
         setSelectedIndexSchedule(indexMap[newIndex])
     }
 
-    console.log(selectedIndexSchedule)
+    const moduleInfo: ModuleInfo[] = [
+        {title: "Exam", data: moduleDetails?.exam.date === "" ? "" : `${moduleDetails?.exam.date} (${moduleDetails?.exam.dayOfWeek}), ${moduleDetails?.exam.time} (${moduleDetails?.exam.duration})`},
+        {title: "Pre-requisite(s)", data: moduleDetails?.prerequisite},
+        {title: "Mutually Exclusive", data: moduleDetails?.mutually_exclusive},
+        {title: "Not Available To", data: moduleDetails?.not_available_to},
+        {title: "Not Available To All Programme With", data: moduleDetails?.not_available_to_prog_with},
+        {title: "Grade Type", data: moduleDetails?.grade_type},
+        {title: "Not Available As UE", data: moduleDetails?.not_available_as_ue},
+        {title: "Not Available As PE", data: moduleDetails?.not_available_as_pe},
+        {title: "Not Offered As BDE", data: moduleDetails?.notOfferedAsBDE ? "Yes" : ""}
+    ]
 
     return (
         <div className="w-full h-full flex flex-row">
@@ -139,6 +149,16 @@ export default function Module({ params }: { params: { module: string } }) {
                         <h1 className="pl-2">{moduleDetails?.au} AU</h1>
                     </div>
                     <p className="pt-4">{moduleDetails?.description}</p>
+                    <table className="table-auto mt-8 border-collapse border border-gray-200">
+                        <tbody>
+                            {moduleInfo.map((detail,index) => (
+                                <tr key={index}>
+                                    <td className="border border-gray-400 px-4 py-2">{detail.title}</td>
+                                    <td className="border border-gray-400 px-4 py-2">{detail.data === "" ? "N/A" : detail.data}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
                 <div id="indexes" className="pb-16">
                     <h1 className="font-bold text-slate-500 text-2xl">Available Indexes: </h1>

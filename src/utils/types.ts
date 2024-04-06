@@ -47,6 +47,11 @@ export type ModuleData = {
     schedule: ScheduleData[]
 }
 
+export type ModuleInfo = {
+    title: string,
+    data: string | undefined
+}
+
 export type ScheduleData = {
     startTime: string,
     endTime: string,
