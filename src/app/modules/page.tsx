@@ -19,6 +19,7 @@ export default function CoursesPage() {
             try {
                 const response = await fetch('/data/fullData/moduleList.json') // cache json and revalidate every hour
                 const data: ModuleMetaData[] = await response.json()
+                data.sort((a,b) => a.code.localeCompare(b.code))
 
                 setModuleData(data)
                 setFilteredData(data)
