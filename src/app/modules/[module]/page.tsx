@@ -101,9 +101,10 @@ export default function Module({ params }: { params: { module: string } }) {
         var startTime = parseInt(startTimeString, 10)
         var endTime = parseInt(endTimeString, 10)
         const timetableStart: number = 800
+        const spanInterval: number = getNumOfIntervals(startTime, endTime)
         const startGridInterval: number = getNumOfIntervals(timetableStart, startTime)
         var startGrid = (startGridInterval * 10) + 2 + Math.floor(startGridInterval / 3)
-        var span = getNumOfIntervals(startTime, endTime) * 10
+        var span = (spanInterval * 10) + Math.floor(spanInterval / 3)
 
         return [startGrid.toString(), span.toString()]
     }
