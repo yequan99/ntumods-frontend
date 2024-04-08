@@ -91,11 +91,11 @@ export default function Module({ params }: { params: { module: string } }) {
         return tempIndexMap[sortedListOfIndex[0]]
     }
 
-    // 0.5 hrs -> span 11
-    // 1 hr -> span 22 
+    // 0.5 hrs -> span 10
+    // 1 hr -> span 20 
     // offset = gridrow 2
-    // 0.5 hrs -> gridrow 11
-    // 1 hr -> gridrow 11
+    // 0.5 hrs -> gridrow 10
+    // 1 hr -> gridrow 20
 
     const calculateGridRow = (startTimeString: string, endTimeString: string) => {
         var startTime = parseInt(startTimeString, 10)
@@ -150,7 +150,7 @@ export default function Module({ params }: { params: { module: string } }) {
                         <h1 className="pl-2">{moduleDetails?.au} AU</h1>
                     </div>
                     <p className="pt-4">{moduleDetails?.description}</p>
-                    <table className="table-auto mt-8 border-collapse border border-gray-200">
+                    <table className="table-fixed w-full mt-8 border-collapse border border-gray-200">
                         <tbody>
                             {moduleInfo.map((detail,index) => (
                                 <tr key={index}>
