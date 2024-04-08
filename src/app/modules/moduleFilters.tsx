@@ -21,34 +21,16 @@ export default function ModuleFilter({filter, setFilter}:{filter: FilterData, se
         }, 1000) 
     }
 
-    const handleFilterChange = (selectedOptions: string, selectCategory: string) => {
-        switch(selectCategory) {
-            case 'faculty':
-                setFilter(prevFilter => ({
-                    ...prevFilter,
-                    faculty: selectedOptions
-                }))
-                break
-            case 'semester':
-                setFilter(prevFilter => ({
-                    ...prevFilter,
-                    semester: selectedOptions === "All Semesters" ? ["1", "2"] : [selectedOptions]
-                }))
-                break
-            case 'moduleType':
-                setFilter(prevFilter => ({
-                    ...prevFilter,
-                    moduleType: selectedOptions
-                }))
-                break
-            default:
-                break
-        }
+    const handleFacultyChange = (selectedOptions: string) => {
+        setFilter(prevFilter => ({
+            ...prevFilter,
+            faculty: selectedOptions
+        }))
     }
 
     return (
         <div className="grid grid-cols-6 gap-4 h-10">
-            <div className="col-span-2">
+            <div className="col-span-4">
                 <Input 
                     className="w-full h-full" 
                     placeholder="Search for module name or code" 
@@ -60,7 +42,7 @@ export default function ModuleFilter({filter, setFilter}:{filter: FilterData, se
                 <Select
                     className="w-full h-full"
                     defaultValue={filter.faculty}
-                    onChange={(selectOption) => handleFilterChange(selectOption, 'faculty')}
+                    onChange={(selectOption) => handleFacultyChange(selectOption)}
                     options={[
                         { value: 'All Faculties', label: 'All Faculties' },
                         { value: 'Accountancy', label: 'Accountancy' },
@@ -70,26 +52,6 @@ export default function ModuleFilter({filter, setFilter}:{filter: FilterData, se
                     ]}
                 />
             </div>
-            <Select
-                className="w-full h-full"
-                defaultValue="All Semesters"
-                onChange={(selectOption) => handleFilterChange(selectOption, 'semester')}
-                options={[
-                    { value: 'All Semesters', label: 'All Semesters' },
-                    { value: '1', label: 'Semester 1' },
-                    { value: '2', label: 'Semester 2' },
-                ]}
-            />
-            <Select
-                className="w-full h-full"
-                defaultValue={filter.moduleType}
-                onChange={(selectOption) => handleFilterChange(selectOption, 'moduleType')}
-                options={[
-                    { value: 'All Module Types', label: 'All Module Types' },
-                    { value: 'Core', label: 'Core' },
-                    { value: 'MPE', label: 'MPE' },
-                ]}
-            />
         </div>
     )
 }

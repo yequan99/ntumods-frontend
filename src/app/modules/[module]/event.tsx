@@ -26,13 +26,14 @@ export default function Event({scheduleEvents}: {scheduleEvents: ScheduleEvent[]
                         className={`absolute inset-1 flex flex-col overflow-y-auto rounded-lg p-2 text-xs leading-5 ${neutralColour[eventSchedule.BgColour]}`}
                     >
                         <p className="order-1 text-gray-700">{eventSchedule.StartTime}-{eventSchedule.EndTime}</p>
-                        {eventSchedule.Remarks.map((remark,index) => (
-                            <div key={index} className={`order-${index + 1}`}>
-                                <p className="text-gray-700">
+                        <div className="order-2">
+                            {eventSchedule.Remarks.map((remark,index) => (
+                                <p key={index} className="text-gray-700">
                                     {remark.Venue} {remark.Remarks !== "" ? `(${remark.Remarks})` : ""}
                                 </p>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
+                        
                         <div className="flex flex-row">
                             <p className={`text-${eventSchedule.BgColour}-500 font-semibold pr-2`}>{eventSchedule.ClassType}</p>
                             <p className="text-gray-500">({eventSchedule.IndexGroup})</p>
