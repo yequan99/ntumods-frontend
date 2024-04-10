@@ -3,11 +3,11 @@
 import { Dispatch, SetStateAction, ChangeEvent } from 'react';
 import { Select, Input } from 'antd';
 
-import { FilterData, FacultyFilterData } from '@/utils/types';
+import { FilterData, SelectData } from '@/utils/types';
 
 let timer: NodeJS.Timeout | null = null
 
-export default function ModuleFilter({facultyList, filter, setFilter}:{facultyList: FacultyFilterData[], filter: FilterData, setFilter: Dispatch<SetStateAction<FilterData>>}) {
+export default function ModuleFilter({facultyList, filter, setFilter}:{facultyList: SelectData[], filter: FilterData, setFilter: Dispatch<SetStateAction<FilterData>>}) {
 
     const handleQueryChange = (e:  ChangeEvent<HTMLInputElement>) => {
         if (timer) {

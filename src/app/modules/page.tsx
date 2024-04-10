@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Pagination, Divider, Skeleton } from 'antd';
 
-import { ModuleMetaData, FilterData, FacultyFilterData } from "@/utils/types"
+import { ModuleMetaData, FilterData, SelectData } from "@/utils/types"
 import Modules from "./modules"
 import ModuleFilter from "./moduleFilters"
 
@@ -12,7 +12,7 @@ export default function CoursesPage() {
     const [moduleData, setModuleData] = useState<ModuleMetaData[]>([])
     const [filteredData, setFilteredData] = useState<ModuleMetaData[]>([])
     const [filter, setFilter] = useState<FilterData>({query: "", faculty: "All Faculties"})
-    const [facultyList, setFacultyList] = useState<FacultyFilterData[]>([{ value: 'All Faculties', label: 'All Faculties' }])
+    const [facultyList, setFacultyList] = useState<SelectData[]>([{ value: 'All Faculties', label: 'All Faculties' }])
     const [currentPage, setCurrentPage] = useState<number>(0)
 
     useEffect(() => {
@@ -30,7 +30,7 @@ export default function CoursesPage() {
                 // get faculty list
                 const facultyResponse = await fetch('/data/fullData/faculty.json')
                 const facultyData = await facultyResponse.json()
-                const faculties: FacultyFilterData[] = Object.values(facultyData).map((item: any) => ({
+                const faculties: SelectData[] = Object.values(facultyData).map((item: any) => ({
                     value: item.Faculty,
                     label: item.Faculty
                 }))

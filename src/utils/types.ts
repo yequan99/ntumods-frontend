@@ -6,7 +6,7 @@ export type ModuleMetaData = {
     faculty: FacultyData
 }
 
-export type FacultyFilterData = {
+export type SelectData = {
     value: string,
     label: string
 }
@@ -93,4 +93,14 @@ export type SubThreadReviewData = ReviewData
 
 export interface ThreadReviewData extends ReviewData {
     SubThreads?: SubThreadReviewData[]
+}
+
+export type SelectedModuleData = {
+    code: string,
+    indexes: SelectData[],
+}
+
+export type SelectedExamData = {
+    code: string,
+    exam: ExamData
 }
