@@ -40,7 +40,8 @@ export default function ModuleSearch({setSelectedModules}: {setSelectedModules: 
                     indexes: uniqueIndexes.map(item => ({
                         value: item,
                         label: item
-                    }))
+                    })),
+                    exam: indexData.exam
                 }
                 setSelectedModules(prevList => [...prevList, addedModule])
             } catch (error) {

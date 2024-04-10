@@ -98,9 +98,5 @@ export interface ThreadReviewData extends ReviewData {
 export type SelectedModuleData = {
     code: string,
     indexes: SelectData[],
-}
-
-export type SelectedExamData = {
-    code: string,
     exam: ExamData
 }
