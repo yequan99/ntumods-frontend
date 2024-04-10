@@ -106,7 +106,7 @@ export default function NavBar() {
                     ))}
                 </ul>
                 <h1 className="text-sm pl-4 text-slate-800">
-                    {getSemesterInfo(new Date(2024,3,22))}
+                    {getSemesterInfo(new Date())}
                 </h1>
             </div>
         </div>

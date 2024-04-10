@@ -3,11 +3,11 @@
 import { Dispatch, SetStateAction, ChangeEvent } from 'react';
 import { Select, Input } from 'antd';
 
-import { FilterData } from '@/utils/types';
+import { FilterData, FacultyFilterData } from '@/utils/types';
 
 let timer: NodeJS.Timeout | null = null
 
-export default function ModuleFilter({filter, setFilter}:{filter: FilterData, setFilter: Dispatch<SetStateAction<FilterData>>}) {
+export default function ModuleFilter({facultyList, filter, setFilter}:{facultyList: FacultyFilterData[], filter: FilterData, setFilter: Dispatch<SetStateAction<FilterData>>}) {
 
     const handleQueryChange = (e:  ChangeEvent<HTMLInputElement>) => {
         if (timer) {
@@ -43,13 +43,7 @@ export default function ModuleFilter({filter, setFilter}:{filter: FilterData, se
                     className="w-full h-full"
                     defaultValue={filter.faculty}
                     onChange={(selectOption) => handleFacultyChange(selectOption)}
-                    options={[
-                        { value: 'All Faculties', label: 'All Faculties' },
-                        { value: 'Accountancy', label: 'Accountancy' },
-                        { value: 'Art, Design & Media', label: 'Art, Design & Media' },
-                        { value: 'Aerospace Engineering', label: 'Aerospace Engineering' },
-                        { value: 'School of Computer Science and Engineering', label: 'School of Computer Science and Engineering' },
-                    ]}
+                    options={facultyList}
                 />
             </div>
         </div>

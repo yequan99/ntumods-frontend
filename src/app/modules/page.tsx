@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Pagination, Divider, Skeleton } from 'antd';
 
-import { ModuleMetaData, FilterData } from "@/utils/types"
+import { ModuleMetaData, FilterData, FacultyFilterData } from "@/utils/types"
 import Modules from "./modules"
 import ModuleFilter from "./moduleFilters"
 
@@ -12,18 +12,29 @@ export default function CoursesPage() {
     const [moduleData, setModuleData] = useState<ModuleMetaData[]>([])
     const [filteredData, setFilteredData] = useState<ModuleMetaData[]>([])
     const [filter, setFilter] = useState<FilterData>({query: "", faculty: "All Faculties"})
+    const [facultyList, setFacultyList] = useState<FacultyFilterData[]>([{ value: 'All Faculties', label: 'All Faculties' }])
     const [currentPage, setCurrentPage] = useState<number>(0)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('/data/fullData/moduleList.json') // cache json and revalidate every hour
-                const data: ModuleMetaData[] = await response.json()
-                data.sort((a,b) => a.code.localeCompare(b.code))
+                // get module list
+                const moduleResponse = await fetch('/data/fullData/moduleList.json') // cache json and revalidate every hour
+                const moduleData: ModuleMetaData[] = await moduleResponse.json()
+                moduleData.sort((a,b) => a.code.localeCompare(b.code))
 
-                setModuleData(data)
-                setFilteredData(data)
+                setModuleData(moduleData)
+                setFilteredData(moduleData)
                 setLoading(false)
+
+                // get faculty list
+                const facultyResponse = await fetch('/data/fullData/faculty.json')
+                const facultyData = await facultyResponse.json()
+                const faculties: FacultyFilterData[] = Object.values(facultyData).map((item: any) => ({
+                    value: item.Faculty,
+                    label: item.Faculty
+                }))
+                setFacultyList(prevList => [...prevList, ...faculties])
             } catch (error) {
                 console.error('Error fetching data:', error)
             }
@@ -33,7 +44,6 @@ export default function CoursesPage() {
 
     // filter modules by query
     useEffect(() => {
-        // TODO: Filter semester query array
         let filterQueryData: ModuleMetaData[] = []
         for (const modData of moduleData) {
             if ((filter.faculty === "All Faculties" || filter.faculty === modData.faculty.Faculty) && 
@@ -66,7 +76,7 @@ export default function CoursesPage() {
                 :
                 <div className="w-full h-full flex flex-col items-center">
                     <div className="w-full">
-                        <ModuleFilter filter={filter} setFilter={setFilter} />
+                        <ModuleFilter facultyList={facultyList} filter={filter} setFilter={setFilter} />
                     </div>
                     <Divider className="w-full" orientation="right" plain orientationMargin="0">
                         {filteredData.length} courses found

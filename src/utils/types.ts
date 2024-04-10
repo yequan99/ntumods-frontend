@@ -6,6 +6,11 @@ export type ModuleMetaData = {
     faculty: FacultyData
 }
 
+export type FacultyFilterData = {
+    value: string,
+    label: string
+}
+
 export type FilterData = {
     query: string,
     faculty: string
