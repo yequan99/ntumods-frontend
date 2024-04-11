@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from "react"
-import { Select, Divider } from "antd"
+import { useState, useEffect, createContext } from "react"
+import { Select, Divider, notification } from "antd"
+import type { NotificationArgsProps } from 'antd';
 
 import Schedule from "@/components/schedule"
 import { ScheduleEvent, SelectData, ModuleMetaData, ModuleData, ScheduleData } from "@/utils/types"
@@ -9,6 +10,7 @@ import { deleteIcon } from "@/utils/icons"
 import { CalculateGridRow } from "@/utils/commonFunction"
 
 const colors: string[] = ["blue", "green", "yellow", "purple", "indigo", "gray", "lime", "emerald", "teal", "cyan", "pink"]
+type NotificationPlacement = NotificationArgsProps['placement']
 
 export default function Timetable() {
     const [selectedIndex, setSelectedIndex] = useState<ScheduleEvent[]>([])
@@ -18,6 +20,7 @@ export default function Timetable() {
     const [defaultValues, setDefaultValues] = useState<Map<string, SelectData[]>>(new Map())
     const [colourMap, setColourMap] = useState<Map<string, string>>(new Map())
     const [colourIndex, setColourIndex] = useState<number>(0)
+    const [api, contextHolder] = notification.useNotification();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -53,6 +56,7 @@ export default function Timetable() {
                             {Code: events.Code!, Index: events.Index, ClassType: events.ClassType, IndexGroup: events.IndexGroup, StartTime: events.StartTime, EndTime: events.EndTime, Remarks: events.Remarks}
                         ]
                         clash = true
+                        openNotification('topRight',dayList[i].Code!, events.Code!, events.DayOfWeek)
                         break
                     }
                 }
@@ -133,6 +137,15 @@ export default function Timetable() {
         newMap.set(moduleCode, eventList)
         setSelectedEvents(newMap)
     }
+
+    const openNotification = (placement: NotificationPlacement, first: string, second: string, day: string) => {
+        api.error({
+            message: "Clash in index!",
+            description: `There is a clash in index between ${first} and ${second} on ${day}`,
+            duration: 10,
+            placement,
+        });
+    };
 
     const getIndex = (data: ModuleData, index: string) => {
         var eventList: ScheduleEvent[] = []
@@ -226,54 +239,57 @@ export default function Timetable() {
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
     return(
-        <div className="w-full h-full flex flex-row">
-            <div className="w-[80%] h-full pr-4">
-                <Schedule events={selectedIndex} />
-            </div>
-            <div className="w-[20%] h-full">
-                <div className="w-full">
-                    <Select
-                        showSearch
-                        style={{ width: '100%' }}
-                        placeholder="Input module to timetable"
-                        onChange={handleSelectModule}
-                        filterOption={filterOption}
-                        options={moduleList}
-                    />
-                    <div className="pt-4">
-                        <h1 className="pb-2">Modules Added: </h1>
-                        {
-                            selectedModules.length === 0 &&
-                            <h1 className="text-slate-500 italic">No modules selected</h1>
-                        }
-                        {selectedModules.map((module,index) => (
-                            <div key={index} className="flex flex-row items-center justify-between pb-2">
-                                <h1>{module.code}</h1>
-                                <Select 
-                                    defaultValue={defaultValues.get(module.code)![0].label}
-                                    options={getSelectOptions(module.schedule)}
-                                    onChange={(selectedOption) => handleSelectIndex(module.code, selectedOption)}
-                                />
-                                <div className="hover:cursor-pointer" onClick={() => {handleDelete(module.code)}}>{deleteIcon}</div>
-                            </div>
-                        ))}
-                    </div>
-                    <Divider />
-                    <div>
-                        <h1 className="pb-2">Exam Schedules: </h1>
-                        <table className="table-fixed mt-4 border-collapse border border-gray-200">
-                            <tbody>
-                                {selectedModules.map((exam,index) => (
-                                    <tr key={index}>
-                                        <td className="border border-gray-400 px-4 py-2 text-sm">{exam.code}</td>
-                                        <td className="w-full border border-gray-400 px-4 py-2 text-sm">{exam.exam.date === "" ? "N/A" : `${exam.exam.date} (${exam.exam.dayOfWeek}), ${exam.exam.time} (${exam.exam.duration})`}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+        <>
+            {contextHolder}
+            <div className="w-full h-full flex flex-row">
+                <div className="w-[80%] h-full pr-4">
+                    <Schedule events={selectedIndex} />
+                </div>
+                <div className="w-[20%] h-full">
+                    <div className="w-full">
+                        <Select
+                            showSearch
+                            style={{ width: '100%' }}
+                            placeholder="Input module to timetable"
+                            onChange={handleSelectModule}
+                            filterOption={filterOption}
+                            options={moduleList}
+                        />
+                        <div className="pt-4">
+                            <h1 className="pb-2">Modules Added: </h1>
+                            {
+                                selectedModules.length === 0 &&
+                                <h1 className="text-slate-500 italic">No modules selected</h1>
+                            }
+                            {selectedModules.map((module,index) => (
+                                <div key={index} className="flex flex-row items-center justify-between pb-2">
+                                    <h1>{module.code}</h1>
+                                    <Select 
+                                        defaultValue={defaultValues.get(module.code)![0].label}
+                                        options={getSelectOptions(module.schedule)}
+                                        onChange={(selectedOption) => handleSelectIndex(module.code, selectedOption)}
+                                    />
+                                    <div className="hover:cursor-pointer" onClick={() => {handleDelete(module.code)}}>{deleteIcon}</div>
+                                </div>
+                            ))}
+                        </div>
+                        <Divider />
+                        <div>
+                            <h1 className="pb-2">Exam Schedules: </h1>
+                            <table className="table-fixed mt-4 border-collapse border border-gray-200">
+                                <tbody>
+                                    {selectedModules.map((exam,index) => (
+                                        <tr key={index}>
+                                            <td className="border border-gray-400 px-4 py-2 text-sm">{exam.code}</td>
+                                            <td className="w-full border border-gray-400 px-4 py-2 text-sm">{exam.exam.date === "" ? "N/A" : `${exam.exam.date} (${exam.exam.dayOfWeek}), ${exam.exam.time} (${exam.exam.duration})`}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
