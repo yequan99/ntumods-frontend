@@ -70,6 +70,7 @@ export type RemarksData = {
 }
 
 export type ScheduleEvent = {
+    Code?: string,
     Index: string,
     ClassType: string,
     IndexGroup: string,

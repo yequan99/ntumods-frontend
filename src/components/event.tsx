@@ -25,7 +25,7 @@ export default function Event({scheduleEvents}: {scheduleEvents: ScheduleEvent[]
                     <div 
                         className={`absolute inset-1 flex flex-col overflow-y-auto rounded-lg p-2 text-xs leading-5 ${neutralColour[eventSchedule.BgColour]}`}
                     >
-                        <p className="order-1 text-gray-700">{eventSchedule.StartTime}-{eventSchedule.EndTime}</p>
+                        {/* <p className="order-1 text-gray-700">{eventSchedule.StartTime}-{eventSchedule.EndTime}</p> */}
                         <div className="order-2">
                             {eventSchedule.Remarks.map((remark,index) => (
                                 <p key={index} className="text-gray-700">
@@ -33,11 +33,20 @@ export default function Event({scheduleEvents}: {scheduleEvents: ScheduleEvent[]
                                 </p>
                             ))}
                         </div>
-                        
-                        <div className="flex flex-row">
-                            <p className={`text-${eventSchedule.BgColour}-500 font-semibold pr-2`}>{eventSchedule.ClassType}</p>
-                            <p className="text-gray-500">({eventSchedule.IndexGroup})</p>
-                        </div>
+                        {
+                            eventSchedule.Code === undefined &&
+                            <div className="flex flex-row">
+                                <p className={`text-${eventSchedule.BgColour}-500 font-semibold pr-2`}>{eventSchedule.ClassType}</p>
+                                <p className="text-gray-500">({eventSchedule.IndexGroup})</p>
+                            </div>
+                        }
+                        {
+                            eventSchedule.Code &&
+                            <div className="flex flex-row flex-wrap">
+                                <p className={`text-${eventSchedule.BgColour}-500 font-semibold pr-2`}>{eventSchedule.Code}</p>
+                                <p className="text-gray-500">({eventSchedule.ClassType})</p>
+                            </div>
+                        }
                     </div>
                 </li>
             ))}

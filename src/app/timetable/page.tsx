@@ -98,6 +98,7 @@ export default function Timetable() {
         data.schedule.map((eventSchedule) => {
             if (eventSchedule.index === index) {
                 const newEvent: ScheduleEvent = {
+                    Code: data.code,
                     Index: eventSchedule.index,
                     ClassType: eventSchedule.classType,
                     IndexGroup: eventSchedule.indexGroup,

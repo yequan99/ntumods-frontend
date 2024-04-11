@@ -1,7 +1,7 @@
 'use client'
 
 import { ScheduleEvent } from "@/utils/types"
-import Event from "@/app/modules/[module]/event"
+import Event from "@/components/event"
 
 export default function Schedule({events}: {events: ScheduleEvent[]}) {
     return (
