@@ -20,7 +20,7 @@ export default function Modules({modules}: {modules: ModuleMetaData[]}) {
                                 </div>
                             </div>
                             <div className="w-1/5 text-right italic">
-                                {item.au}
+                                {item.au} AU
                             </div>
                         </div>
                         <div className="pt-4 h-40 overflow-hidden">
