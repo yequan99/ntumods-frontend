@@ -11,6 +11,7 @@ import { CalculateGridRow } from "@/utils/commonFunction"
 const colors: string[] = ["blue", "green", "yellow", "purple", "indigo", "gray", "lime", "emerald", "teal", "cyan", "pink"]
 
 export default function Timetable() {
+    const [selectedIndex, setSelectedIndex] = useState<ScheduleEvent[]>([])
     const [selectedEvents, setSelectedEvents] = useState<Map<string, ScheduleEvent[]>>(new Map())
     const [selectedModules, setSelectedModules] = useState<ModuleData[]>([])
     const [moduleList, setModuleList] = useState<SelectData[]>([])
@@ -35,6 +36,42 @@ export default function Timetable() {
         }
         fetchData()
     }, [])
+
+    useEffect(() => {
+        const allEvents: ScheduleEvent[] = Array.from(selectedEvents.values()).reduce((acc, current) => { return acc.concat(current)}, [])
+        const clashMap: Map<string, ScheduleEvent[]> = new Map()
+        allEvents.forEach(events => {
+            if (clashMap.has(events.DayOfWeek)) {
+                const dayList: ScheduleEvent[] = clashMap.get(events.DayOfWeek)!
+                var clash: boolean = false
+                for (let i = 0; i < dayList.length; i++) {
+                    if (checkOverlap(events, dayList[i])) {
+                        dayList[i].BgColour = "red"
+                        dayList[i].GridRow = CalculateGridRow(getStartTime(dayList[i].StartTime, events.StartTime), getEndTime(dayList[i].EndTime, events.EndTime))
+                        dayList[i].ClashData = [
+                            {Code: dayList[i].Code!, Index: dayList[i].Index, ClassType: dayList[i].ClassType, IndexGroup: dayList[i].IndexGroup, StartTime: dayList[i].StartTime, EndTime: dayList[i].EndTime, Remarks: dayList[i].Remarks},
+                            {Code: events.Code!, Index: events.Index, ClassType: events.ClassType, IndexGroup: events.IndexGroup, StartTime: events.StartTime, EndTime: events.EndTime, Remarks: events.Remarks}
+                        ]
+                        clash = true
+                        break
+                    }
+                }
+                if (!clash) {
+                    events.BgColour = getColour(events.Code!)
+                    events.GridRow = CalculateGridRow(events.StartTime, events.EndTime)
+                    events.ClashData = undefined
+                    dayList.push(events)
+                }
+                clashMap.set(events.DayOfWeek, dayList)
+            } else {
+                events.BgColour = getColour(events.Code!)
+                events.GridRow = CalculateGridRow(events.StartTime, events.EndTime)
+                events.ClashData = undefined
+                clashMap.set(events.DayOfWeek, [events])
+            }
+        })
+        setSelectedIndex(Array.from(clashMap.values()).reduce((acc, current) => { return acc.concat(current)}, []))
+    }, [selectedEvents])
 
     const handleSelectModule = (value: string) => {
         const fetchModuleData = async () => {
@@ -147,6 +184,35 @@ export default function Timetable() {
         }
     }
 
+    const getStartTime = (curStart: string, newStart: string) => {
+        if (parseInt(curStart) < parseInt(newStart)) {
+            return curStart
+        } else {
+            return newStart
+        }
+    }
+
+    const getEndTime = (curEnd: string, newEnd: string) => {
+        if (parseInt(curEnd) > parseInt(newEnd)) {
+            return curEnd
+        } else {
+            return newEnd
+        }
+    }
+
+    const checkOverlap = (newEvent: ScheduleEvent, curEvent: ScheduleEvent) => {
+        const newStart: number = parseInt(newEvent.StartTime)
+        const newEnd: number = parseInt(newEvent.EndTime)
+        const curStart: number = parseInt(curEvent.StartTime)
+        const curEnd: number = parseInt(curEvent.EndTime)
+
+        if ((newStart >= curStart && newStart < curEnd) || (curStart >= newStart && curStart < newEnd)) {
+            return true
+        } else {
+            return false
+        }
+    }
+
     const getSelectOptions = (scheduleDataList: ScheduleData[]) => {
         const uniqueMap: Map<string, SelectData> = new Map()
         scheduleDataList.forEach(schedule => {
@@ -161,10 +227,10 @@ export default function Timetable() {
 
     return(
         <div className="w-full h-full flex flex-row">
-            <div className="w-[75%] h-full pr-8">
-                <Schedule events={Array.from(selectedEvents.values()).reduce((acc, current) => { return acc.concat(current)}, [])} />
+            <div className="w-[80%] h-full pr-4">
+                <Schedule events={selectedIndex} />
             </div>
-            <div className="w-[25%] h-full">
+            <div className="w-[20%] h-full">
                 <div className="w-full">
                     <Select
                         showSearch

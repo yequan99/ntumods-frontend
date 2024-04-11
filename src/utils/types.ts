@@ -79,7 +79,18 @@ export type ScheduleEvent = {
     Remarks: RemarksData[],
     DayOfWeek: string,
     GridRow: string[],
-    BgColour: string
+    BgColour: string,
+    ClashData?: ClashData[]
+}
+
+export type ClashData = {
+    Code: string,
+    Index: string,
+    ClassType: string,
+    IndexGroup: string,
+    StartTime: string,
+    EndTime: string,
+    Remarks: RemarksData[]
 }
 
 export interface ReviewData {
