@@ -66,5 +66,13 @@ const neutralColour: Record<string, string> = {
     "blue": "bg-blue-100",
     "pink": "bg-pink-100",
     "green": "bg-green-100",
-    "yellow": "bg-yellow-100"
+    "yellow": "bg-yellow-100",
+    "purple": "bg-purple-300",
+    "indigo": "bg-indigo-300",
+    "gray": "bg-gray-200",
+    "lime": "bg-lime-100",
+    "emerald": "bg-emerald-300",
+    "teal": "bg-teal-300",
+    "cyan": "bg-cyan-300",
+    "red": "bg-red-400"
 }

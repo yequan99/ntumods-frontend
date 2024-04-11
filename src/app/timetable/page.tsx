@@ -8,11 +8,15 @@ import { ScheduleEvent, SelectData, ModuleMetaData, ModuleData, ScheduleData } f
 import { deleteIcon } from "@/utils/icons"
 import { CalculateGridRow } from "@/utils/commonFunction"
 
+const colors: string[] = ["blue", "green", "yellow", "purple", "indigo", "gray", "lime", "emerald", "teal", "cyan", "pink"]
+
 export default function Timetable() {
     const [selectedEvents, setSelectedEvents] = useState<Map<string, ScheduleEvent[]>>(new Map())
     const [selectedModules, setSelectedModules] = useState<ModuleData[]>([])
     const [moduleList, setModuleList] = useState<SelectData[]>([])
     const [defaultValues, setDefaultValues] = useState<Map<string, SelectData[]>>(new Map())
+    const [colourMap, setColourMap] = useState<Map<string, string>>(new Map())
+    const [colourIndex, setColourIndex] = useState<number>(0)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -107,7 +111,7 @@ export default function Timetable() {
                     Remarks: [{ Venue: eventSchedule.venue, Remarks: eventSchedule.remarks.replace("Teaching ", "") }],
                     DayOfWeek: eventSchedule.dayOfWeek,
                     GridRow: CalculateGridRow(eventSchedule.startTime, eventSchedule.endTime),
-                    BgColour: "pink"
+                    BgColour: getColour(data.code)
                 }
                 let found: boolean = false
                 for (let i = 0; i < eventList.length; i++) {
@@ -122,6 +126,25 @@ export default function Timetable() {
             }
         })
         return eventList
+    }
+
+    const getColour = (code: string) => {
+        if (colourMap.has(code)) {
+            return colourMap.get(code)!
+        }
+        else {
+            const newColour: string = colors[colourIndex]
+            if (colourIndex < 10) {
+                setColourIndex(colourIndex+1)
+            }
+            else {
+                setColourIndex(0)
+            }
+            const newMap = new Map(colourMap)
+            newMap.set(code, newColour)
+            setColourMap(newMap)
+            return newColour
+        }
     }
 
     const getSelectOptions = (scheduleDataList: ScheduleData[]) => {
@@ -153,6 +176,10 @@ export default function Timetable() {
                     />
                     <div className="pt-4">
                         <h1 className="pb-2">Modules Added: </h1>
+                        {
+                            selectedModules.length === 0 &&
+                            <h1 className="text-slate-500 italic">No modules selected</h1>
+                        }
                         {selectedModules.map((module,index) => (
                             <div key={index} className="flex flex-row items-center justify-between pb-2">
                                 <h1>{module.code}</h1>
