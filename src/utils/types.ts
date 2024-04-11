@@ -94,9 +94,3 @@ export type SubThreadReviewData = ReviewData
 export interface ThreadReviewData extends ReviewData {
     SubThreads?: SubThreadReviewData[]
 }
-
-export type SelectedModuleData = {
-    code: string,
-    indexes: SelectData[],
-    exam: ExamData
-}

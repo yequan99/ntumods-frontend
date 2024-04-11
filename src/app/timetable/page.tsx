@@ -4,12 +4,12 @@ import { useState, useEffect } from "react"
 import { Select, Divider } from "antd"
 
 import Schedule from "@/components/schedule"
-import { ScheduleEvent, SelectedModuleData, SelectData, ModuleMetaData, ModuleData, ScheduleData } from "@/utils/types"
+import { ScheduleEvent, SelectData, ModuleMetaData, ModuleData, ScheduleData } from "@/utils/types"
 import { deleteIcon } from "@/utils/icons"
 import { CalculateGridRow } from "@/utils/commonFunction"
 
 export default function Timetable() {
-    const [selectedIndex, setSelectedIndex] = useState<ScheduleEvent[]>([])
+    const [selectedEvents, setSelectedEvents] = useState<Map<string, ScheduleEvent[]>>(new Map())
     const [selectedModules, setSelectedModules] = useState<ModuleData[]>([])
     const [moduleList, setModuleList] = useState<SelectData[]>([])
     const [defaultValues, setDefaultValues] = useState<Map<string, SelectData[]>>(new Map())
@@ -56,8 +56,8 @@ export default function Timetable() {
                 })
 
                 // setting indexes for events
+                var eventList: ScheduleEvent[] = []
                 data.schedule.map((eventSchedule) => {
-                    var eventList: ScheduleEvent[] = []
                     if (eventSchedule.index === uniqueIndexList[0].label) {
                         const newEvent: ScheduleEvent = {
                             Index: eventSchedule.index,
@@ -70,9 +70,22 @@ export default function Timetable() {
                             GridRow: CalculateGridRow(eventSchedule.startTime, eventSchedule.endTime),
                             BgColour: "pink"
                         }
-                        eventList.push(newEvent)
+                        let found: boolean = false
+                        for (let i = 0; i < eventList.length; i++) {
+                            if (eventList[i].ClassType === newEvent.ClassType && eventList[i].DayOfWeek === newEvent.DayOfWeek && eventList[i].StartTime === newEvent.StartTime && eventList[i].EndTime === newEvent.EndTime) {
+                                eventList[i].Remarks.push(...newEvent.Remarks)
+                                found = true
+                            }
+                        }
+                        if (!found) {
+                            eventList.push(newEvent)
+                        }
                     }
-                    setSelectedIndex(prevList => [...prevList, ...eventList])
+                })
+                setSelectedEvents(prevState => {
+                    const newMap = new Map(prevState)
+                    newMap.set(data.code, eventList)
+                    return newMap
                 })
             } catch (error) {
                 console.log('Error fetching module data:', error)
@@ -85,6 +98,12 @@ export default function Timetable() {
         setSelectedModules(selectedModules.filter(module => module.code !== moduleCode))
 
         setDefaultValues(prevState => {
+            const newMap = new Map(prevState)
+            newMap.delete(moduleCode)
+            return newMap
+        })
+
+        setSelectedEvents(prevState => {
             const newMap = new Map(prevState)
             newMap.delete(moduleCode)
             return newMap
@@ -106,7 +125,7 @@ export default function Timetable() {
     return(
         <div className="w-full h-full flex flex-row">
             <div className="w-[75%] h-full pr-8">
-                <Schedule events={selectedIndex} />
+                <Schedule events={Array.from(selectedEvents.values()).reduce((acc, current) => { return acc.concat(current)}, [])} />
             </div>
             <div className="w-[25%] h-full">
                 <div className="w-full">
