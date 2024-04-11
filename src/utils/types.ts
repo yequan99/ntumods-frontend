@@ -7,7 +7,7 @@ export type ModuleMetaData = {
 }
 
 export type SelectData = {
-    value: string,
+    value: any,
     label: string
 }
 
