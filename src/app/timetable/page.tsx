@@ -32,7 +32,7 @@ export default function Timetable() {
         fetchData()
     }, [])
 
-    const handleChange = (value: string) => {
+    const handleSelectModule = (value: string) => {
         const fetchModuleData = async () => {
             try {
                 // getting the new modules
@@ -56,32 +56,7 @@ export default function Timetable() {
                 })
 
                 // setting indexes for events
-                var eventList: ScheduleEvent[] = []
-                data.schedule.map((eventSchedule) => {
-                    if (eventSchedule.index === uniqueIndexList[0].label) {
-                        const newEvent: ScheduleEvent = {
-                            Index: eventSchedule.index,
-                            ClassType: eventSchedule.classType,
-                            IndexGroup: eventSchedule.indexGroup,
-                            StartTime: eventSchedule.startTime,
-                            EndTime: eventSchedule.endTime,
-                            Remarks: [{ Venue: eventSchedule.venue, Remarks: eventSchedule.remarks.replace("Teaching ", "") }],
-                            DayOfWeek: eventSchedule.dayOfWeek,
-                            GridRow: CalculateGridRow(eventSchedule.startTime, eventSchedule.endTime),
-                            BgColour: "pink"
-                        }
-                        let found: boolean = false
-                        for (let i = 0; i < eventList.length; i++) {
-                            if (eventList[i].ClassType === newEvent.ClassType && eventList[i].DayOfWeek === newEvent.DayOfWeek && eventList[i].StartTime === newEvent.StartTime && eventList[i].EndTime === newEvent.EndTime) {
-                                eventList[i].Remarks.push(...newEvent.Remarks)
-                                found = true
-                            }
-                        }
-                        if (!found) {
-                            eventList.push(newEvent)
-                        }
-                    }
-                })
+                const eventList: ScheduleEvent[] = getIndex(data, uniqueIndexList[0].label)
                 setSelectedEvents(prevState => {
                     const newMap = new Map(prevState)
                     newMap.set(data.code, eventList)
@@ -110,6 +85,44 @@ export default function Timetable() {
         })
     }
 
+    const handleSelectIndex = (moduleCode: string, index: string) => {
+        const selectedModuleData: ModuleData = selectedModules.find(module => module.code === moduleCode)!
+        const eventList: ScheduleEvent[] = getIndex(selectedModuleData, index)
+        const newMap = new Map(selectedEvents)
+        newMap.set(moduleCode, eventList)
+        setSelectedEvents(newMap)
+    }
+
+    const getIndex = (data: ModuleData, index: string) => {
+        var eventList: ScheduleEvent[] = []
+        data.schedule.map((eventSchedule) => {
+            if (eventSchedule.index === index) {
+                const newEvent: ScheduleEvent = {
+                    Index: eventSchedule.index,
+                    ClassType: eventSchedule.classType,
+                    IndexGroup: eventSchedule.indexGroup,
+                    StartTime: eventSchedule.startTime,
+                    EndTime: eventSchedule.endTime,
+                    Remarks: [{ Venue: eventSchedule.venue, Remarks: eventSchedule.remarks.replace("Teaching ", "") }],
+                    DayOfWeek: eventSchedule.dayOfWeek,
+                    GridRow: CalculateGridRow(eventSchedule.startTime, eventSchedule.endTime),
+                    BgColour: "pink"
+                }
+                let found: boolean = false
+                for (let i = 0; i < eventList.length; i++) {
+                    if (eventList[i].ClassType === newEvent.ClassType && eventList[i].DayOfWeek === newEvent.DayOfWeek && eventList[i].StartTime === newEvent.StartTime && eventList[i].EndTime === newEvent.EndTime) {
+                        eventList[i].Remarks.push(...newEvent.Remarks)
+                        found = true
+                    }
+                }
+                if (!found) {
+                    eventList.push(newEvent)
+                }
+            }
+        })
+        return eventList
+    }
+
     const getSelectOptions = (scheduleDataList: ScheduleData[]) => {
         const uniqueMap: Map<string, SelectData> = new Map()
         scheduleDataList.forEach(schedule => {
@@ -133,7 +146,7 @@ export default function Timetable() {
                         showSearch
                         style={{ width: '100%' }}
                         placeholder="Input module to timetable"
-                        onChange={handleChange}
+                        onChange={handleSelectModule}
                         filterOption={filterOption}
                         options={moduleList}
                     />
@@ -145,6 +158,7 @@ export default function Timetable() {
                                 <Select 
                                     defaultValue={defaultValues.get(module.code)![0].label}
                                     options={getSelectOptions(module.schedule)}
+                                    onChange={(selectedOption) => handleSelectIndex(module.code, selectedOption)}
                                 />
                                 <div className="hover:cursor-pointer" onClick={() => {handleDelete(module.code)}}>{deleteIcon}</div>
                             </div>
