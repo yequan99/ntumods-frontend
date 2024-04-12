@@ -7,6 +7,7 @@ import { ModuleData, ScheduleEvent, ThreadReviewData, ModuleInfo } from "@/utils
 import Schedule from "@/components/schedule"
 import { CalculateGridRow } from "@/utils/commonFunction"
 import Reviews from "./reviews"
+import FetchReviews from "@/api/FetchReviews"
 
 const bgColor: Record<string, string> = {
     "LEC/STUDIO": "pink",
@@ -27,7 +28,6 @@ export default function Module({ params }: { params: { module: string } }) {
         // make API call to fetch module detail using modulecode
         const fetchModuleData = async () => {
             try {
-                // const response = await fetch('/data/mockfakeData.json')
                 const response = await fetch(`/data/fullData/moduleData/${params.module}.json`)
                 const data: ModuleData = await response.json()
 
@@ -40,12 +40,11 @@ export default function Module({ params }: { params: { module: string } }) {
         }
 
         // make API call to fetch reviews data using modulecode
+        
         const fetchReviewData = async () => {
             try {
-                const response = await fetch('/data/mockReviewData.json')
-                const data: ThreadReviewData[] = await response.json()
-
-                setReviews(data)
+                const reviewData: ThreadReviewData[] = await FetchReviews(params.module)
+                setReviews(reviewData)
             } catch (error) {
                 console.log('Error fetching review data')
             }

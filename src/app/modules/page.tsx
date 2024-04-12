@@ -6,6 +6,8 @@ import { Pagination, Divider, Skeleton } from 'antd';
 import { ModuleMetaData, FilterData, SelectData } from "@/utils/types"
 import Modules from "./modules"
 import ModuleFilter from "./moduleFilters"
+import FetchModuleList from "@/api/FetchModuleList"
+import FetchFacultyList from "@/api/FetchFacultyList";
 
 export default function CoursesPage() {
     const [loading, setLoading] = useState<boolean>(true)
@@ -19,8 +21,7 @@ export default function CoursesPage() {
         const fetchData = async () => {
             try {
                 // get module list
-                const moduleResponse = await fetch('/data/fullData/moduleList.json') // cache json and revalidate every hour
-                const moduleData: ModuleMetaData[] = await moduleResponse.json()
+                const moduleData: ModuleMetaData[] = await FetchModuleList("2023_2")
                 moduleData.sort((a,b) => a.code.localeCompare(b.code))
 
                 setModuleData(moduleData)
@@ -28,8 +29,7 @@ export default function CoursesPage() {
                 setLoading(false)
 
                 // get faculty list
-                const facultyResponse = await fetch('/data/fullData/faculty.json')
-                const facultyData = await facultyResponse.json()
+                const facultyData: ModuleMetaData[] = await FetchFacultyList("2023_2")
                 const faculties: SelectData[] = Object.values(facultyData).map((item: any) => ({
                     value: item.Faculty,
                     label: item.Faculty
