@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect, createContext } from "react"
-import { Select, Divider, notification } from "antd"
+import { useState, useEffect } from "react"
+import { Select, Divider, notification, Button } from "antd"
 import type { NotificationArgsProps } from 'antd';
 
 import Schedule from "@/components/schedule"
@@ -16,6 +16,8 @@ export default function Timetable() {
     const [selectedIndex, setSelectedIndex] = useState<ScheduleEvent[]>([])
     const [selectedEvents, setSelectedEvents] = useState<Map<string, ScheduleEvent[]>>(new Map())
     const [selectedModules, setSelectedModules] = useState<ModuleData[]>([])
+    const [userModule, setUserModule] = useState<string>("")
+    const [dropdownValue, setDropdownValue] = useState<SelectData | null | undefined>(null)
     const [moduleList, setModuleList] = useState<SelectData[]>([])
     const [defaultValues, setDefaultValues] = useState<Map<string, SelectData[]>>(new Map())
     const [colourMap, setColourMap] = useState<Map<string, string>>(new Map())
@@ -77,11 +79,11 @@ export default function Timetable() {
         setSelectedIndex(Array.from(clashMap.values()).reduce((acc, current) => { return acc.concat(current)}, []))
     }, [selectedEvents])
 
-    const handleSelectModule = (value: string) => {
+    const handleSelectModule = () => {
         const fetchModuleData = async () => {
             try {
                 // getting the new modules
-                const response = await fetch(`/data/fullData/moduleData/${value}.json`)
+                const response = await fetch(`/data/fullData/moduleData/${userModule}.json`)
                 const data: ModuleData = await response.json()
 
                 setSelectedModules(prevList => [...prevList, data])
@@ -111,7 +113,11 @@ export default function Timetable() {
                 console.log('Error fetching module data:', error)
             }
         }
-        fetchModuleData()
+        if (userModule !== "") {
+            fetchModuleData()
+            setUserModule("")
+            setDropdownValue(null)
+        }
     }
 
     const handleDelete = (moduleCode: string) => {
@@ -136,6 +142,11 @@ export default function Timetable() {
         const newMap = new Map(selectedEvents)
         newMap.set(moduleCode, eventList)
         setSelectedEvents(newMap)
+    }
+
+    const handleDropdown = (option: SelectData) => {
+        setUserModule(option.toString())
+        setDropdownValue(option)
     }
 
     const openNotification = (placement: NotificationPlacement, first: string, second: string, day: string) => {
@@ -248,13 +259,15 @@ export default function Timetable() {
                 <div className="w-[20%] h-full">
                     <div className="w-full">
                         <Select
+                            className="w-full mb-2"
                             showSearch
-                            style={{ width: '100%' }}
-                            placeholder="Input module to timetable"
-                            onChange={handleSelectModule}
+                            placeholder="Input module"
+                            value={dropdownValue}
+                            onChange={handleDropdown}
                             filterOption={filterOption}
                             options={moduleList}
                         />
+                        <Button className="bg-blue-800 text-white w-full" onClick={handleSelectModule}>Add</Button>
                         <div className="pt-4">
                             <h1 className="pb-2">Modules Added: </h1>
                             {
