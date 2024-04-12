@@ -1,8 +1,7 @@
-export default async function FetchFacultyList(semInfo: string) {
+export default async function FetchFacultyList() {
     try {
         const facultyListResponse = await fetch(
-            // `https://ntumodssa.blob.core.windows.net/ntumodssc/${semInfo}/faculty.json`,
-            "/data/fullData/faculty.json",
+            `https://ntumodssa.blob.core.windows.net/ntumodssc/faculty.json`,
             {
                 method: 'GET',
                 headers: {

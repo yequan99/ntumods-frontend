@@ -29,7 +29,7 @@ export default function CoursesPage() {
                 setLoading(false)
 
                 // get faculty list
-                const facultyData: ModuleMetaData[] = await FetchFacultyList("2023_2")
+                const facultyData: ModuleMetaData[] = await FetchFacultyList()
                 const faculties: SelectData[] = Object.values(facultyData).map((item: any) => ({
                     value: item.Faculty,
                     label: item.Faculty
