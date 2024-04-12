@@ -87,7 +87,7 @@ export default function CoursesPage() {
                                 <Modules modules={currentPosts} />
                             </div>
                             <div className="py-8">
-                                <Pagination onChange={(value) => setCurrentPage(value-1)} defaultCurrent={1} total={filteredData.length} />
+                                <Pagination onChange={(value) => setCurrentPage(value-1)} defaultCurrent={1} total={filteredData.length} showSizeChanger={false} />
                             </div>
                         </>
                         :
