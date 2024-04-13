@@ -29,7 +29,7 @@ export default function Timetable() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const moduleListData: ModuleMetaData[] = await FetchModuleList("2023_2")
+                const moduleListData: ModuleMetaData[] = await FetchModuleList()
                 moduleListData.sort((a,b) => a.code.localeCompare(b.code))
                 const listOfModules: SelectData[] = Object.values(moduleListData).map((item) => ({
                     value: item.code,
@@ -87,7 +87,7 @@ export default function Timetable() {
         const fetchModuleData = async () => {
             try {
                 // getting the new modules
-                const data: ModuleData = await FetchModuleData("2023_2", userModule)
+                const data: ModuleData = await FetchModuleData(userModule)
 
                 setSelectedModules(prevList => [...prevList, data])
 

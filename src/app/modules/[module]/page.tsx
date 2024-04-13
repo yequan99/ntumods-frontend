@@ -31,7 +31,7 @@ export default function Module({ params }: { params: { module: string } }) {
         // make API call to fetch module detail using modulecode
         const fetchModuleData = async () => {
             try {
-                const data: ModuleData = await FetchModuleData("2023_2", params.module)
+                const data: ModuleData = await FetchModuleData(params.module)
                 setNotFound(false)
                 setModuleDetails(data)
                 const parsedEvent: ScheduleEvent[] = ParseEventSchedule(data)

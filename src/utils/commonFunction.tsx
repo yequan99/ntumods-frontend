@@ -25,3 +25,15 @@ export function GetNumOfIntervals(startTime: number, endTime:number) {
 
     return numOfIntervals
 }
+
+export function GetSemInfo() {
+    const currentDate: Date = new Date()
+    const currentYear: number = currentDate.getFullYear()
+    const currentMonth = currentDate.getMonth() + 1
+
+    if (currentMonth > 8) {
+        return `${currentYear-1}_1`
+    } else {
+        return `${currentYear-1}_2`
+    }
+}

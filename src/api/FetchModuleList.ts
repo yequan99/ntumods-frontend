@@ -1,9 +1,10 @@
 import { ModuleMetaData } from "@/utils/types"
+import { GetSemInfo } from "@/utils/commonFunction"
 
-export default async function FetchModuleList(semInfo: string) {
+export default async function FetchModuleList() {
     try {
         const moduleListResponse = await fetch(
-            `https://ntumodssa.blob.core.windows.net/ntumodssc/${semInfo}/moduleList.json`,
+            `https://ntumodssa.blob.core.windows.net/ntumodssc/${GetSemInfo()}/moduleList.json`,
             {
                 method: 'GET',
                 headers: {

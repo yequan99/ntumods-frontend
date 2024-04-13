@@ -21,7 +21,7 @@ export default function CoursesPage() {
         const fetchData = async () => {
             try {
                 // get module list
-                const moduleData: ModuleMetaData[] = await FetchModuleList("2023_2")
+                const moduleData: ModuleMetaData[] = await FetchModuleList()
                 moduleData.sort((a,b) => a.code.localeCompare(b.code))
 
                 setModuleData(moduleData)

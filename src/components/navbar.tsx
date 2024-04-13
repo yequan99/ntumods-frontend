@@ -12,76 +12,60 @@ export default function NavBar() {
         { name: "Modules", icon: course, link:"/modules" }
     ]
 
-    const getSemesterInfo = (currentDate: Date) => {
-        // const currentDate: Date = new Date()
-        const currentYear = currentDate.getFullYear() % 100
-        const currentMonth = currentDate.getMonth() + 1
+    const getWeek = (currentDate: Date, semStartDate: Date) => {
+        let weeks = 0
+        let pointer: Date = semStartDate
 
-        if (currentMonth < 8) {
-            // sem 2
-            const january = 0
-            const firstDayOfJan = new Date(currentYear, january, 1)
-            const dayOfWeekOfFirstJan = firstDayOfJan.getDay()
-
-            let offset = 0
-            if (dayOfWeekOfFirstJan < 1) {
-                offset = 1 - dayOfWeekOfFirstJan // If the first day of January is Monday or Sunday, the second Monday is on the 8th
-            } else {
-                offset = 8 - dayOfWeekOfFirstJan // If the first day of January is any other day, the second Monday is on the 15th
-            }
-            const semStartDate = new Date(new Date().getFullYear(), january, offset + 7)
-            let weeks = 1
-            let pointer: Date = semStartDate
-
-            while (semStartDate < currentDate) {
+        while (pointer < currentDate) {
+            if (pointer < currentDate) {
                 weeks += 1
-                pointer.setDate(pointer.getDate() + 7)
             }
-            weeks -= 1
-            let currentWeek = ""
-            if (weeks <= 7) {
-                currentWeek = `Week ${weeks}`
-            } else if (weeks > 13){
-                currentWeek = "Reading/Exam Week"
-            } else if (weeks > 8) {
-                currentWeek = `Week ${weeks-1}`
-            } else {
-                currentWeek = "Recess Week"
-            }
+            pointer.setDate(pointer.getDate() + 7)
+        }
 
-            return `AY${currentYear-1}/${currentYear}, Semester 2, ${currentWeek}`
+        let currentWeek = ""
+        if (weeks <= 7) {
+            currentWeek = `Week ${weeks}`
+        } else if (weeks > 14){
+            currentWeek = "Reading/Exam Week"
+        } else if (weeks > 8) {
+            currentWeek = `Week ${weeks-1}`
         } else {
-            // sem 1
-            const august = 7
-            const firstDayOfAug = new Date(currentDate.getFullYear(), august, 1)
+            currentWeek = "Recess Week"
+        }
+
+        return currentWeek
+    }
+
+    const getSemesterInfo = (currentDate: Date) => {
+        const currentYear: number = currentDate.getFullYear()
+        const currentShortYear: number = currentYear % 100
+        const currentMonth = currentDate.getMonth() + 1
+    
+        if (currentMonth >= 8) {
+            // sem 1 (start in aug)
+            const firstDayOfAug = new Date(currentYear, 7, 1)
             const dayOfWeekOfFirstAug = firstDayOfAug.getDay()
-
-            let offset = 0
-            if (dayOfWeekOfFirstAug < 1) {
-                offset = 1 - dayOfWeekOfFirstAug // If the first day of January is Monday or Sunday, the second Monday is on the 8th
-            } else {
-                offset = 8 - dayOfWeekOfFirstAug // If the first day of January is any other day, the second Monday is on the 15th
-            }
-            const semStartDate = new Date(currentDate.getFullYear(), august, offset + 7)
-            let weeks = 1
-            let pointer: Date = semStartDate
-
-            while (pointer < currentDate) {
-                weeks += 1
-                pointer.setDate(pointer.getDate() + 7)
-            }
-            weeks -= 1
-            let currentWeek = ""
-            if (weeks <= 7) {
-                currentWeek = `Week ${weeks}`
-            } else if (weeks > 13){
-                currentWeek = "Reading/Exam Week"
-            } else if (weeks > 8) {
-                currentWeek = `Week ${weeks-1}`
-            } else {
-                currentWeek = "Recess Week"
-            }
-            return `AY${currentYear}/${currentYear+1}, Semester 1, ${currentWeek}`
+    
+            let offset: number = dayOfWeekOfFirstAug - 1
+    
+            const semStartDate = new Date(currentYear, 7, 15 - offset)
+            
+            const curWeek = getWeek(currentDate, semStartDate)
+    
+            return `AY${currentShortYear-1}/${currentShortYear}, Semester 1, ${curWeek}`
+        } else {
+            // sem 2 (start in jan)
+            const firstDayOfJan = new Date(currentYear, 0, 1)
+            const dayOfWeekOfFirstJan = firstDayOfJan.getDay()
+    
+            let offset: number = dayOfWeekOfFirstJan - 1
+    
+            const semStartDate = new Date(currentYear, 0, 15 - offset)
+            
+            const curWeek = getWeek(currentDate, semStartDate)
+    
+            return `AY${currentShortYear-1}/${currentShortYear}, Semester 2, ${curWeek}`
         }
     }
 
