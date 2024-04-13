@@ -124,14 +124,7 @@ export default function Timetable() {
     }
 
     const handleDelete = (moduleCode: string) => {
-        let newSelectedModules: ModuleData[] = []
-        selectedModules.forEach(module => {
-            if(module.code !== moduleCode) {
-                newSelectedModules.push(module)
-            }
-        })
-        setSelectedModules(newSelectedModules)
-        // setSelectedModules(selectedModules.filter(module => module.code !== moduleCode))
+        setSelectedModules(selectedModules.filter(module => module.code !== moduleCode))
 
         setDefaultValues(prevState => {
             const newMap = new Map(prevState)
