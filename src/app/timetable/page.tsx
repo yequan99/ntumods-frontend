@@ -124,7 +124,14 @@ export default function Timetable() {
     }
 
     const handleDelete = (moduleCode: string) => {
-        setSelectedModules(selectedModules.filter(module => module.code !== moduleCode))
+        let newSelectedModules: ModuleData[] = []
+        selectedModules.forEach(module => {
+            if(module.code !== moduleCode) {
+                newSelectedModules.push(module)
+            }
+        })
+        setSelectedModules(newSelectedModules)
+        // setSelectedModules(selectedModules.filter(module => module.code !== moduleCode))
 
         setDefaultValues(prevState => {
             const newMap = new Map(prevState)
@@ -289,7 +296,7 @@ export default function Timetable() {
                                 <div key={index} className="flex flex-row items-center justify-between pb-2">
                                     <h1>{module.code}</h1>
                                     <Select 
-                                        defaultValue={defaultValues.get(module.code)![0].label}
+                                        value={defaultValues.get(module.code)![0].label}
                                         options={getSelectOptions(module.schedule)}
                                         onChange={(selectedOption) => handleSelectIndex(module.code, selectedOption)}
                                     />
