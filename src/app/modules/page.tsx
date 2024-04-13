@@ -1,40 +1,67 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { Pagination, Divider, Skeleton } from 'antd';
+import { Pagination, Divider, Skeleton } from 'antd'
 
 import { ModuleMetaData, FilterData, SelectData } from "@/utils/types"
 import Modules from "./modules"
 import ModuleFilter from "./moduleFilters"
 import FetchModuleList from "@/api/FetchModuleList"
 import FetchFacultyList from "@/api/FetchFacultyList";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+
+const facultyCodeMap: Map<string, string> = new Map([
+    ["all", "All Faculties"]
+])
 
 export default function CoursesPage() {
+    const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+
     const [loading, setLoading] = useState<boolean>(true)
     const [moduleData, setModuleData] = useState<ModuleMetaData[]>([])
     const [filteredData, setFilteredData] = useState<ModuleMetaData[]>([])
-    const [filter, setFilter] = useState<FilterData>({query: "", faculty: "All Faculties"})
-    const [facultyList, setFacultyList] = useState<SelectData[]>([{ value: 'All Faculties', label: 'All Faculties' }])
+    const [filter, setFilter] = useState<FilterData>({query: "", faculty: "all"})
+    const [facultyList, setFacultyList] = useState<SelectData[]>([{ value: 'all', label: 'All Faculties' }])
     const [currentPage, setCurrentPage] = useState<number>(0)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // get module list
-                const moduleData: ModuleMetaData[] = await FetchModuleList()
-                moduleData.sort((a,b) => a.code.localeCompare(b.code))
-
-                setModuleData(moduleData)
-                setFilteredData(moduleData)
-                setLoading(false)
-
                 // get faculty list
-                const facultyData: ModuleMetaData[] = await FetchFacultyList()
+                const facultyData = await FetchFacultyList()
                 const faculties: SelectData[] = Object.values(facultyData).map((item: any) => ({
-                    value: item.Faculty,
+                    value: item.Code,
                     label: item.Faculty
                 }))
                 setFacultyList(prevList => [...prevList, ...faculties])
+                
+                Object.values(facultyData).map((faculty: any) => (
+                    facultyCodeMap.set(faculty.Code, faculty.Faculty)
+                ))
+                
+                // check for search params
+                const query = searchParams.get('query')
+                const faculty = searchParams.get('faculty')
+                
+                const prevFilter: FilterData = {query: query === null ? "" : query, faculty: faculty === null ? "all" : faculty}
+                setFilter(prevFilter)
+
+                // get module list
+                const newModuleData: ModuleMetaData[] = await FetchModuleList()
+                newModuleData.sort((a,b) => a.code.localeCompare(b.code))
+
+                setModuleData(newModuleData)
+
+                if (query === null && faculty === null) {
+                    setFilteredData(newModuleData)
+                } else {
+                    const newFilteredData: ModuleMetaData[] = handleFilter(newModuleData, prevFilter)
+                    setFilteredData(newFilteredData)
+                }
+                
+                setLoading(false)
             } catch (error) {
                 console.error('Error fetching data:', error)
             }
@@ -44,16 +71,28 @@ export default function CoursesPage() {
 
     // filter modules by query
     useEffect(() => {
+        const newFilteredData: ModuleMetaData[] = handleFilter(moduleData, filter)
+        setFilteredData(newFilteredData)
+        setCurrentPage(0)
+        if (filter.query !== "" && filter.faculty !== "") {
+            router.push(pathname + '?' + `query=${filter.query}` + '&' + `faculty=${filter.faculty}`)
+        } else if (filter.query !== "") {
+            router.push(pathname + '?' + `query=${filter.query}`)
+        } else {
+            router.push(pathname + '?' + `faculty=${filter.faculty}`)
+        }
+    }, [filter])
+
+    const handleFilter = (prefilteredData: ModuleMetaData[], chosenFilter: FilterData) => {
         let filterQueryData: ModuleMetaData[] = []
-        for (const modData of moduleData) {
-            if ((filter.faculty === "All Faculties" || filter.faculty === modData.faculty.Faculty) && 
-                (filter.query === "" || modData.module.toLowerCase().includes(filter.query.toLowerCase()) || modData.code.toLowerCase().includes(filter.query.toLowerCase()) )) {
-                filterQueryData.push(modData)
+        for (const preData of prefilteredData) {
+            if ((facultyCodeMap.get(chosenFilter.faculty) === "All Faculties" || facultyCodeMap.get(chosenFilter.faculty) === preData.faculty.Faculty) && 
+                (chosenFilter.query === "" || preData.module.toLowerCase().includes(chosenFilter.query.toLowerCase()) || preData.code.toLowerCase().includes(chosenFilter.query.toLowerCase()) )) {
+                filterQueryData.push(preData)
             }
         }
-        setFilteredData(filterQueryData)
-        setCurrentPage(0)
-    }, [filter])
+        return filterQueryData
+    }
 
     // Getting current posts based on pagination
     const postsPerPage: number = 10

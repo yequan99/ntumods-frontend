@@ -18,7 +18,7 @@ export default function ModuleFilter({facultyList, filter, setFilter}:{facultyLi
                 ...prevFilter,
                 query: e.target.value
             }))
-        }, 1000) 
+        }, 0) 
     }
 
     const handleFacultyChange = (selectedOptions: string) => {
@@ -32,7 +32,8 @@ export default function ModuleFilter({facultyList, filter, setFilter}:{facultyLi
         <div className="grid grid-cols-6 gap-4 h-10">
             <div className="col-span-4">
                 <Input 
-                    className="w-full h-full" 
+                    className="w-full h-full"
+                    value={filter.query}
                     placeholder="Search for module name or code" 
                     allowClear={true}
                     onChange={(e) => handleQueryChange(e)}
