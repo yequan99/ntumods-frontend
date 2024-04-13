@@ -8,6 +8,7 @@ import Schedule from "@/components/schedule"
 import { CalculateGridRow } from "@/utils/commonFunction"
 import Reviews from "./reviews"
 import FetchReviews from "@/api/FetchReviews"
+import FetchModuleData from "@/api/FetchModuleData"
 
 const bgColor: Record<string, string> = {
     "LEC/STUDIO": "pink",
@@ -28,8 +29,7 @@ export default function Module({ params }: { params: { module: string } }) {
         // make API call to fetch module detail using modulecode
         const fetchModuleData = async () => {
             try {
-                const response = await fetch(`/data/fullData/moduleData/${params.module}.json`)
-                const data: ModuleData = await response.json()
+                const data: ModuleData = await FetchModuleData("2023_2", params.module)
 
                 setModuleDetails(data)
                 const parsedEvent: ScheduleEvent[] = ParseEventSchedule(data)

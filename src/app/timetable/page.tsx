@@ -8,6 +8,8 @@ import Schedule from "@/components/schedule"
 import { ScheduleEvent, SelectData, ModuleMetaData, ModuleData, ScheduleData } from "@/utils/types"
 import { deleteIcon } from "@/utils/icons"
 import { CalculateGridRow } from "@/utils/commonFunction"
+import FetchModuleList from "@/api/FetchModuleList"
+import FetchModuleData from "@/api/FetchModuleData";
 
 const colors: string[] = ["blue", "green", "yellow", "purple", "indigo", "gray", "lime", "emerald", "teal", "cyan", "pink"]
 type NotificationPlacement = NotificationArgsProps['placement']
@@ -27,8 +29,7 @@ export default function Timetable() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const moduleResponse = await fetch('/data/fullData/moduleList.json')
-                const moduleListData: ModuleMetaData[] = await moduleResponse.json()
+                const moduleListData: ModuleMetaData[] = await FetchModuleList("2023_2")
                 moduleListData.sort((a,b) => a.code.localeCompare(b.code))
                 const listOfModules: SelectData[] = Object.values(moduleListData).map((item) => ({
                     value: item.code,
@@ -83,8 +84,7 @@ export default function Timetable() {
         const fetchModuleData = async () => {
             try {
                 // getting the new modules
-                const response = await fetch(`/data/fullData/moduleData/${userModule}.json`)
-                const data: ModuleData = await response.json()
+                const data: ModuleData = await FetchModuleData("2023_2", userModule)
 
                 setSelectedModules(prevList => [...prevList, data])
 

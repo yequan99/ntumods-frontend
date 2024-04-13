@@ -45,7 +45,8 @@ export type ModuleData = {
     faculty: FacultyData,
     notOfferedAsBDE: boolean,
     exam: ExamData,
-    schedule: ScheduleData[]
+    schedule: ScheduleData[],
+    teachingWeeks: number[]
 }
 
 export type ModuleInfo = {

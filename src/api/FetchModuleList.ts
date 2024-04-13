@@ -2,7 +2,6 @@ import { ModuleMetaData } from "@/utils/types"
 
 export default async function FetchModuleList(semInfo: string) {
     try {
-        console.log("called fetchmodulelist")
         const moduleListResponse = await fetch(
             `https://ntumodssa.blob.core.windows.net/ntumodssc/${semInfo}/moduleList.json`,
             {
