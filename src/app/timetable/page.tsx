@@ -49,21 +49,24 @@ export default function Timetable() {
         allEvents.forEach(events => {
             if (clashMap.has(events.DayOfWeek)) {
                 const dayList: ScheduleEvent[] = clashMap.get(events.DayOfWeek)!
-                var clash: boolean = false
+                var overlap: boolean = false
                 for (let i = 0; i < dayList.length; i++) {
-                    if (checkOverlap(events, dayList[i])) {
-                        dayList[i].BgColour = "red"
+                    const result = checkClash(events, dayList[i])
+                    if ((result === "clash") || (result === "overlap")) {
+                        dayList[i].BgColour = result === "clash" ? "red" : "white"
                         dayList[i].GridRow = CalculateGridRow(getStartTime(dayList[i].StartTime, events.StartTime), getEndTime(dayList[i].EndTime, events.EndTime))
                         dayList[i].ClashData = [
                             {Code: dayList[i].Code!, Index: dayList[i].Index, ClassType: dayList[i].ClassType, IndexGroup: dayList[i].IndexGroup, StartTime: dayList[i].StartTime, EndTime: dayList[i].EndTime, Remarks: dayList[i].Remarks},
                             {Code: events.Code!, Index: events.Index, ClassType: events.ClassType, IndexGroup: events.IndexGroup, StartTime: events.StartTime, EndTime: events.EndTime, Remarks: events.Remarks}
                         ]
-                        clash = true
-                        openNotification('topRight',dayList[i].Code!, events.Code!, events.DayOfWeek)
+                        overlap = true
+                        if (result === "clash") {
+                            openNotification('topRight',dayList[i].Code!, events.Code!, events.DayOfWeek)
+                        }
                         break
                     }
                 }
-                if (!clash) {
+                if (!overlap) {
                     events.BgColour = getColour(events.Code!)
                     events.GridRow = CalculateGridRow(events.StartTime, events.EndTime)
                     events.ClashData = undefined
@@ -172,7 +175,8 @@ export default function Timetable() {
                     Remarks: [{ Venue: eventSchedule.venue, Remarks: eventSchedule.remarks.replace("Teaching ", "") }],
                     DayOfWeek: eventSchedule.dayOfWeek,
                     GridRow: CalculateGridRow(eventSchedule.startTime, eventSchedule.endTime),
-                    BgColour: getColour(data.code)
+                    BgColour: getColour(data.code),
+                    TeachingWeeks: eventSchedule.teachingWeeks
                 }
                 let found: boolean = false
                 for (let i = 0; i < eventList.length; i++) {
@@ -224,16 +228,23 @@ export default function Timetable() {
         }
     }
 
-    const checkOverlap = (newEvent: ScheduleEvent, curEvent: ScheduleEvent) => {
+    const checkClash = (newEvent: ScheduleEvent, curEvent: ScheduleEvent) => {
         const newStart: number = parseInt(newEvent.StartTime)
         const newEnd: number = parseInt(newEvent.EndTime)
         const curStart: number = parseInt(curEvent.StartTime)
         const curEnd: number = parseInt(curEvent.EndTime)
 
         if ((newStart >= curStart && newStart < curEnd) || (curStart >= newStart && curStart < newEnd)) {
-            return true
+            const intersectionWeeks: number[] = newEvent.TeachingWeeks!.filter(week => curEvent.TeachingWeeks!.includes(week))
+            if (newEvent.TeachingWeeks?.length === 0 || curEvent.TeachingWeeks?.length === 0 ) {
+                return "clash"
+            } else if (intersectionWeeks.length === 0) {
+                return "overlap"
+            } else {
+                return "clash"
+            }
         } else {
-            return false
+            return "No clash"
         }
     }
 

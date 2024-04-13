@@ -45,8 +45,7 @@ export type ModuleData = {
     faculty: FacultyData,
     notOfferedAsBDE: boolean,
     exam: ExamData,
-    schedule: ScheduleData[],
-    teachingWeeks: number[]
+    schedule: ScheduleData[]
 }
 
 export type ModuleInfo = {
@@ -62,7 +61,8 @@ export type ScheduleData = {
     index: string,
     indexGroup: string,
     dayOfWeek: string,
-    remarks: string
+    remarks: string,
+    teachingWeeks: number[]
 }
 
 export type RemarksData = {
@@ -81,6 +81,7 @@ export type ScheduleEvent = {
     DayOfWeek: string,
     GridRow: string[],
     BgColour: string,
+    TeachingWeeks?: number[],
     ClashData?: ClashData[]
 }
 

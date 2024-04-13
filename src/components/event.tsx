@@ -23,7 +23,7 @@ export default function Event({scheduleEvents}: {scheduleEvents: ScheduleEvent[]
                     style={{ gridRow: `${eventSchedule.GridRow[0]} / span ${eventSchedule.GridRow[1]}`}}
                 >
                     <div 
-                        className={`absolute inset-1 flex flex-col overflow-y-auto rounded-lg p-2 text-xs leading-5 ${neutralColour[eventSchedule.BgColour]}`}
+                        className={`absolute inset-1 flex flex-col overflow-y-auto rounded-lg p-2 text-xs leading-5 ${neutralColour[eventSchedule.BgColour]} ${eventSchedule.BgColour === "white" ? "border-slate-200 border-2" : ""}`}
                     >
                         {
                             eventSchedule.ClashData !== undefined ?
@@ -99,5 +99,6 @@ const neutralColour: Record<string, string> = {
     "emerald": "bg-emerald-300",
     "teal": "bg-teal-300",
     "cyan": "bg-cyan-300",
-    "red": "bg-red-400"
+    "red": "bg-red-400",
+    "white": "bg-white"
 }
