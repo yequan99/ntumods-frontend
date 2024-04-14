@@ -272,11 +272,11 @@ export default function Timetable() {
     return(
         <>
             {contextHolder}
-            <div className="w-full h-full flex flex-row">
-                <div className="w-[80%] h-full pr-4">
+            <div className="w-full h-full flex flex-col md:flex-row">
+                <div className="w-full md:w-[80%] pr-0 md:pr-4 h-[60%] md:h-full">
                     <Schedule events={selectedIndex} />
                 </div>
-                <div className="w-[20%] h-full">
+                <div className="w-full md:w-[20%] h-[40%] md:h-full mt-4 md:mt-0">
                     <div className="w-full">
                         <Select
                             className="w-full mb-2"
@@ -310,7 +310,7 @@ export default function Timetable() {
                         <Divider />
                         <div>
                             <h1 className="pb-2">Exam Schedules: </h1>
-                            <table className="table-fixed mt-4 border-collapse border border-gray-200">
+                            <table className="table-fixed mt-4 mb-4 border-collapse border border-gray-200">
                                 <tbody>
                                     {selectedModules.map((exam,index) => (
                                         <tr key={index}>
