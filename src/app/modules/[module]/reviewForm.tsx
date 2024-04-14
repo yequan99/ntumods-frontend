@@ -51,7 +51,7 @@ export default function ReviewForm({type}: {type: string}) {
                 autoSize={{ minRows: 5, maxRows: 5 }}
             />
             <div className="w-full flex flex-row justify-between">
-                <div className="mt-2">
+                <div className="mt-2 w-full mr-2 md:w-fit md:mr-0">
                     <Input 
                         onChange={(e) => updateReviewForm("name", e.target.value)}
                         status={isNameEmpty ? "error" : ""} 

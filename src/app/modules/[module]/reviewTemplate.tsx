@@ -35,7 +35,7 @@ export default function ReviewTemplate({isMainThread, mainThreadReviews}: {isMai
                             <Divider type="vertical" className="bg-slate-400 h-20 mt-6" />
                         </div>
                     </div>
-                    <div className="w-[95%] pl-2 h-full">
+                    <div className="w-[95%] pl-6 md:pl-2 h-full">
                         <p className="text-blue-800 font-medium text-xl">{mainThread.Author}</p>
                         <p className="text-slate-500 text-sm italic pb-4">{getDateDiff(new Date(mainThread.Date * 1000))}</p>
                         <p className="pb-2">{mainThread.Comment}</p>
