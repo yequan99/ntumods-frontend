@@ -45,6 +45,7 @@ export default function Timetable() {
 
     useEffect(() => {
         const allEvents: ScheduleEvent[] = Array.from(selectedEvents.values()).reduce((acc, current) => { return acc.concat(current)}, [])
+        console.log(allEvents)
         const clashMap: Map<string, ScheduleEvent[]> = new Map()
         allEvents.forEach(events => {
             if (clashMap.has(events.DayOfWeek)) {
@@ -187,6 +188,9 @@ export default function Timetable() {
                 for (let i = 0; i < eventList.length; i++) {
                     if (eventList[i].ClassType === newEvent.ClassType && eventList[i].DayOfWeek === newEvent.DayOfWeek && eventList[i].StartTime === newEvent.StartTime && eventList[i].EndTime === newEvent.EndTime) {
                         eventList[i].Remarks.push(...newEvent.Remarks)
+                        const mergedWeeksArray: number[] = eventList[i].TeachingWeeks!.concat(newEvent.TeachingWeeks!)
+                        const mergedWeekSet = new Set(mergedWeeksArray)
+                        eventList[i].TeachingWeeks = Array.from(mergedWeekSet)
                         found = true
                     }
                 }
