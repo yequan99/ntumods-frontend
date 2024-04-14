@@ -119,25 +119,25 @@ export default function Module({ params }: { params: { module: string } }) {
                 </div>
                 :
                 <div className="w-full h-full flex flex-row">
-                    <div className="w-[80%]">
+                    <div className="w-full md:w-[80%]">
                         <div id="details" className="h-fit pb-16">
-                            <h1 className="font-bold text-4xl text-blue-800">
+                            <h1 className="font-bold text-2xl md:text-4xl text-blue-800">
                                 {moduleDetails?.code}
                             </h1>
-                            <h1 className="text-slate-500 font-bold text-3xl pt-2">
+                            <h1 className="text-slate-500 font-bold text-xl md:text-3xl pt-2">
                                 {moduleDetails?.title}
                             </h1>
                             <div className="flex flex-row mt-4 divide-x divide-slate-400 text-slate-800">
                                 <h1 className="pr-2">{moduleDetails?.faculty.Faculty} ({moduleDetails?.faculty.Code})</h1>
                                 <h1 className="pl-2">{moduleDetails?.au} AU</h1>
                             </div>
-                            <p className="pt-4">{moduleDetails?.description}</p>
+                            <p className="pt-4 text-justify">{moduleDetails?.description}</p>
                             <table className="table-fixed w-full mt-8 border-collapse border border-gray-200">
                                 <tbody>
                                     {moduleInfo.map((detail,index) => (
                                         <tr key={index}>
                                             <td className="border border-gray-400 px-4 py-2">{detail.title}</td>
-                                            <td className="border border-gray-400 px-4 py-2">{detail.data === "" ? "N/A" : detail.data}</td>
+                                            <td className="border border-gray-400 px-4 py-2 break-all whitespace-normal">{detail.data === "" ? "N/A" : detail.data}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -164,7 +164,7 @@ export default function Module({ params }: { params: { module: string } }) {
                             <Reviews reviews={reviews} />
                         </div>
                     </div>
-                    <div className="fixed right-0 w-[20%]">
+                    <div className="hidden md:block md:fixed md:right-0 md:w-[20%]">
                         <Anchor
                             targetOffset={112}
                             items={[

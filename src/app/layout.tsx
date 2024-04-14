@@ -23,7 +23,7 @@ export default function RootLayout({
           <div className="fixed h-16 px-0 md:px-36 w-screen bg-white shadow shadow-slate-200 z-50">
             <NavBar />
           </div>
-          <main className="mt-8 md:mt-16 px-8 md:px-36 p-12 h-full z-0">
+          <main className="mt-8 md:mt-16 px-8 md:px-36 p-12 w-full h-full z-0">
             {children}
           </main>
         </div>
