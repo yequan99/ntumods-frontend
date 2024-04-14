@@ -21,7 +21,7 @@ export default function Timetable() {
     const [userModule, setUserModule] = useState<string>("")
     const [dropdownValue, setDropdownValue] = useState<SelectData | null | undefined>(null)
     const [moduleList, setModuleList] = useState<SelectData[]>([])
-    const [defaultValues, setDefaultValues] = useState<Map<string, SelectData[]>>(new Map())
+    const [defaultValues, setDefaultValues] = useState<Map<string, SelectData>>(new Map())
     const [colourMap, setColourMap] = useState<Map<string, string>>(new Map())
     const [colourIndex, setColourIndex] = useState<number>(0)
     const [api, contextHolder] = notification.useNotification();
@@ -101,7 +101,7 @@ export default function Timetable() {
 
                 setDefaultValues(prevState => {
                     const newMap = new Map(prevState)
-                    newMap.set(data.code, uniqueIndexList)
+                    newMap.set(data.code, uniqueIndexList[0])
                     return newMap
                 })
 
@@ -145,6 +145,11 @@ export default function Timetable() {
         const newMap = new Map(selectedEvents)
         newMap.set(moduleCode, eventList)
         setSelectedEvents(newMap)
+
+        // set default value
+        const defaultValueMap = new Map(defaultValues)
+        defaultValueMap.set(moduleCode, { value: index, label: index })
+        setDefaultValues(defaultValueMap)
     }
 
     const handleDropdown = (option: SelectData) => {
@@ -289,7 +294,8 @@ export default function Timetable() {
                                 <div key={index} className="flex flex-row items-center justify-between pb-2">
                                     <h1>{module.code}</h1>
                                     <Select 
-                                        value={defaultValues.get(module.code)![0].label}
+                                        defaultValue={defaultValues.get(module.code)!.label}
+                                        value={defaultValues.get(module.code)!.label}
                                         options={getSelectOptions(module.schedule)}
                                         onChange={(selectedOption) => handleSelectIndex(module.code, selectedOption)}
                                     />
