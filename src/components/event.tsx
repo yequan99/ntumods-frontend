@@ -13,13 +13,13 @@ export default function Event({scheduleEvents}: {scheduleEvents: ScheduleEvent[]
 
     return (
         <ol
-            className="col-start-1 col-end-2 row-start-1 grid grid-cols-1 sm:grid-cols-5 sm:pr-8"
+            className="col-start-1 col-end-2 row-start-1 grid grid-cols-5 pr-8"
             style={{ gridTemplateRows: '1.75rem repeat(288, minmax(0, 1fr)) auto' }}
         >
             {eventData.map((eventSchedule,index) => (
                 <li 
                     key={index} 
-                    className={`relative mt-px flex sm:${dayColumn[eventSchedule.DayOfWeek]}`} 
+                    className={`relative mt-px flex ${dayColumn[eventSchedule.DayOfWeek]}`} 
                     style={{ gridRow: `${eventSchedule.GridRow[0]} / span ${eventSchedule.GridRow[1]}`}}
                 >
                     <div 

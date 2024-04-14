@@ -7,11 +7,11 @@ export default function Schedule({events}: {events: ScheduleEvent[]}) {
     return (
         <div className="flex h-full flex-col">
             <div className="isolate flex flex-auto flex-col overflow-auto bg-white">
-                <div style={{ width: '165%' }} className="flex max-w-full flex-none flex-col sm:max-w-none md:max-w-full">
+                <div style={{ width: '165%' }} className="flex flex-none flex-col max-w-none md:max-w-full">
                     <div
-                        className="sticky top-0 z-30 flex-none bg-white shadow ring-1 ring-black ring-opacity-5 sm:pr-8"
+                        className="sticky top-0 z-30 flex-none bg-white shadow ring-1 ring-black ring-opacity-5 pr-8"
                     >
-                        <div className="-mr-px hidden grid-cols-5 divide-x divide-gray-100 border-r border-gray-100 text-sm leading-6 text-gray-500 sm:grid">
+                        <div className="-mr-px grid grid-cols-5 divide-x divide-gray-100 border-r border-gray-100 text-sm leading-6 text-gray-500">
                             <div className="col-end-1 w-14" />
                             <div className="flex items-center justify-center py-3">
                                 <span>Mon</span>
@@ -132,7 +132,7 @@ export default function Schedule({events}: {events: ScheduleEvent[]}) {
                             </div>
 
                             {/* Vertical lines */}
-                            <div className="col-start-1 col-end-2 row-start-1 hidden grid-cols-5 grid-rows-1 divide-x divide-gray-100 sm:grid sm:grid-cols-5">
+                            <div className="col-start-1 col-end-2 row-start-1 grid-rows-1 divide-x divide-gray-100 grid grid-cols-5">
                                 <div className="col-start-1 row-span-full" />
                                 <div className="col-start-2 row-span-full" />
                                 <div className="col-start-3 row-span-full" />

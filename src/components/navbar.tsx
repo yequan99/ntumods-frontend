@@ -76,7 +76,7 @@ export default function NavBar() {
                 <ul className="flex">
                     {tabs.map((item,index) => (
                         <Link key={index} href={item.link}>
-                            <li className={`flex flex-row items-center py-2 pr-4 md:pr-2 sm:ml-8 lg:ml-0 sm:mr-0 lg:mr-8 hover:cursor-pointer ${pathname.toLowerCase().includes(item.name.toLowerCase()) ? 'text-blue-800' : ''}`} >
+                            <li className={`flex flex-row items-center py-2 pr-4 md:pr-2 ml-8 lg:ml-0 sm:mr-0 lg:mr-8 hover:cursor-pointer ${pathname.toLowerCase().includes(item.name.toLowerCase()) ? 'text-blue-800' : ''}`} >
                                 <div className="w-6 h-6">
                                     {item.icon}
                                 </div>
