@@ -8,21 +8,25 @@ import Modules from "./modules"
 import ModuleFilter from "./moduleFilters"
 import FetchModuleList from "@/api/FetchModuleList"
 import FetchFacultyList from "@/api/FetchFacultyList";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const facultyCodeMap: Map<string, string> = new Map([
     ["all", "All Faculties"]
 ])
 
-export default function CoursesPage() {
+type ParamType = {
+    faculty: string,
+    query: string
+}
+
+export default function CoursesPage({ searchParams }: {searchParams: ParamType}) {
     const router = useRouter()
     const pathname = usePathname()
-    const searchParams = useSearchParams()
 
     const [loading, setLoading] = useState<boolean>(true)
     const [moduleData, setModuleData] = useState<ModuleMetaData[]>([])
     const [filteredData, setFilteredData] = useState<ModuleMetaData[]>([])
-    const [filter, setFilter] = useState<FilterData>({query: "", faculty: "all"})
+    const [filter, setFilter] = useState<FilterData>({query: (searchParams.query === undefined || searchParams.query === "") ? "" : searchParams.query, faculty: (searchParams.faculty === undefined || searchParams.faculty === "") ? "all" : searchParams.faculty})
     const [facultyList, setFacultyList] = useState<SelectData[]>([{ value: 'all', label: 'All Faculties' }])
     const [currentPage, setCurrentPage] = useState<number>(0)
 
@@ -42,10 +46,10 @@ export default function CoursesPage() {
                 ))
                 
                 // check for search params
-                const query = searchParams.get('query')
-                const faculty = searchParams.get('faculty')
-                
-                const prevFilter: FilterData = {query: query === null ? "" : query, faculty: faculty === null ? "all" : faculty}
+                const query: string = searchParams.query
+                const faculty: string = searchParams.faculty
+
+                const prevFilter: FilterData = {query: (query === undefined || query === "") ? "" : query, faculty: (faculty === undefined || faculty === "") ? "all" : faculty}
                 setFilter(prevFilter)
 
                 // get module list
