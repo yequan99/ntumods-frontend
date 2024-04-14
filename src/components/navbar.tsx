@@ -71,23 +71,23 @@ export default function NavBar() {
 
     return (
         <div className="h-full w-full flex flex-row items-center justify-between">
-            <Link className="hover:cursor-pointer text-2xl" href="/">NTUMODS</Link>
-            <div className="flex flex-row items-center divide-x divide-slate-400">
+            <Link className="hover:cursor-pointer pl-4 md:pl-0 text-base sm:text-xl lg:text-2xl" href="/">NTUMODS</Link>
+            <div className="flex flex-row items-center divide-x divide-slate-400 pr-4 md:pl-0">
                 <ul className="flex">
                     {tabs.map((item,index) => (
                         <Link key={index} href={item.link}>
-                            <li className={`flex flex-row items-center py-2 pr-2 mr-8 hover:cursor-pointer ${pathname.toLowerCase().includes(item.name.toLowerCase()) ? 'text-blue-800' : ''}`} >
+                            <li className={`flex flex-row items-center py-2 pr-4 md:pr-2 sm:ml-8 lg:ml-0 sm:mr-0 lg:mr-8 hover:cursor-pointer ${pathname.toLowerCase().includes(item.name.toLowerCase()) ? 'text-blue-800' : ''}`} >
                                 <div className="w-6 h-6">
                                     {item.icon}
                                 </div>
-                                <h1 className="pl-2">
+                                <h1 className="pl-2 hidden sm:block">
                                     {item.name}
                                 </h1>
                             </li>
                         </Link>
                     ))}
                 </ul>
-                <h1 className="text-sm pl-4 text-slate-800">
+                <h1 className="text-sm pl-0 lg:pl-4 text-slate-800 hidden lg:block">
                     {getSemesterInfo(new Date())}
                 </h1>
             </div>
