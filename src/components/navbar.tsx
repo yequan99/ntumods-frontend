@@ -70,9 +70,9 @@ export default function NavBar() {
     }
 
     return (
-        <div className="h-full w-full flex flex-row items-center justify-between">
-            <Link className="hover:cursor-pointer pl-4 md:pl-0 text-base sm:text-xl lg:text-2xl" href="/">NTUMODS</Link>
-            <div className="flex flex-row items-center divide-x divide-slate-400 pr-4 md:pl-0">
+        <div className="h-full w-full flex flex-col md:flex-row items-center justify-between divide-y divide-slate-200 md:divide-y-0">
+            <Link className="hover:cursor-pointer pl-4 md:pl-0 text-base md:text-xl lg:text-2xl" href="/">NTUMODS</Link>
+            <div className="w-full flex flex-row justify-around md:justify-end items-center divide-x divide-slate-400 pr-4 md:pl-0">
                 <ul className="flex">
                     {tabs.map((item,index) => (
                         <Link key={index} href={item.link}>
@@ -80,7 +80,7 @@ export default function NavBar() {
                                 <div className="w-6 h-6">
                                     {item.icon}
                                 </div>
-                                <h1 className="pl-2 hidden sm:block">
+                                <h1 className="pl-2 text-sm">
                                     {item.name}
                                 </h1>
                             </li>
