@@ -118,12 +118,14 @@ export default function CoursesPage({ searchParams }: {searchParams: ParamType})
                 </div>
                 :
                 <div className="w-full h-full flex flex-col items-center">
-                    <div className="w-full">
+                    <div className="w-full h-fit pb-16 lg:pb-0">
                         <ModuleFilter facultyList={facultyList} filter={filter} setFilter={setFilter} />
                     </div>
-                    <Divider className="w-full" orientation="right" plain orientationMargin="0">
-                        {filteredData.length} courses found
-                    </Divider>
+                    <div className="w-full hidden lg:block">
+                        <Divider className="w-full" orientation="right" plain orientationMargin="0">
+                            {filteredData.length} courses found
+                        </Divider>
+                    </div>
                     {filteredData.length > 0 ? 
                         <>
                             <div className="w-full">

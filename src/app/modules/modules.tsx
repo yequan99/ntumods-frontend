@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Modules({modules}: {modules: ModuleMetaData[]}) {
 
     return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col gap-y-4 md:grid md:grid-cols-2 md:gap-4">
             {modules.map((item,index) => (
                 <Link key={index} href={`/modules/${item.code}`}>
                     <div className="h-fit border-2 border-slate-200 rounded-md p-4 cursor-pointer hover:-translate-y-1.5 transition-all ease-in-out">
