@@ -75,7 +75,7 @@ export default function CoursesPage() {
         setFilteredData(newFilteredData)
         setCurrentPage(0)
         if (filter.query !== "" && filter.faculty !== "") {
-            router.push(pathname + '?' + `query=${filter.query}` + '&' + `faculty=${filter.faculty}`)
+            router.push(pathname + '?' + `faculty=${filter.faculty}` + '&' + `query=${filter.query}`)
         } else if (filter.query !== "") {
             router.push(pathname + '?' + `query=${filter.query}`)
         } else {
