@@ -108,3 +108,23 @@ export type SubThreadReviewData = ReviewData
 export interface ThreadReviewData extends ReviewData {
     SubThreads?: SubThreadReviewData[]
 }
+
+export type SelectedModuleData = {
+    Code: string,
+    Title: string,
+    SelectedIndex: SelectData,
+    IndexList: SelectData[],
+    Exam: ExamData,
+    Schedule: ScheduleData[]
+}
+
+export type TimetableStorageData = {
+    Modules: StoreModuleData[],
+    ColourMap: Map<string, string>,
+    ColourIndex: number
+}
+
+export type StoreModuleData = {
+    Code: SelectData | null,
+    Index: SelectData
+}
