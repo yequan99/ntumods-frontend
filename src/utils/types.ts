@@ -125,6 +125,6 @@ export type TimetableStorageData = {
 }
 
 export type StoreModuleData = {
-    Code: SelectData | null,
+    Code: string | null,
     Index: SelectData
 }

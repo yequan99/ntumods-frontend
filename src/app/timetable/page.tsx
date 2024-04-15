@@ -35,7 +35,7 @@ export default function Timetable() {
     const [selectedEvents, setSelectedEvents] = useState<ScheduleEvent[]>([])
     const [moduleList, setModuleList] = useState<SelectData[]>([])
     const [selectedModules, setSelectedModules] = useState<SelectedModuleData[]>([])
-    const [selectedDropdown, setSelectedDropdown] = useState<SelectData | null>(null)
+    const [selectedDropdown, setSelectedDropdown] = useState<string | null>(null)
     const [colourMap, setColourMap] = useState<Map<string, string>>(new Map())  // need to store in local storage
     const [colourIndex, setColourIndex] = useState<number>(0)   // need to store in local storage
     const [api, contextHolder] = notification.useNotification()
@@ -57,15 +57,14 @@ export default function Timetable() {
         fetchModuleListData()
 
         // fetch local storage and load it
-        // const savedItems: TimetableStorageData | null = getLocalStorage()
-        // console.log("cached: ", savedItems)
-        // if (savedItems !== null) {
-        //     setColourIndex(savedItems.ColourIndex)
-        //     setColourMap(savedItems.ColourMap)
-        //     {savedItems.Modules.forEach(module => {
-        //         handleSelectModule(module.Code, module.Index)
-        //     })}
-        // }
+        const savedItems: TimetableStorageData | null = getLocalStorage()
+        if (savedItems !== null) {
+            setColourIndex(savedItems.ColourIndex)
+            setColourMap(savedItems.ColourMap)
+            {savedItems.Modules.forEach(module => {
+                handleSelectModule(module.Code, module.Index)
+            })}
+        }
     }, [])
 
     useEffect(() => {
@@ -109,7 +108,7 @@ export default function Timetable() {
         setParsedEvents(ParsedSchedules)
     }, [selectedEvents])
 
-    const handleSelectModule = (module: SelectData | null, savedIndex?: SelectData) => {
+    const handleSelectModule = (module: string | null, savedIndex?: SelectData) => {
         const fetchModuleData = async () => {
             try {
                 // fetching the module data
@@ -217,7 +216,7 @@ export default function Timetable() {
         setSelectedEvents(newParsedList)
 
         // update local storage
-        const storeObject: StoreModuleData = { Code: {label: moduleCode, value: moduleCode}, Index: index }
+        const storeObject: StoreModuleData = { Code: moduleCode, Index: {label: index.toString(), value: index.toString()} }
         const storedData: TimetableStorageData | null = getLocalStorage()!
         const findIndex = storedData!.Modules.findIndex(item => item.Code === storeObject.Code)
         if (findIndex !== -1) {
@@ -338,7 +337,7 @@ export default function Timetable() {
                             className="w-full mb-2"
                             showSearch
                             value={selectedDropdown}
-                            onChange={(option) => setSelectedDropdown(option)}
+                            onChange={(option) => setSelectedDropdown(option.toString())}
                             placeholder="Input module"
                             options={moduleList}
                             filterOption={filterOption}
