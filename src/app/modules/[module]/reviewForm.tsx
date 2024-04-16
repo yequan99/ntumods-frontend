@@ -1,15 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Input, Button, notification } from 'antd'
-import type { NotificationArgsProps } from 'antd'
+import { Input, Button } from 'antd'
 import { v4 as uuidv4 } from 'uuid'
 
 import PostReview from '@/api/PostReview'
 import PostReply from '@/api/PostReply'
 import { PostReviewData, PostReplyData, StoreUserData } from '@/utils/types'
-
-type NotificationPlacement = NotificationArgsProps['placement']
+import { tick } from '@/utils/icons'
 
 const getLocalStorage = () => {
     if (typeof window !== undefined) {
@@ -35,7 +33,7 @@ export default function ReviewForm({reviewId, module}: {reviewId?: string, modul
     const [user, setUser] = useState<StoreUserData | null>(null)
     const [isNameEmpty, setIsNameEmpty] = useState<boolean>(false)
     const [isReviewEmpty, setIsReviewEmpty] = useState<boolean>(false)
-    const [api, contextHolder] = notification.useNotification()
+    const [submitted, setSubmitted] = useState<boolean>(false)
 
     const { TextArea } = Input
 
@@ -77,6 +75,7 @@ export default function ReviewForm({reviewId, module}: {reviewId?: string, modul
                 const postReply = await PostReply(replyData)
             }
             // get uuid
+            setSubmitted(true)
             var retrievedUUID: string = ""
             var retrievedName: string = ""
             if (user !== null) {
@@ -99,22 +98,12 @@ export default function ReviewForm({reviewId, module}: {reviewId?: string, modul
             
             setUser({uuid: retrievedUUID, username: retrievedName})
             setReview("")
-            openNotification('topRight')
             window.location.reload()
         }
     }
 
-    const openNotification = (placement: NotificationPlacement) => {
-        api.success({
-            message: "Successfully added a review/reply",
-            duration: 10,
-            placement,
-        })
-    }
-
     return (
         <>
-            {contextHolder}
             <TextArea
                 value={review}
                 status={isReviewEmpty ? "error" : ""}
@@ -133,7 +122,17 @@ export default function ReviewForm({reviewId, module}: {reviewId?: string, modul
                     />
                 </div>
                 <div className="mt-2">
-                    <Button className="" onClick={handleSubmit}>Submit</Button>
+                    <Button className="" onClick={handleSubmit}>
+                        {
+                            !submitted ?
+                            <h1>Submit</h1>
+                            :
+                            <div className="flex flex-row items-center">
+                                <div className="w-5 h-5">{tick}</div>
+                                <h1 className="pl-2">Submitted</h1>
+                            </div>
+                        }
+                    </Button>
                 </div>
             </div>
         </>
