@@ -1,47 +1,41 @@
 [
     {
-        "Author": "Xin Wei",
-        "Comment": "I love this mod so much! I managed to learn MapReduce!",
-        "Upvotes": 88,
-        "Downvotes": 0,
-        "Date": 1712210979,
-        "SubThreads": [
+        "userId": "mlbeast",
+        "timestamp": 1712634360,
+        "review": "I have learnt that this module is a waste of time!I have learnt that this module is a waste of time!I have learnt that this module is a waste of time!I have learnt that this module is a waste of time!I have learnt that this module is a waste of time!I have learnt that this module is a waste of time!",
+        "reviewId": "review-1712634360-uvq8kidk2i",
+        "replies": [
             {
-                "Author": "Jun Wei",
-                "Comment": "I agree with you! The prof is so nice and patient!",
-                "Upvotes": 125,
-                "Downvotes": 0,
-                "Date": 1712221001
+                "userId": "mlbeast2",
+                "timestamp": 171263440,
+                "review": "I agree",
+                "reviewId": "review-1712634360-uvq8kidk2i"
             },
             {
-                "Author": "Prof Tan Chee Wei",
-                "Comment": "OMG I didnt expect my mod to be such a success. I love my students!",
-                "Upvotes": 266,
-                "Downvotes": 0,
-                "Date": 1712221015
+                "userId": "mlbeast3",
+                "timestamp": 171263444,
+                "review": "agreed",
+                "reviewId": "review-1712634360-dvb4567"
             }
         ]
     },
     {
-        "Author": "Ye Quan",
-        "Comment": "This mod sucks. How is Dropbox a PaaS. Prof rly amazes me at how stupid he is",
-        "Upvotes": 0,
-        "Downvotes": 1231234,
-        "Date": 1712221035,
-        "SubThreads": [
+        "userId": "mlbeast",
+        "timestamp": 1712634360,
+        "review": "I have learnt that this module is a waste of time!",
+        "reviewId": "review-1712634360-sdcgv2345f",
+        "replies": [
             {
-                "Author": "Xin Wei",
-                "Comment": "Boooo you just dont know your shit. Go away",
-                "Upvotes": 132,
-                "Downvotes": 0,
-                "Date": 1712221046
+                "userId": "mlbeast2",
+                "timestamp": 171263440,
+                "review": "I agree",
+                "reviewId": "review-1712634360-dfg345yergt"
             },
             {
-                "Author": "Prof Tan Chee Wei",
-                "Comment": "If you dont like my class, i can drop you out. Your choice.",
-                "Upvotes": 123,
-                "Downvotes": 0,
-                "Date": 1712221058
+                "userId": "mlbeast3",
+                "timestamp": 171263444,
+                "review": "agreed",
+                "reviewId": "review-1712634360-asd456rgb"
             }
         ]
     }
