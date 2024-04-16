@@ -5,7 +5,8 @@ import { Input, Button } from 'antd'
 import { useRouter } from 'next/navigation'
 
 import PostReview from '@/api/PostReview'
-import { PostReviewData } from '@/utils/types'
+import PostReply from '@/api/PostReply'
+import { PostReviewData, PostReplyData } from '@/utils/types'
 
 export default function ReviewForm({reviewId, module}: {reviewId?: string, module: string}) {
     const router = useRouter()
@@ -37,11 +38,21 @@ export default function ReviewForm({reviewId, module}: {reviewId?: string, modul
         }
         if (name !== "" && review !== "") {
             // submit form
-            const handlePost = async () => {
-                const postReview = await PostReview({uuid: "sdf", username: "asdf", module: module, review: review})
-                // const response = await PostReview(postReview)
+            const handlePostReview = async () => {
+                const reviewData: PostReviewData = {uuid: "sdf", username: "asdf", module: module, review: review}
+                const postReview = await PostReview(reviewData)
             }
-            handlePost()
+            const handlePostReply = async () => {
+                const replyData: PostReplyData = {uuid: "sdf", username: "asdf", module: module, reviewId: reviewId!, reply: review}
+                const postReply = await PostReply(replyData)
+            }
+            
+            if (reviewId === undefined) {
+                handlePostReview()
+            } else {
+                handlePostReply()
+            }
+            
             setSubmitted(true)
             setName("")
             setReview("")

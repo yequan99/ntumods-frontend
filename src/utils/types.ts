@@ -134,3 +134,11 @@ export type PostReviewData = {
     module: string,
     review: string
 }
+
+export type PostReplyData = {
+    uuid: string,
+    username: string,
+    module: string,
+    reviewId: string,
+    reply: string
+}

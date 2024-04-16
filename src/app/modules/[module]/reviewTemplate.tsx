@@ -49,7 +49,7 @@ export default function ReviewTemplate({isMainThread, mainThreadReviews, module}
                             {
                                 selectReply && mainThread.reviewId === replyID &&
                                 <div className="pt-4">
-                                    <ReviewForm reviewId="Reply" module={module} />
+                                    <ReviewForm reviewId={mainThread.reviewId} module={module} />
                                 </div>
                             }
                             {
