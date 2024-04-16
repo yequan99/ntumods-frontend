@@ -1,18 +1,18 @@
 [
     {
-        "userId": "mlbeast",
+        "username": "mlbeast",
         "timestamp": 1712634360,
         "review": "I have learnt that this module is a waste of time!I have learnt that this module is a waste of time!I have learnt that this module is a waste of time!I have learnt that this module is a waste of time!I have learnt that this module is a waste of time!I have learnt that this module is a waste of time!",
         "reviewId": "review-1712634360-uvq8kidk2i",
         "replies": [
             {
-                "userId": "mlbeast2",
+                "username": "mlbeast2",
                 "timestamp": 171263440,
                 "review": "I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.I agree.",
                 "reviewId": "review-1712634360-uvq8kidk2i"
             },
             {
-                "userId": "mlbeast3",
+                "username": "mlbeast3",
                 "timestamp": 171263444,
                 "review": "agreed",
                 "reviewId": "review-1712634360-dvb4567"
@@ -20,19 +20,19 @@
         ]
     },
     {
-        "userId": "mlbeast",
+        "username": "mlbeast",
         "timestamp": 1712634360,
         "review": "I have learnt that this module is a waste of time!",
         "reviewId": "review-1712634360-sdcgv2345f",
         "replies": [
             {
-                "userId": "mlbeast2",
+                "username": "mlbeast2",
                 "timestamp": 171263440,
                 "review": "I agree",
                 "reviewId": "review-1712634360-dfg345yergt"
             },
             {
-                "userId": "mlbeast3",
+                "username": "mlbeast3",
                 "timestamp": 171263444,
                 "review": "agreed",
                 "reviewId": "review-1712634360-asd456rgb"

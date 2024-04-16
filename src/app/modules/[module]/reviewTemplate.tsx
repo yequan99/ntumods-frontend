@@ -28,10 +28,10 @@ export default function ReviewTemplate({isMainThread, mainThreadReviews, module}
                 <div key={index} className="pb-4 w-full">
                     <div className="flex flex-row h-fit items-center">
                         <div className="w-12 pl-1">
-                            <Avatar name={mainThread.userId} size="43" round="10px" />
+                            <Avatar name={mainThread.username} size="43" round="10px" />
                         </div>
                         <div className="pl-3">
-                            <p className="text-blue-800 font-medium text-xl">{mainThread.userId}</p>
+                            <p className="text-blue-800 font-medium text-xl">{mainThread.username}</p>
                             <p className="text-slate-500 text-sm italic">{getDateDiff(new Date(mainThread.timestamp * 1000))}</p>
                         </div>
                     </div>

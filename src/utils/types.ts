@@ -96,7 +96,7 @@ export type ClashData = {
 }
 
 export interface ReplyData {
-    userId: string,
+    username: string,
     timestamp: number,
     review: string,
     reviewId: string,
@@ -131,14 +131,14 @@ export type StoreModuleData = {
 export type PostReviewData = {
     uuid: string,
     username: string,
-    module: string,
+    moduleId: string,
     review: string
 }
 
 export type PostReplyData = {
     uuid: string,
     username: string,
-    module: string,
+    moduleId: string,
     reviewId: string,
     reply: string
 }

@@ -67,11 +67,11 @@ export default function ReviewForm({reviewId, module}: {reviewId?: string, modul
         if (name !== null && review !== "") {
             // submit form
             const handlePostReview = async (uuid: string, username: string) => {
-                const reviewData: PostReviewData = {uuid: uuid, username: username, module: module, review: review}
+                const reviewData: PostReviewData = {uuid: uuid, username: username, moduleId: module, review: review}
                 const postReview = await PostReview(reviewData)
             }
             const handlePostReply = async (uuid: string, username: string) => {
-                const replyData: PostReplyData = {uuid: uuid, username: username, module: module, reviewId: reviewId!, reply: review}
+                const replyData: PostReplyData = {uuid: uuid, username: username, moduleId: module, reviewId: reviewId!, reply: review}
                 const postReply = await PostReply(replyData)
             }
             // get uuid
