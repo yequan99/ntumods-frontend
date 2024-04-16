@@ -12,7 +12,7 @@ export default function Reviews({reviews}: {reviews: ThreadReviewData[]}) {
             <div className="w-full md:w-[60%]">
                 <ReviewForm type="Review" />
             </div>
-            <div className="pt-4 pl-4 md:pl-0">
+            <div className="pt-4">
                 <ReviewTemplate isMainThread={true} mainThreadReviews={reviews} />
             </div>
         </div>

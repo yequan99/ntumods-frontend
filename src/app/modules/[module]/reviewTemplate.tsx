@@ -35,7 +35,7 @@ export default function ReviewTemplate({isMainThread, mainThreadReviews}: {isMai
                             <p className="text-slate-500 text-sm italic">{getDateDiff(new Date(mainThread.timestamp * 1000))}</p>
                         </div>
                     </div>
-                    <div className="flex flex-row pt-4 h-full w-[60%]">
+                    <div className="flex flex-row pt-4 h-full md:w-[60%]">
                         <div className="w-12 flex items-center justify-center">
                             <Divider type="vertical" className="bg-slate-400 h-full" />
                         </div>
