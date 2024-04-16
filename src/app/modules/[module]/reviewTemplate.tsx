@@ -8,7 +8,7 @@ import { Divider } from 'antd'
 import ReviewForm from './reviewForm'
 import { ThreadReviewData } from "@/utils/types"
 
-export default function ReviewTemplate({isMainThread, mainThreadReviews}: {isMainThread: boolean, mainThreadReviews?: ThreadReviewData[]}) {
+export default function ReviewTemplate({isMainThread, mainThreadReviews, module}: {isMainThread: boolean, mainThreadReviews?: ThreadReviewData[], module: string}) {
     const [selectReply, setSelectReply] = useState<boolean>(false)
     const [replyID, setReplyID] = useState<string>("")
     
@@ -35,7 +35,7 @@ export default function ReviewTemplate({isMainThread, mainThreadReviews}: {isMai
                             <p className="text-slate-500 text-sm italic">{getDateDiff(new Date(mainThread.timestamp * 1000))}</p>
                         </div>
                     </div>
-                    <div className="flex flex-row pt-4 h-full md:w-[60%]">
+                    <div className="flex flex-row pt-4 h-full md:w-[80%]">
                         <div className="w-12 flex items-center justify-center">
                             <Divider type="vertical" className="bg-slate-400 h-full" />
                         </div>
@@ -49,12 +49,12 @@ export default function ReviewTemplate({isMainThread, mainThreadReviews}: {isMai
                             {
                                 selectReply && mainThread.reviewId === replyID &&
                                 <div className="pt-4">
-                                    <ReviewForm type="Reply" />
+                                    <ReviewForm reviewId="Reply" module={module} />
                                 </div>
                             }
                             {
                                 isMainThread &&
-                                <ReviewTemplate isMainThread={false} mainThreadReviews={mainThread.replies} />
+                                <ReviewTemplate isMainThread={false} mainThreadReviews={mainThread.replies} module={module} />
                             }
                         </div>
                     </div>                    

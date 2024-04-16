@@ -161,7 +161,7 @@ export default function Module({ params }: { params: { module: string } }) {
                             </div>
                         </div>
                         <div id="reviews" className="h-screen">
-                            <Reviews reviews={reviews} />
+                            <Reviews reviews={reviews} module={params.module} />
                         </div>
                     </div>
                     <div className="hidden md:block md:fixed md:right-0 md:w-[20%]">

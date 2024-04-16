@@ -95,20 +95,6 @@ export type ClashData = {
     Remarks: RemarksData[]
 }
 
-// export interface ReviewData {
-//     Author: string,
-//     Comment: string,
-//     Upvotes: number,
-//     Downvotes: number,
-//     Date: number
-// }
-
-// export type SubThreadReviewData = ReviewData
-
-// export interface ThreadReviewData extends ReviewData {
-//     SubThreads?: SubThreadReviewData[]
-// }
-
 export interface ReplyData {
     userId: string,
     timestamp: number,
@@ -121,14 +107,6 @@ export type SubThreadReviewData = ReplyData
 export interface ThreadReviewData extends ReplyData {
     replies?: SubThreadReviewData[]
 }
-
-// export type ReviewsData = {
-//     userId: string,
-//     timestamp: number,
-//     review: string,
-//     reviewId: string,
-//     replies: ReplyData[]
-// }
 
 export type SelectedModuleData = {
     Code: string,
@@ -148,4 +126,11 @@ export type TimetableStorageData = {
 export type StoreModuleData = {
     Code: string | null,
     Index: SelectData
+}
+
+export type PostReviewData = {
+    uuid: string,
+    username: string,
+    module: string,
+    review: string
 }
