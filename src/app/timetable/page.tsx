@@ -18,7 +18,9 @@ const getLocalStorage = () => {
     if (typeof window !== undefined) {
         const serializedTimetableData = window.localStorage.getItem('timetable')
         if (serializedTimetableData) {
-            return JSON.parse(serializedTimetableData) as TimetableStorageData
+            const parsedData: TimetableStorageData = JSON.parse(serializedTimetableData) as TimetableStorageData
+            parsedData.ColourMap = new Map(parsedData.ColourMap)
+            return parsedData
         }
     }
     return null
@@ -26,7 +28,8 @@ const getLocalStorage = () => {
 
 const setLocalStorage = (storeObject: TimetableStorageData) => {
     if (typeof window !== undefined) {
-        window.localStorage.setItem('timetable', JSON.stringify(storeObject))
+        const colourMapArray = Array.from(storeObject.ColourMap)
+        window.localStorage.setItem('timetable', JSON.stringify({Modules: storeObject.Modules, ColourIndex: storeObject.ColourIndex, ColourMap: colourMapArray}))
     }
 }
 
@@ -104,7 +107,6 @@ export default function Timetable() {
                     events.ClashData = undefined
                     newDayList.push(events)
                 }
-                console.log("daylist:", newDayList)
                 clashMap.set(events.DayOfWeek, newDayList)
             } else {
                 events.BgColour = getColour(events.Code!)
@@ -122,7 +124,7 @@ export default function Timetable() {
             try {
                 // fetching the module data
                 const moduleData: ModuleData = await FetchModuleData(module!.toString())
-                
+                                
                 // set selected modules
                 const uniqueIndexMap: Map<string, SelectData> = new Map()
                 moduleData.schedule.forEach(schedule => {
@@ -165,11 +167,13 @@ export default function Timetable() {
                         } else {
                             storedData.Modules.push(storeObject)
                         }
+                        storedData.ColourIndex = colourIndex
+                        storedData.ColourMap = colourMap
                         setLocalStorage(storedData)
                     }
                 }
             } catch (error) {
-                console.error('Error fetching module data')
+                console.error('Error fetching module data: ', error)
             }
         }
         if (module !== null) {
@@ -314,9 +318,20 @@ export default function Timetable() {
             const colour: string = colours[colourIndex]
             const newColourMap = new Map(colourMap)
             newColourMap.set(moduleCode, colour)
+            const newIndex: number = colourIndex < 9 ? colourIndex+1 : 0
             setColourMap(newColourMap)
-            setColourIndex(colourIndex < 9 ? colourIndex+1 : 0)
+            setColourIndex(newIndex)
 
+            const storedData: TimetableStorageData | null = getLocalStorage()
+            if (storedData !== null) {
+                const newStoredData: TimetableStorageData = {
+                    Modules: storedData!.Modules,
+                    ColourIndex: newIndex,
+                    ColourMap: newColourMap
+                }
+                setLocalStorage(newStoredData)
+            }
+            
             return colour
         }
     }
