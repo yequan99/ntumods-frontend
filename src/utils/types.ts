@@ -142,3 +142,8 @@ export type PostReplyData = {
     reviewId: string,
     reply: string
 }
+
+export type StoreUserData = {
+    uuid: string,
+    username: string
+}
