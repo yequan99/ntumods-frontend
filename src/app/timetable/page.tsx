@@ -36,8 +36,8 @@ export default function Timetable() {
     const [moduleList, setModuleList] = useState<SelectData[]>([])
     const [selectedModules, setSelectedModules] = useState<SelectedModuleData[]>([])
     const [selectedDropdown, setSelectedDropdown] = useState<string | null>(null)
-    const [colourMap, setColourMap] = useState<Map<string, string>>(new Map())  // need to store in local storage
-    const [colourIndex, setColourIndex] = useState<number>(0)   // need to store in local storage
+    const [colourMap, setColourMap] = useState<Map<string, string>>(new Map())
+    const [colourIndex, setColourIndex] = useState<number>(0)
     const [api, contextHolder] = notification.useNotification()
 
     useEffect(() => {
@@ -62,7 +62,7 @@ export default function Timetable() {
             setColourIndex(savedItems.ColourIndex)
             setColourMap(savedItems.ColourMap)
             {savedItems.Modules.forEach(module => {
-                handleSelectModule(module.Code, module.Index)
+                handleSelectModule(module.Code, module.Index, true)
             })}
         }
     }, [])
@@ -73,30 +73,39 @@ export default function Timetable() {
         selectedEvents.forEach(events => {
             if (clashMap.has(events.DayOfWeek)) {
                 const dayList: ScheduleEvent[] = clashMap.get(events.DayOfWeek)!
+                const newDayList: ScheduleEvent[] = []
                 var overlap: boolean = false
                 for (let i = 0; i < dayList.length; i++) {
                     const result = checkClash(events, dayList[i])
                     if ((result === "clash") || (result === "overlap")) {
-                        dayList[i].BgColour = result === "clash" ? "red" : "white"
-                        dayList[i].GridRow = CalculateGridRow(getStartTime(dayList[i].StartTime, events.StartTime), getEndTime(dayList[i].EndTime, events.EndTime))
-                        dayList[i].ClashData = [
-                            {Code: dayList[i].Code!, Index: dayList[i].Index, ClassType: dayList[i].ClassType, IndexGroup: dayList[i].IndexGroup, StartTime: dayList[i].StartTime, EndTime: dayList[i].EndTime, Remarks: dayList[i].Remarks},
-                            {Code: events.Code!, Index: events.Index, ClassType: events.ClassType, IndexGroup: events.IndexGroup, StartTime: events.StartTime, EndTime: events.EndTime, Remarks: events.Remarks}
-                        ]
                         overlap = true
                         if (result === "clash") {
                             openNotification('topRight',dayList[i].Code!, events.Code!, events.DayOfWeek)
                         }
-                        break
+
+                        events.BgColour = result === "clash" ? "red" : "white"
+                        events.GridRow = CalculateGridRow(getStartTime(dayList[i].StartTime, events.StartTime), getEndTime(dayList[i].EndTime, events.EndTime))
+                        if (events.ClashData === undefined) {
+                            events.ClashData = [
+                                {Code: events.Code!, Index: events.Index, ClassType: events.ClassType, IndexGroup: events.IndexGroup, StartTime: events.StartTime, EndTime: events.EndTime, Remarks: events.Remarks},
+                                {Code: dayList[i].Code!, Index: dayList[i].Index, ClassType: dayList[i].ClassType, IndexGroup: dayList[i].IndexGroup, StartTime: dayList[i].StartTime, EndTime: dayList[i].EndTime, Remarks: dayList[i].Remarks}
+                            ]
+                        } else {
+                            events.ClashData.push({Code: dayList[i].Code!, Index: dayList[i].Index, ClassType: dayList[i].ClassType, IndexGroup: dayList[i].IndexGroup, StartTime: dayList[i].StartTime, EndTime: dayList[i].EndTime, Remarks: dayList[i].Remarks})
+                        }
+                        newDayList.push(events)
+                    } else {
+                        newDayList.push(dayList[i])
                     }
                 }
                 if (!overlap) {
                     events.BgColour = getColour(events.Code!)
                     events.GridRow = CalculateGridRow(events.StartTime, events.EndTime)
                     events.ClashData = undefined
-                    dayList.push(events)
+                    newDayList.push(events)
                 }
-                clashMap.set(events.DayOfWeek, dayList)
+                console.log("daylist:", newDayList)
+                clashMap.set(events.DayOfWeek, newDayList)
             } else {
                 events.BgColour = getColour(events.Code!)
                 events.GridRow = CalculateGridRow(events.StartTime, events.EndTime)
@@ -108,13 +117,12 @@ export default function Timetable() {
         setParsedEvents(ParsedSchedules)
     }, [selectedEvents])
 
-    const handleSelectModule = (module: string | null, savedIndex?: SelectData) => {
+    const handleSelectModule = (module: string | null, savedIndex?: SelectData, loadStorage?: boolean) => {
         const fetchModuleData = async () => {
             try {
                 // fetching the module data
                 const moduleData: ModuleData = await FetchModuleData(module!.toString())
                 
-
                 // set selected modules
                 const uniqueIndexMap: Map<string, SelectData> = new Map()
                 moduleData.schedule.forEach(schedule => {
@@ -133,32 +141,33 @@ export default function Timetable() {
                 }
 
                 setSelectedModules(prevList => [...prevList, selectedModule])
-                
-                // set selected events
+
                 const listOfEvents: ScheduleEvent[] = getEvents(selectedModule.Schedule, selectedModule.SelectedIndex.label, selectedModule.Code)
                 setSelectedEvents(prevList => [...prevList, ...listOfEvents])
                 
+                
                 // store in localStorage
-                const storeObject: StoreModuleData = { Code: module, Index: savedIndex !== undefined ? savedIndex :  uniqueIndexList[0]}
-                const storedData: TimetableStorageData | null = getLocalStorage()
-
-                if (storedData === null) {
-                    const storeData: TimetableStorageData = {
-                        Modules: [storeObject],
-                        ColourIndex: colourIndex,
-                        ColourMap: colourMap
-                    }
-                    setLocalStorage(storeData)
-                } else {
-                    const index = storedData.Modules.findIndex(item => item.Code === storeObject.Code)
-                    if (index !== -1) {
-                        storedData.Modules[index] = storeObject
+                if (loadStorage !== true) {
+                    const storeObject: StoreModuleData = { Code: module, Index: savedIndex !== undefined ? savedIndex :  uniqueIndexList[0]}
+                    const storedData: TimetableStorageData | null = getLocalStorage()
+    
+                    if (storedData === null) {
+                        const storeData: TimetableStorageData = {
+                            Modules: [storeObject],
+                            ColourIndex: colourIndex,
+                            ColourMap: colourMap
+                        }
+                        setLocalStorage(storeData)
                     } else {
-                        storedData.Modules.push(storeObject)
+                        const index = storedData.Modules.findIndex(item => item.Code === storeObject.Code)
+                        if (index !== -1) {
+                            storedData.Modules[index] = storeObject
+                        } else {
+                            storedData.Modules.push(storeObject)
+                        }
+                        setLocalStorage(storedData)
                     }
-                    setLocalStorage(storedData)
                 }
-
             } catch (error) {
                 console.error('Error fetching module data')
             }
