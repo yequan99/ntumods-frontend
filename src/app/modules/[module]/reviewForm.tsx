@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { Input, Button } from 'antd'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -69,10 +69,16 @@ export default function ReviewForm({reviewId, module}: {reviewId?: string, modul
             const handlePostReview = async (uuid: string, username: string) => {
                 const reviewData: PostReviewData = {uuid: uuid, username: username, moduleId: module, review: review}
                 const postReview = await PostReview(reviewData)
+                if (postReview !== 404) {
+                    window.location.reload()
+                }
             }
             const handlePostReply = async (uuid: string, username: string) => {
                 const replyData: PostReplyData = {uuid: uuid, username: username, moduleId: module, reviewId: reviewId!, reply: review}
                 const postReply = await PostReply(replyData)
+                if (postReply !== 404) {
+                    window.location.reload()
+                }
             }
             // get uuid
             setSubmitted(true)
@@ -98,7 +104,6 @@ export default function ReviewForm({reviewId, module}: {reviewId?: string, modul
             
             setUser({uuid: retrievedUUID, username: retrievedName})
             setReview("")
-            window.location.reload()
         }
     }
 

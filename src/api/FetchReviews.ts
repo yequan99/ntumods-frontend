@@ -3,7 +3,7 @@ import { ThreadReviewData } from "@/utils/types"
 export default async function FetchReviews(moduleCode: string): Promise<ThreadReviewData[]> {
     try {
         const reviewResponse = await fetch(
-            `/data/mockReviewData.json`,
+            `http://ntumods-backend.southeastasia.azurecontainer.io:8080/review/${moduleCode}`,
             {
                 method: 'GET',
                 headers: {

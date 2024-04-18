@@ -26,6 +26,7 @@ export default function Module({ params }: { params: { module: string } }) {
     const [indexList, setIndexList] = useState<string[]>([])
     const [selectedIndex, setSelectedIndex] = useState<string>("")
     const [notFound, setNotFound] = useState<boolean>(false)
+    const [submit, setSubmit] = useState<boolean>(false)
 
     useEffect(() => {
         // make API call to fetch module detail using modulecode
@@ -46,14 +47,25 @@ export default function Module({ params }: { params: { module: string } }) {
         const fetchReviewData = async () => {
             try {
                 const reviewData: ThreadReviewData[] = await FetchReviews(params.module)
-                setReviews(reviewData)
+                const parsedReviewData: ThreadReviewData[] = []
+                reviewData.forEach(review => {
+                    const newReview: ThreadReviewData = {
+                        username: review.username,
+                        timestamp: review.timestamp,
+                        review: review.review,
+                        reviewId: review.reviewId,
+                        replies: review.replies?.reverse()
+                    }
+                    parsedReviewData.push(newReview)
+                })
+                setReviews(parsedReviewData)
             } catch (error) {
                 console.log('Error fetching review data')
             }
         }
         fetchModuleData()
         fetchReviewData()
-    }, [])
+    }, [submit])
 
     const ParseEventSchedule = (moduleIndexes: ModuleData) => {
         var listOfIndex: string[] = []
